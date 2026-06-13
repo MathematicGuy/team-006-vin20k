@@ -6,7 +6,8 @@
         "hooks": [
           {
             "name": "log-prompt",
-            "command": "bash scripts/_pyrun.sh scripts/log_hook.py --tool=codex",
+            "type": "command",
+            "command": "D:\\Personlich\\_VIN20K_PROJECT\\scripts\\_pyrun.cmd D:\\Personlich\\_VIN20K_PROJECT\\scripts\\log_hook.py --tool=codex",
             "timeout": 10
           }
         ]
@@ -17,7 +18,8 @@
         "hooks": [
           {
             "name": "log-stop",
-            "command": "bash scripts/_pyrun.sh scripts/log_hook.py --tool=codex",
+            "type": "command",
+            "command": "D:\\Personlich\\_VIN20K_PROJECT\\scripts\\_pyrun.cmd D:\\Personlich\\_VIN20K_PROJECT\\scripts\\log_hook.py --tool=codex",
             "timeout": 10
           }
         ]

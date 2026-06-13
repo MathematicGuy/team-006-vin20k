@@ -1,0 +1,11 @@
+*.log
+private/*
+repos
+.DS_Store
+.claude/
+!resources/.claude/
+.env
+scripts/*CLAUDE.md
+.DS_Store
+!buildflow/.claude/
+!buildflow/.claude/**

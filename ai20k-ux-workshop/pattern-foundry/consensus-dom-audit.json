@@ -1,0 +1,871 @@
+{
+  "title": "Consensus: AI for Research",
+  "url": "https://consensus.app/",
+  "headings": [
+    {
+      "level": "H1",
+      "text": "Research starts here"
+    },
+    {
+      "level": "H2",
+      "text": "Research starts here"
+    },
+    {
+      "level": "H3",
+      "text": "The new standard for academic research"
+    },
+    {
+      "level": "H3",
+      "text": "Used daily at top research institutions"
+    },
+    {
+      "level": "H3",
+      "text": "Automate Literature Review with Deep Search"
+    },
+    {
+      "level": "H3",
+      "text": "Try Medical mode"
+    },
+    {
+      "level": "H3",
+      "text": "Use filters with natural language"
+    },
+    {
+      "level": "H3",
+      "text": "See where the research agrees"
+    }
+  ],
+  "buttons": [
+    {
+      "tag": "A",
+      "text": "",
+      "href": "https://consensus.app/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Close sidebar",
+      "href": "",
+      "aria": "Close sidebar",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "New Thread",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "Home",
+      "href": "https://consensus.app/search/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Sign in",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Sign up",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "Sign up",
+      "href": "https://consensus.app/sign-up/#/?redirect_url=/",
+      "aria": "Sign up",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Sources",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Corpus",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Deep",
+      "href": "",
+      "aria": "Deep",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Filter",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Submit search",
+      "href": "",
+      "aria": "Submit search",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Run a Deep review",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Draft a report",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Compare two approaches",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "",
+      "href": "https://consensus.app/home/blog/sage-partners-with-consensus-to-bring/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "",
+      "href": "https://consensus.app/home/blog/consensus-partners-with-acs-to-bring-trusted-research-into-the-ai-era/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "About Us",
+      "href": "https://consensus.app/home/about-us/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "For Universities",
+      "href": "https://consensus.app/home/universities-student/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "For Organizations",
+      "href": "https://consensus.app/home/research-organizations/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "Careers",
+      "href": "https://consensus.app/home/careers/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "A",
+      "text": "Contact Us",
+      "href": "https://consensus.app/home/contact/",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Conflicting evidence on SSRIs and suicide risk in adolescents",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "What are the competing theoretical explanations for the placebo effect in pain management?",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Historical consensus shifts on hormone replacement therapy",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "SGLT2 inhibitors vs GLP-1 agonists for renal outcomes in type 2 diabetes",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Guideline-based management of atrial fibrillation with CKD",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "When is syncope considered high risk?",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Evidence on microplastic exposure and health excluding animal and in vitro studies",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Controlled studies only evaluating cognitive training programs for memory improvement",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "How have findings on gut microbiome diversity changed over the last decade?",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Does air pollution exposure increase cardiovascular disease risk?",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Does social media use increase the risk of depression in adolescents?",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Are antidepressants effective for mild depression?",
+      "href": "",
+      "aria": "",
+      "visible": true
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Open support chat",
+      "href": "",
+      "aria": "Open support chat",
+      "visible": true
+    }
+  ],
+  "inputs": [
+    {
+      "tag": "TEXTAREA",
+      "type": "textarea",
+      "placeholder": "Ask the research...",
+      "label": "",
+      "aria": "",
+      "id": ""
+    },
+    {
+      "tag": "TEXTAREA",
+      "type": "textarea",
+      "placeholder": "",
+      "label": "",
+      "aria": "",
+      "id": ""
+    }
+  ],
+  "imgs": [
+    {
+      "src": "https://consensus.app/icons/quote-bubble.svg",
+      "alt": "quote bubble",
+      "w": 24,
+      "h": 19
+    },
+    {
+      "src": "https://consensus.app/icons/document-star.svg",
+      "alt": "document",
+      "w": 26,
+      "h": 27
+    }
+  ],
+  "colors": [
+    [
+      "rgb(228, 228, 231)",
+      587
+    ],
+    [
+      "rgb(24, 24, 27)",
+      344
+    ],
+    [
+      "rgb(113, 113, 123)",
+      252
+    ],
+    [
+      "rgb(255, 255, 255)",
+      13
+    ],
+    [
+      "rgb(244, 244, 245)",
+      12
+    ],
+    [
+      "rgb(6, 142, 241)",
+      3
+    ],
+    [
+      "rgba(0, 0, 0, 0.16)",
+      3
+    ],
+    [
+      "rgb(239, 247, 255)",
+      2
+    ],
+    [
+      "rgb(250, 250, 250)",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.08)",
+      1
+    ],
+    [
+      "rgb(206, 249, 235)",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.5)",
+      1
+    ],
+    [
+      "oklab(0.985098 0.0000447631 0.0000197291 / 0.96)",
+      1
+    ],
+    [
+      "rgb(212, 212, 216)",
+      1
+    ],
+    [
+      "rgb(228, 228, 231) rgb(228, 228, 231) rgb(24, 24, 27)",
+      1
+    ]
+  ],
+  "text": [
+    {
+      "tag": "a",
+      "role": "",
+      "text": "",
+      "href": "https://consensus.app/",
+      "cls": "flex items-center h-full"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Close sidebar",
+      "href": "",
+      "cls": "Button_root__OzuEG Button_flat__hzIRL Button_sm__5sq_E Button_iconOnly__iznBs cursor-w-resize"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "New Thread",
+      "href": "",
+      "cls": "NavigationButton_root__hQ46Y NavigationButton_medium__r3MWC NavigationButton_themeBase__20osY NavigationButton_sm__V0huR"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Ctrl+K",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-x-sm__mfFcA Type_medium___QqCm Type_muted__qqbE_ Type_mono__H6TAN Type_left__RUTa6 upper"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "Home",
+      "href": "https://consensus.app/search/",
+      "cls": "NavigationButton_root__hQ46Y NavigationButton_medium__r3MWC NavigationButton_themeBase__20osY NavigationButton_sm__V0huR"
+    },
+    {
+      "tag": "h1",
+      "role": "",
+      "text": "Research starts here",
+      "href": "",
+      "cls": "h2-md pr-8 leading-[1.3]"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Consensus is the AI-powered academic search engine",
+      "href": "",
+      "cls": "leading-[1.4]"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Search & analyze200M+ peerreviewed research papers",
+      "href": "",
+      "cls": "leading-normal"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Transparent, reliable, and built tosave you time",
+      "href": "",
+      "cls": "pr-2 leading-normal"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Sign in",
+      "href": "",
+      "cls": "Button_root__OzuEG Button_tertiary__4ovxP Button_sm__5sq_E"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Sign up",
+      "href": "",
+      "cls": "Button_root__OzuEG Button_primary__6jG9a Button_sm__5sq_E"
+    },
+    {
+      "tag": "nav",
+      "role": "",
+      "text": "Sign up",
+      "href": "",
+      "cls": "flex items-center min-h-header px-4 lg:px-6"
+    },
+    {
+      "tag": "a",
+      "role": "button",
+      "text": "Sign up",
+      "href": "https://consensus.app/sign-up/#/?redirect_url=/",
+      "cls": "inline-flex justify-center items-center relative whitespace-nowrap align-middle leading-[1.2] rounded-xl transition-colo"
+    },
+    {
+      "tag": "h2",
+      "role": "",
+      "text": "Research starts here",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_medium___QqCm Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6 mt-4 m"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Sources",
+      "href": "",
+      "cls": "Button_root__OzuEG Button_tertiary__4ovxP Button_sm__5sq_E Button_iconOnly__iznBs"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Corpus",
+      "href": "",
+      "cls": "Button_root__OzuEG Button_tertiary__4ovxP Button_sm__5sq_E"
+    },
+    {
+      "tag": "button",
+      "role": "switch",
+      "text": "Deep",
+      "href": "",
+      "cls": "group relative flex items-center gap-2 h-9 px-3 rounded-xl transition-colors text-fg-muted bg-transparent"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Deep",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-sm__C7jmg Type_medium___QqCm Type_muted__qqbE_ Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Filter",
+      "href": "",
+      "cls": "Button_root__OzuEG Button_flat__hzIRL Button_sm__5sq_E Button_hideLabelForMobile__nYfGd w-9 sm:w-auto"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Submit search",
+      "href": "",
+      "cls": "Button_root__OzuEG Button_primary__6jG9a Button_sm__5sq_E inputs_isDisabled__3omw5 Button_iconOnly__iznBs"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Run a Deep review",
+      "href": "",
+      "cls": "Chip_root__RSFxD Chip_sm__WjQ52"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Draft a report",
+      "href": "",
+      "cls": "Chip_root__RSFxD Chip_sm__WjQ52"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Compare two approaches",
+      "href": "",
+      "cls": "Chip_root__RSFxD Chip_sm__WjQ52"
+    },
+    {
+      "tag": "h3",
+      "role": "",
+      "text": "The new standard for academic research",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-lg__Hpvyc Type_medium___QqCm Type_base__uyb_k Type_sans__hhG_J Type_center__tp2wk"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "",
+      "href": "https://consensus.app/home/blog/sage-partners-with-consensus-to-bring/",
+      "cls": "flex w-[50%] items-center justify-center h-16 rounded-2xl gap-2 sm:w-[25%] px-6 text-fg-base hover:bg-bg-mist cursor-poi"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "",
+      "href": "https://consensus.app/home/blog/consensus-partners-with-acs-to-bring-trusted-research-into-the-ai-era/",
+      "cls": "flex w-[50%] items-center justify-center h-16 rounded-2xl gap-2 sm:w-[25%] px-6 text-fg-base hover:bg-bg-mist cursor-poi"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Search and analyze peer-reviewed literature. Consensus draws on 250M+ research papers, including licensed full text content from leading publishers.",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_regular__ArhXo Type_base__uyb_k Type_sans__hhG_J Type_center__tp2wk px-"
+    },
+    {
+      "tag": "h3",
+      "role": "",
+      "text": "Used daily at top research institutions",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-lg__Hpvyc Type_medium___QqCm Type_base__uyb_k Type_sans__hhG_J Type_center__tp2wk"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Over 170 university libraries partner with Consensus to give students and faculty access. 10 million researchers, students, and clinicians use Consensus to supercharge literature r",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_regular__ArhXo Type_base__uyb_k Type_sans__hhG_J Type_center__tp2wk px-"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "About Us",
+      "href": "https://consensus.app/home/about-us/",
+      "cls": "w-full sm:w-[calc(50%-8px)]"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "For Universities",
+      "href": "https://consensus.app/home/universities-student/",
+      "cls": "w-full sm:w-[calc(50%-8px)]"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "For Organizations",
+      "href": "https://consensus.app/home/research-organizations/",
+      "cls": "w-full sm:w-[calc(50%-8px)]"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "Careers",
+      "href": "https://consensus.app/home/careers/",
+      "cls": "w-full sm:w-[calc(50%-8px)]"
+    },
+    {
+      "tag": "a",
+      "role": "",
+      "text": "Contact Us",
+      "href": "https://consensus.app/home/contact/",
+      "cls": "w-full sm:w-[calc(50%-8px)]"
+    },
+    {
+      "tag": "h3",
+      "role": "",
+      "text": "Automate Literature Review with Deep Search",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_medium___QqCm Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Turn days of literature review into a few minutes. Consensus Deep Search builds a comprehensive search strategy, expanding key terms, identifying conflicting arguments, and explori",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_regular__ArhXo Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Conflicting evidence on SSRIs and suicide risk in adolescents",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Conflicting evidence on SSRIs and suicide risk in adolescents",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "What are the competing theoretical explanations for the placebo effect in pain management?",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "What are the competing theoretical explanations for the placebo effect in pain management?",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Historical consensus shifts on hormone replacement therapy",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Historical consensus shifts on hormone replacement therapy",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "h3",
+      "role": "",
+      "text": "Try Medical mode",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_medium___QqCm Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Narrow your results to the highest-quality medical sources — about 50,000 clinical guidelines and 8M articles from the top 1,000 medical journals for quick, trusted clinical answer",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_regular__ArhXo Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "SGLT2 inhibitors vs GLP-1 agonists for renal outcomes in type 2 diabetes",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "SGLT2 inhibitors vs GLP-1 agonists for renal outcomes in type 2 diabetes",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Guideline-based management of atrial fibrillation with CKD",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Guideline-based management of atrial fibrillation with CKD",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "When is syncope considered high risk?",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "When is syncope considered high risk?",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "h3",
+      "role": "",
+      "text": "Use filters with natural language",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_medium___QqCm Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Specify timeframes, populations, designs, and more directly in your prompt — and Consensus automatically applies the right filters for your search.",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_regular__ArhXo Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Evidence on microplastic exposure and health excluding animal and in vitro studies",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Evidence on microplastic exposure and health excluding animal and in vitro studies",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Controlled studies only evaluating cognitive training programs for memory improvement",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Controlled studies only evaluating cognitive training programs for memory improvement",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "How have findings on gut microbiome diversity changed over the last decade?",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "How have findings on gut microbiome diversity changed over the last decade?",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "h3",
+      "role": "",
+      "text": "See where the research agrees",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_medium___QqCm Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Ask a clear yes-or-no research question and the Consensus Meter instantly shows how much the evidence agrees or disagrees — giving you a fast, visual read on the state of the resea",
+      "href": "",
+      "cls": "Type_base__uyb_k Type_text-size-base__QPoYq Type_regular__ArhXo Type_base__uyb_k Type_sans__hhG_J Type_left__RUTa6"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Does air pollution exposure increase cardiovascular disease risk?",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Does air pollution exposure increase cardiovascular disease risk?",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Does social media use increase the risk of depression in adolescents?",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Does social media use increase the risk of depression in adolescents?",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Are antidepressants effective for mild depression?",
+      "href": "",
+      "cls": "flex items-center justify-between w-full gap-6 px-3 text-left rounded-xl transition-colors py-2 min-h-10 border-border-b"
+    },
+    {
+      "tag": "p",
+      "role": "",
+      "text": "Are antidepressants effective for mild depression?",
+      "href": "",
+      "cls": "sm-normal mt-0 mb-0"
+    },
+    {
+      "tag": "button",
+      "role": "",
+      "text": "Open support chat",
+      "href": "",
+      "cls": "fixed bottom-5 right-5 z-sidebar bg-bg-faint hover:bg-bg-muted text-fg-base rounded-full border transition-all flex item"
+    },
+    {
+      "tag": "p",
+      "role": "alert",
+      "text": "",
+      "href": "",
+      "cls": ""
+    },
+    {
+      "tag": "iframe",
+      "role": "presentation",
+      "text": "",
+      "href": "",
+      "cls": ""
+    }
+  ]
+}

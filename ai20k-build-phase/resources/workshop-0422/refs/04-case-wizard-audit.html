@@ -1,0 +1,1687 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wizard + inline audit · Checklist + 3 prompt · VinUni A20</title>
+<meta name="description" content="Checklist + 3 copy-paste prompts for AI coding agents (Claude Code / Cursor / Windsurf) to retrofit a step-by-step wizard (ABET syllabus, virtual lab experiment authoring, lesson planner) with inline compliance highlights using the T-C-R pattern. Every rule cited to Nielsen, Microsoft HAX, or Google PAIR." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap&subset=vietnamese,latin,latin-ext" rel="stylesheet" />
+<style>
+  :root {
+    --dark: #141413;
+    --light: #faf9f5;
+    --mid: #b0aea5;
+    --light-gray: #e8e6dc;
+    --dim: #6b6960;
+    --orange: #d97757;
+    --blue: #6a9bcc;
+    --green: #788c5d;
+    --red: #c07a6e;
+    --yellow: #d4a84b;
+    --purple: #a07fb5;
+    --teal: #5a9b94;
+
+    --font-head: "Be Vietnam Pro", "Poppins", system-ui, sans-serif;
+    --font-body: "Lora", "Be Vietnam Pro", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --radius: 12px;
+    --max: 1120px;
+    --max-narrow: 780px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--light); color: var(--dark);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-head); font-weight: 600; line-height: 1.22;
+    letter-spacing: -0.015em; margin: 0 0 0.5em;
+  }
+  p { margin: 0 0 1em; }
+  ul, ol { margin: 0 0 1em; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--dark); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { color: var(--orange); }
+  code {
+    font-family: var(--font-mono); font-size: 0.88em;
+    background: var(--light-gray); padding: 2px 6px; border-radius: 4px;
+  }
+  pre { margin: 0; }
+  pre code { background: transparent; padding: 0; }
+  sup.cite {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    color: var(--orange); padding: 0 3px; vertical-align: super; line-height: 0;
+  }
+  sup.cite a { color: var(--orange); text-decoration: none; }
+  sup.cite a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  .wrap-narrow { max-width: var(--max-narrow); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    padding: 18px 0; border-bottom: 1px solid var(--light-gray);
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250, 249, 245, 0.92); backdrop-filter: saturate(140%) blur(8px);
+  }
+  nav .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  nav .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; }
+  nav .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); }
+  nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; font-family: var(--font-head); font-size: 13px; }
+  nav a { text-decoration: none; color: var(--dark); opacity: .72; }
+  nav a:hover { opacity: 1; color: var(--orange); }
+  @media (max-width: 860px) { nav ul { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 56px 0 40px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--light-gray); padding: 6px 12px; border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .eyebrow .bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+  h1 {
+    font-size: clamp(2.1rem, 5.0vw, 3.6rem); font-weight: 700;
+    letter-spacing: -0.03em; max-width: 18ch; margin-bottom: 18px;
+  }
+  h1 .accent { color: var(--orange); font-style: italic; font-family: "Lora", Georgia, serif; font-weight: 500; }
+  .lede {
+    font-size: clamp(1.06rem, 1.5vw, 1.2rem); line-height: 1.6;
+    max-width: 62ch; margin-bottom: 28px;
+  }
+  .meta {
+    margin-top: 18px; display: flex; flex-wrap: wrap; gap: 20px;
+    font-family: var(--font-head); font-size: 13px; opacity: .72;
+  }
+  .meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .meta .sq { width: 8px; height: 8px; }
+
+  /* ---------- rules card (insight-first "gold") ---------- */
+  .rules-card {
+    margin-top: 36px; padding: 28px 32px;
+    background: #fff; border: 1px solid var(--light-gray);
+    border-radius: var(--radius); border-left: 4px solid var(--orange);
+  }
+  .rules-card .kicker {
+    font-family: var(--font-head); font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .rules-card h2 {
+    font-size: 1.3rem; margin: 0 0 18px; letter-spacing: -0.01em;
+  }
+  .rules-card ol {
+    margin: 0; padding-left: 0; list-style: none; counter-reset: rule;
+  }
+  .rules-card ol li {
+    counter-increment: rule; padding: 10px 0 10px 38px; position: relative;
+    font-size: 15.5px; line-height: 1.55; border-top: 1px solid var(--light-gray);
+  }
+  .rules-card ol li:first-child { border-top: none; }
+  .rules-card ol li::before {
+    content: counter(rule);
+    position: absolute; left: 0; top: 10px;
+    width: 26px; height: 26px; border-radius: 6px;
+    background: var(--light-gray); color: var(--dark);
+    font-family: var(--font-mono); font-weight: 600; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rules-card .tag-t, .rules-card .tag-c, .rules-card .tag-r {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px; margin-right: 8px;
+    vertical-align: 2px;
+  }
+  .rules-card .tag-t { background: rgba(217,119,87,0.15); color: var(--orange); }
+  .rules-card .tag-c { background: rgba(106,155,204,0.15); color: var(--blue); }
+  .rules-card .tag-r { background: rgba(120,140,93,0.18); color: var(--green); }
+
+  .rule-head {
+    font-family: var(--font-head); font-weight: 700;
+    font-size: 16px; color: var(--dark); line-height: 1.3;
+    display: block; margin-bottom: 4px;
+  }
+  .rule-sub {
+    font-size: 14.5px; line-height: 1.55; color: var(--dark);
+    display: block; margin-bottom: 6px;
+  }
+  .rule-sub code { font-size: 0.86em; background: var(--light-gray); padding: 1px 5px; border-radius: 3px; }
+  .rule-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+  }
+  .chip {
+    font-family: var(--font-head); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 3px 9px; border-radius: 999px;
+    background: #fafaf8; color: var(--dim);
+    border: 1px solid var(--light-gray);
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .chip.evidence { color: var(--dark); border-color: #d5d3c8; }
+  .chip.framework { color: var(--dim); font-family: var(--font-mono); font-size: 10.5px; }
+  .chip .c-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--mid);
+  }
+  .chip.evidence .c-dot { background: var(--orange); }
+  .chip.framework .c-dot { background: var(--blue); }
+  .chip sup { font-size: 9px; vertical-align: super; margin-left: 3px; }
+  .chip sup a { color: inherit; opacity: .7; }
+  .chip sup a + a::before { content: ","; margin: 0 1px; opacity: .6; }
+
+  /* ---------- if-remember-nothing ---------- */
+  .remember {
+    margin-top: 28px; padding: 22px 26px;
+    background: rgba(212,168,75,0.08);
+    border: 1px solid rgba(212,168,75,0.3); border-radius: var(--radius);
+  }
+  .remember .rl {
+    font-family: var(--font-head); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #8a6e20;
+    margin-bottom: 8px;
+  }
+  .remember h3 { font-size: 1.05rem; margin: 0 0 10px; }
+  .remember ul { margin: 0; padding-left: 20px; font-size: 15px; }
+  .remember li { margin-bottom: 4px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 56px 0; border-top: 1px solid var(--light-gray); }
+  .section-head { margin-bottom: 32px; max-width: 62ch; }
+  .section-head h2 { font-size: clamp(1.55rem, 2.6vw, 2.1rem); }
+  .section-head .kicker {
+    font-family: var(--font-head); font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--orange); font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .section-head p { font-size: 1.02rem; opacity: .84; }
+  h3 { font-size: 1.22rem; }
+  h4 { font-size: 1.02rem; }
+
+  /* ---------- diagnostic card ---------- */
+  .diag {
+    padding: 22px 26px; background: #fff;
+    border: 1px solid var(--light-gray); border-radius: var(--radius);
+    border-left: 4px solid var(--blue);
+  }
+  .diag .kicker {
+    font-family: var(--font-head); font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .diag h3 { font-size: 1.05rem; margin: 0 0 12px; }
+  .diag ol { padding-left: 22px; margin: 0 0 12px; font-size: 15px; }
+  .diag ol li { margin-bottom: 6px; }
+  .diag .verdict {
+    margin-top: 14px; padding: 12px 14px; border-radius: 8px;
+    background: var(--light); border: 1px dashed var(--light-gray);
+    font-family: var(--font-head); font-size: 13.5px;
+  }
+  .diag .verdict strong { color: var(--dark); }
+
+  /* ---------- T-C-R block ---------- */
+  .tcr {
+    padding: 28px 0; border-top: 1px solid var(--light-gray);
+  }
+  .tcr:first-of-type { border-top: none; padding-top: 0; }
+  .tcr .head {
+    display: flex; align-items: baseline; gap: 18px;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .tcr .letter {
+    font-family: var(--font-head); font-weight: 700;
+    font-size: 2.6rem; letter-spacing: -0.04em; line-height: 1;
+  }
+  .tcr.t .letter { color: var(--orange); }
+  .tcr.c .letter { color: var(--blue); }
+  .tcr.r .letter { color: var(--green); }
+  .tcr h3 { font-size: 1.3rem; margin: 0; }
+  .tcr .what {
+    font-family: var(--font-head); font-size: 13px; color: var(--mid);
+    font-weight: 500; letter-spacing: 0.03em;
+  }
+  .tcr-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 0;
+  }
+  @media (max-width: 720px) { .tcr-grid { grid-template-columns: 1fr; } }
+  .tcr-cell {
+    padding: 16px 18px; border: 1px solid var(--light-gray);
+    border-radius: 10px; background: #fff;
+  }
+  .tcr-cell .cl {
+    font-family: var(--font-head); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid);
+    margin-bottom: 8px;
+  }
+  .tcr-cell h4 { margin: 0 0 8px; font-size: 0.98rem; }
+  .tcr-cell ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+  .tcr-cell li { margin-bottom: 4px; }
+  .tcr-cell code { font-size: 0.82em; }
+  .tcr-cell.ui { border-left: 3px solid var(--orange); }
+  .tcr.c .tcr-cell.ui { border-left-color: var(--blue); }
+  .tcr.r .tcr-cell.ui { border-left-color: var(--green); }
+  .tcr-cell.mistake { border-left: 3px solid var(--red); }
+  .tcr-cell.verify { border-left: 3px solid var(--teal); }
+  .tcr-cite {
+    font-family: var(--font-head); font-size: 12.5px; color: var(--dim);
+    margin-top: 12px; padding: 10px 14px;
+    border-left: 2px solid var(--light-gray); background: transparent;
+  }
+  .tcr-cite strong { color: var(--dark); font-weight: 600; }
+
+  .tcr-order {
+    list-style: none; padding: 0; margin: 18px 0 0;
+    display: grid; grid-template-columns: 1fr; gap: 8px;
+  }
+  .tcr-order li {
+    padding: 10px 14px; background: #fff;
+    border: 1px solid var(--light-gray); border-radius: 8px;
+    font-size: 14.5px; line-height: 1.5;
+    display: flex; gap: 10px; align-items: baseline;
+  }
+  .tcr-order .tag-t, .tcr-order .tag-c, .tcr-order .tag-r {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px;
+    flex-shrink: 0; align-self: center;
+  }
+  .tcr-order .tag-t { background: rgba(217,119,87,0.15); color: var(--orange); }
+  .tcr-order .tag-c { background: rgba(106,155,204,0.15); color: var(--blue); }
+  .tcr-order .tag-r { background: rgba(120,140,93,0.18); color: var(--green); }
+  .tcr-order strong { margin-right: 4px; }
+
+  .en {
+    font-family: var(--font-head); font-style: normal;
+    color: var(--dim); font-weight: 500;
+    font-size: 0.94em; letter-spacing: 0.01em;
+  }
+
+  .after-paste {
+    margin-top: 14px; padding: 16px 20px;
+    background: rgba(127,160,127,0.08);
+    border: 1px solid rgba(127,160,127,0.25);
+    border-left: 3px solid var(--green);
+    border-radius: 10px;
+  }
+  .after-paste h4 {
+    margin: 0 0 10px; font-size: 0.98rem;
+    font-family: var(--font-head); color: var(--dark);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .after-paste h4::before {
+    content: "✓"; color: var(--green); font-weight: 700;
+    font-size: 1.05em;
+  }
+  .after-paste ul {
+    margin: 0; padding-left: 20px;
+    font-size: 14.5px; line-height: 1.6;
+  }
+  .after-paste li { margin-bottom: 6px; }
+  .after-paste li::marker { color: var(--green); }
+  .after-paste code {
+    font-size: 0.86em; background: #fff;
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  .codeblock {
+    background: var(--dark); color: var(--light);
+    border-radius: 10px; padding: 20px 22px;
+    overflow-x: auto; font-size: 13px; line-height: 1.7;
+    font-family: var(--font-mono); margin: 14px 0;
+  }
+  .codeblock .c { color: var(--mid); }
+  .codeblock .k { color: var(--orange); }
+  .codeblock .s { color: #9ab98a; }
+  .code-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 8px; color: var(--mid);
+  }
+  .code-label .tag { padding: 3px 10px; border-radius: 999px; font-weight: 500; font-size: 10.5px; color: var(--light); }
+  .code-label .tag.t { background: var(--orange); }
+  .code-label .tag.c { background: var(--blue); }
+  .code-label .tag.r { background: var(--green); }
+
+  .teams {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  @media (max-width: 860px) { .teams { grid-template-columns: 1fr; } }
+  .team-card {
+    padding: 20px 22px;
+    border: 1px solid var(--light-gray); border-radius: var(--radius);
+    background: #fff;
+  }
+  .team-card .num {
+    font-family: var(--font-head); font-weight: 700;
+    font-size: 1.4rem; line-height: 1; margin-bottom: 8px;
+  }
+  .team-card.a .num { color: var(--orange); }
+  .team-card.b .num { color: var(--blue); }
+  .team-card.c .num { color: var(--green); }
+  .team-card h4 { font-size: 1.02rem; margin: 0 0 4px; }
+  .team-card .tagline {
+    font-family: var(--font-head); font-size: 13px; color: var(--mid);
+    margin-bottom: 12px;
+  }
+  .team-card .label {
+    font-family: var(--font-head); font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; margin-top: 12px; margin-bottom: 4px;
+    color: var(--mid);
+  }
+  .team-card .label.keep { color: var(--green); }
+  .team-card .label.change { color: var(--orange); }
+  .team-card ul { margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.5; }
+  .team-card li { margin-bottom: 3px; }
+  .team-card code { font-size: 12px; }
+
+  .traps { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+  .trap {
+    padding: 14px 18px; background: #fff;
+    border: 1px solid var(--light-gray); border-radius: 10px;
+    border-left: 3px solid var(--red);
+  }
+  .trap .trap-label {
+    font-family: var(--font-head); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+    margin-bottom: 4px;
+  }
+  .trap h4 { font-size: 0.98rem; margin: 0 0 6px; }
+  .trap p { margin: 0; font-size: 14px; line-height: 1.55; }
+  .trap code { font-size: 12.5px; }
+
+  .sources {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    margin-top: 20px;
+  }
+  @media (max-width: 720px) { .sources { grid-template-columns: 1fr; } }
+  .source {
+    padding: 16px 18px; border: 1px solid var(--light-gray);
+    border-radius: 10px; text-decoration: none; color: var(--dark);
+    background: #fff; display: block; transition: border-color .15s ease;
+  }
+  .source:hover { border-color: var(--dark); color: var(--dark); }
+  .source .tag {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 6px; display: block;
+  }
+  .source h4 { font-size: 0.96rem; margin: 0 0 4px; }
+  .source p { font-size: 13px; margin: 0; opacity: .8; }
+
+  .callout {
+    padding: 18px 22px; border-left: 3px solid var(--orange);
+    margin: 24px 0; background: transparent;
+  }
+  .callout p { margin: 0; font-size: 15px; }
+  .callout p + p { margin-top: 8px; }
+  .callout.blue { border-left-color: var(--blue); }
+  .callout.green { border-left-color: var(--green); }
+
+  .ix-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 16px; font-family: var(--font-head);
+    font-size: 13px; font-weight: 500;
+    border: 1px solid var(--dark); background: var(--dark); color: var(--light);
+    border-radius: 8px; cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .ix-btn:hover { background: var(--orange); border-color: var(--orange); }
+  .ix-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .ix-btn.ghost { background: transparent; color: var(--dark); }
+  .ix-btn.ghost:hover { background: var(--dark); color: var(--light); }
+  .ix-btn.sm { padding: 5px 11px; font-size: 11.5px; border-radius: 6px; }
+
+  .ix-toggle {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-head); font-size: 12.5px;
+    cursor: pointer; user-select: none;
+  }
+  .ix-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .ix-toggle .track {
+    width: 38px; height: 20px;
+    background: var(--light-gray); border-radius: 999px;
+    position: relative; transition: background .2s ease; flex-shrink: 0;
+  }
+  .ix-toggle .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 14px; height: 14px; background: var(--light);
+    border-radius: 50%; transition: transform .2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  }
+  .ix-toggle input:checked + .track { background: var(--orange); }
+  .ix-toggle input:checked + .track::after { transform: translateX(18px); }
+  .ix-toggle input:focus-visible + .track { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+  /* ---------- DEEP DEMO: T → C → R retrofit walkthrough ---------- */
+  .demo { margin-top: 8px; background: #fff; border: 1px solid var(--light-gray); border-radius: var(--radius); overflow: hidden; }
+  .demo-top { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 16px; background: #fafaf8; border-bottom: 1px solid var(--light-gray); }
+  .demo-presets { display: flex; gap: 6px; flex-wrap: wrap; }
+  .demo-preset-btn { padding: 5px 11px; font-family: var(--font-head); font-size: 11.5px; border: 1px solid var(--light-gray); border-radius: 999px; background: var(--light); color: var(--dark); cursor: pointer; transition: all .15s ease; }
+  .demo-preset-btn:hover { border-color: var(--dark); }
+  .demo-preset-btn.active { background: var(--dark); color: var(--light); border-color: var(--dark); }
+  .demo-top-ctrls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .demo-force { font-size: 12px; }
+
+  .demo-body { display: grid; grid-template-columns: 220px 1fr; gap: 0; }
+  .demo-stepper { list-style: none; margin: 0; padding: 14px 10px; border-right: 1px solid var(--light-gray); background: #fafaf8; display: flex; flex-direction: column; gap: 4px; }
+  .demo-stepper li { margin: 0; }
+  .demo-step { width: 100%; border: 1px solid transparent; background: transparent; padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; transition: background .15s, border-color .15s; }
+  .demo-step:hover { background: #f0eee6; }
+  .demo-step .s-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--light-gray); margin-bottom: 4px; box-shadow: inset 0 0 0 2px #fff; }
+  .demo-step.done .s-dot { background: var(--green); }
+  .demo-step.active { background: #fff; border-color: var(--orange); }
+  .demo-step.active .s-dot { background: var(--orange); }
+  .demo-step .s-lbl { font-family: var(--font-head); font-size: 12.5px; font-weight: 600; color: var(--dark); }
+  .demo-step .s-sub { font-family: var(--font-head); font-size: 11px; color: var(--dim); line-height: 1.35; }
+  @media (max-width: 760px) { .demo-body { grid-template-columns: 1fr; } .demo-stepper { border-right: none; border-bottom: 1px solid var(--light-gray); flex-direction: row; overflow-x: auto; padding: 10px; } .demo-stepper li { flex-shrink: 0; } }
+
+  .demo-stage { padding: 18px 20px; background: #fff; min-height: 420px; }
+  .w-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .w-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .w-step { border: 1px solid var(--light-gray); background: #fafaf8; padding: 6px 10px; border-radius: 6px; font-family: var(--font-head); font-size: 11.5px; color: var(--dim); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: background .15s, border-color .15s, color .15s; }
+  .w-step:hover { border-color: var(--dark); color: var(--dark); }
+  .w-step.active { background: var(--dark); color: var(--light); border-color: var(--dark); }
+  .w-step.done { background: rgba(120,140,93,.14); color: var(--green); border-color: rgba(120,140,93,.3); }
+  .w-step-n { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,.12); font-size: 10px; font-weight: 600; }
+  .w-step.active .w-step-n { background: rgba(255,255,255,.25); }
+  .w-step.done .w-step-n { background: rgba(120,140,93,.25); }
+  .w-stage-badge { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 999px; background: var(--light-gray); color: var(--dim); }
+  .w-stage-badge.stage-T { background: rgba(217,119,87,.15); color: var(--orange); }
+  .w-stage-badge.stage-C { background: rgba(106,155,204,.15); color: var(--blue); }
+  .w-stage-badge.stage-R { background: rgba(120,140,93,.18); color: var(--green); }
+
+  .w-grid { display: grid; grid-template-columns: 1fr 260px; gap: 16px; }
+  .w-grid-solo { grid-template-columns: 1fr; }
+  @media (max-width: 760px) { .w-grid { grid-template-columns: 1fr; } }
+
+  .w-step-title { font-family: var(--font-head); font-size: 11.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; }
+  .w-field { margin-bottom: 10px; }
+  .w-field label { font-family: var(--font-head); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; display: block; margin-bottom: 2px; }
+  .w-val { font-family: var(--font-body); font-size: 14px; padding: 6px 10px; background: #fafaf8; border-radius: 6px; border: 1px solid var(--light-gray); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .clo-row { padding: 12px 14px; margin-bottom: 10px; background: #fff; border: 1px solid var(--light-gray); border-left: 3px solid var(--light-gray); border-radius: 8px; transition: background .25s ease; }
+  .clo-row.pass { border-left-color: var(--green); }
+  .clo-row.warn { border-left-color: var(--yellow); background: rgba(212,168,75,.04); }
+  .clo-row.critical { border-left-color: var(--red); background: rgba(192,122,110,.04); }
+  .clo-row.anchor-flash { background: rgba(217,119,87,.12); border-color: var(--orange); }
+  .clo-row-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-family: var(--font-head); font-size: 12.5px; margin-bottom: 6px; }
+  .clo-text { font-size: 13.5px; line-height: 1.5; }
+  .clo-edit { width: 100%; padding: 8px 10px; margin: 2px 0 6px; font-family: var(--font-body); font-size: 13.5px; line-height: 1.5; border: 1px solid var(--light-gray); border-radius: 6px; background: var(--light); resize: vertical; }
+  .clo-edit:focus { outline: 2px solid var(--orange); border-color: var(--orange); outline-offset: 1px; }
+  .clo-edit:disabled { opacity: .6; cursor: not-allowed; }
+  .clo-plo { font-family: var(--font-head); font-size: 11px; color: var(--dim); margin-top: 4px; }
+  .clo-plo code { font-size: 10.5px; }
+  .clo-reason { margin-top: 8px; font-family: var(--font-head); font-size: 12px; background: #fafaf8; border-radius: 6px; padding: 6px 10px; }
+  .clo-reason summary { cursor: pointer; color: var(--orange); font-weight: 600; }
+  .clo-reason > div { margin-top: 6px; color: var(--dim); line-height: 1.5; }
+  .clo-reason code { font-size: 11px; }
+  .clo-ctrls { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+
+  .ai-chip { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-head); font-size: 10.5px; font-weight: 500; padding: 2px 8px; border-radius: 999px; background: rgba(106,155,204,.12); color: var(--blue); border: 1px solid rgba(106,155,204,.28); }
+  .ai-chip.edited { background: rgba(217,119,87,.12); color: var(--orange); border-color: rgba(217,119,87,.3); }
+
+  .clo-status { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-head); font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 999px; border: 1px solid transparent; }
+  .clo-status.pass { background: rgba(120,140,93,.12); color: var(--green); border-color: rgba(120,140,93,.28); }
+  .clo-status.warn { background: rgba(212,168,75,.14); color: #8a6e20; border-color: rgba(212,168,75,.32); }
+  .clo-status.critical { background: rgba(192,122,110,.12); color: var(--red); border-color: rgba(192,122,110,.3); }
+  .clo-status .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  .w-audit { padding: 12px 14px; background: #fafaf8; border: 1px solid var(--light-gray); border-radius: 8px; font-family: var(--font-head); }
+  .w-audit-head { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); margin-bottom: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .w-audit-sum { display: flex; gap: 5px; flex-wrap: wrap; }
+  .aud-pill { font-family: var(--font-mono); font-size: 10.5px; padding: 2px 7px; border-radius: 4px; font-weight: 600; letter-spacing: 0; }
+  .aud-pill.critical { background: rgba(192,122,110,.14); color: var(--red); }
+  .aud-pill.warn { background: rgba(212,168,75,.14); color: #8a6e20; }
+  .aud-pill.pass { background: rgba(120,140,93,.14); color: var(--green); }
+  .w-audit-list { display: flex; flex-direction: column; gap: 8px; }
+  .audit-card { padding: 9px 11px; border-radius: 6px; background: #fff; border: 1px solid var(--light-gray); border-left: 3px solid var(--light-gray); cursor: default; }
+  .audit-card[data-audit-jump] { cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+  .audit-card[data-audit-jump]:hover { border-color: var(--dark); box-shadow: 0 2px 6px rgba(0,0,0,.05); }
+  .audit-card.critical { border-left-color: var(--red); }
+  .audit-card.warn { border-left-color: var(--yellow); }
+  .audit-title { font-size: 12px; font-weight: 600; color: var(--dark); display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
+  .audit-card.critical .audit-title .pill-dot { background: var(--red); width: 6px; height: 6px; border-radius: 50%; }
+  .audit-card.warn .audit-title .pill-dot { background: var(--yellow); width: 6px; height: 6px; border-radius: 50%; }
+  .audit-msg { font-size: 11.5px; color: var(--dim); line-height: 1.45; }
+  .audit-acts { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+  .audit-overridden { font-size: 11px; color: var(--green); font-weight: 600; }
+  .w-audit-empty { font-family: var(--font-head); font-size: 12px; color: var(--dim); padding: 8px 0; }
+  .w-audit-foot { font-family: var(--font-mono); font-size: 10.5px; color: var(--dim); margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--light-gray); }
+  .w-audit-foot code { font-size: 10px; }
+
+  .w-footer { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--light-gray); }
+  .w-footer-spacer { flex: 1; }
+  .w-guard-note { font-family: var(--font-head); font-size: 11.5px; color: var(--red); width: 100%; margin-top: 4px; }
+  .w-autosave { font-family: var(--font-head); font-size: 11px; color: var(--green); margin-top: 8px; padding: 4px 10px; background: rgba(120,140,93,.08); border-radius: 4px; display: inline-block; }
+
+  .demo-footer { padding: 12px 16px; background: #fafaf8; border-top: 1px solid var(--light-gray); }
+  .demo-advance { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .demo-advance-lbl { font-family: var(--font-head); font-size: 12.5px; color: var(--dim); flex: 1; min-width: 180px; }
+  .demo-paste-btn { padding: 10px 18px; font-family: var(--font-head); font-size: 13.5px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; color: var(--light); transition: opacity .15s, transform .15s; }
+  .demo-paste-btn:hover { opacity: .92; transform: translateY(-1px); }
+  .demo-paste-btn.tag-t { background: var(--orange); }
+  .demo-paste-btn.tag-c { background: var(--blue); }
+  .demo-paste-btn.tag-r { background: var(--green); }
+  .demo-complete { font-family: var(--font-head); font-size: 13px; color: var(--green); font-weight: 600; }
+  .demo-force-note { margin-top: 10px; padding: 10px 14px; border-radius: 6px; border-left: 3px solid var(--yellow); background: rgba(212,168,75,.08); font-family: var(--font-head); font-size: 12.5px; color: #8a6e20; line-height: 1.5; }
+  .demo-recovery { margin-top: 10px; padding: 12px 14px; border-radius: 6px; border: 1px solid var(--red); border-left: 3px solid var(--red); background: rgba(192,122,110,.06); }
+  .demo-recovery .rec-title { font-family: var(--font-head); font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 4px; }
+  .demo-recovery .rec-msg { font-family: var(--font-head); font-size: 12.5px; line-height: 1.5; color: var(--dark); opacity: .9; margin-bottom: 8px; }
+  .demo-recovery .rec-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  [hidden] { display: none !important; }
+
+  footer {
+    padding: 36px 0 48px; border-top: 1px solid var(--light-gray);
+    font-family: var(--font-head); font-size: 13.5px; opacity: .85;
+  }
+  footer .row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; }
+  footer .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  footer .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+  footer ul { list-style: none; display: flex; flex-wrap: wrap; gap: 18px; margin: 0; padding: 0; }
+  footer a { text-decoration: none; opacity: .72; }
+  footer a:hover { opacity: 1; color: var(--orange); }
+  footer .legal { font-size: 12px; opacity: .55; margin-top: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  .footnotes {
+    margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--light-gray);
+    font-family: var(--font-head); font-size: 12.5px; opacity: .88;
+  }
+  .footnotes ol { padding-left: 24px; counter-reset: fn; list-style: decimal; }
+  .footnotes li { margin-bottom: 6px; line-height: 1.5; }
+  .footnotes a { color: var(--orange); text-decoration: none; }
+  .footnotes a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap row">
+    <div class="brand"><span class="dot" aria-hidden="true"></span>Wizard + inline audit · Checklist + 3 prompt</div>
+    <ul>
+      <li><a href="#rules">5 điều bắt buộc</a></li>
+      <li><a href="#diagnostic">App có hợp không?</a></li>
+      <li><a href="#tcr">3 prompt</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#traps">Chỗ dễ sai</a></li>
+      <li><a href="#adapt">Biến thể</a></li>
+      <li><a href="#sources">Nguồn</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap-narrow">
+    <span class="eyebrow"><span class="bullet" aria-hidden="true"></span>VinUni A20 · Checklist + 3 prompt · Dùng với AI coding agent</span>
+    <h1>Wizard + <span class="accent">inline audit</span>.</h1>
+    <p class="lede">
+      App của bạn là một form nhiều bước, mỗi bước AI điền sẵn một nháp — và <strong>mỗi bước phải đạt một luật nào đó</strong> (ABET, an toàn phòng lab, chuẩn chương trình)? Trang này cho bạn: <strong>5 điều bắt buộc</strong> để tác giả không phải mở PDF riêng kiểm tra từng trường, và <strong>3 prompt copy-paste</strong> để gắn thêm lớp đối chiếu luật ngay trong từng trường. Paste URL này vào Claude Code / Cursor / Windsurf — agent đọc trang, soi code hiện tại, biết sửa gì.
+    </p>
+    <div class="meta">
+      <span><svg class="sq" viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" fill="#d97757"/></svg>3 prompt · agent chạy ~2 phút mỗi cái</span>
+      <span><svg class="sq" viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" fill="#6a9bcc"/></svg>Chỉ thêm, không viết lại</span>
+      <span><svg class="sq" viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" fill="#788c5d"/></svg>ABET syllabus · Lab authoring · Lesson plan</span>
+    </div>
+
+    <!-- RULES CARD -->
+    <div class="rules-card" id="rules">
+      <div class="kicker">5 điều bắt buộc · chụp màn hình để xem lại</div>
+      <h2>5 điều bắt buộc để wizard có đối chiếu luật không vỡ.</h2>
+      <ol>
+        <li>
+          <span class="tag-t">T</span>
+          <span class="rule-head">Dán nhãn luật vào từng trường, ngay cạnh bản nháp AI.</span>
+          <span class="rule-sub">Mỗi trường hiện một chip (ví dụ <code>ABET 3a</code>) và một liên kết "Xem luật" mở ra đoạn luật gốc. Đừng yêu cầu tác giả mở PDF riêng và tự đoán trường nào phải khớp câu nào. Nếu luật không nằm cạnh trường đang gõ, tác giả sẽ bỏ qua — và bản nháp AI trông hợp lý nhưng âm thầm thiếu bằng chứng bắt buộc.</span>
+          <div class="rule-chips">
+            <span class="chip evidence"><span class="c-dot"></span>GitHub Copilot inline · Grammarly rule highlight<sup><a href="#fn-copilot">1</a><a href="#fn-grammarly">2</a></sup></span>
+            <span class="chip framework"><span class="c-dot"></span>Nielsen #1<sup><a href="#fn-nielsen">3</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-t">T</span>
+          <span class="rule-head">Ba màu, ba ý nghĩa rõ: đạt · thiếu bằng chứng · vi phạm.</span>
+          <span class="rule-sub">Xanh = đạt luật cụ thể. Vàng = thiếu bằng chứng cụ thể (ví dụ thiếu động từ đo được, thiếu con số). Đỏ = vi phạm luật X (ví dụ chưa có phương pháp đánh giá). Đừng dùng một số phần trăm chung chung 87% — tác giả cần biết <em>trường nào hỏng</em> và <em>hỏng vì luật nào</em>, không phải một điểm tổng trừu tượng.</span>
+          <div class="rule-chips">
+            <span class="chip evidence"><span class="c-dot"></span>Grammarly phân loại lỗi theo nhóm<sup><a href="#fn-grammarly">2</a></sup></span>
+            <span class="chip framework"><span class="c-dot"></span>HAX G3 + G4<sup><a href="#fn-hax">4</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-c">C</span>
+          <span class="rule-head">Cho sửa từng trường một, không phải ép tạo lại cả trang.</span>
+          <span class="rule-sub">Tác giả click vào trường, chỉnh thẳng chữ AI đã điền, hoặc bấm "Chỉ tạo lại trường này". Có một nút phụ "Không áp dụng luật này — lý do: …" để tác giả ghi đè với lý do viết ra, không phải bấm lén. Đừng bắt tác giả tạo lại toàn bộ wizard chỉ vì sai một trường — họ sẽ mất hết dữ liệu các trường đã gõ trước đó.</span>
+          <div class="rule-chips">
+            <span class="chip evidence"><span class="c-dot"></span>Copilot accept/reject từng gợi ý · Notion AI per-block<sup><a href="#fn-copilot">1</a><a href="#fn-notion">5</a></sup></span>
+            <span class="chip framework"><span class="c-dot"></span>Nielsen #3, HAX G9<sup><a href="#fn-nielsen">3</a><a href="#fn-hax">4</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-r">R</span>
+          <span class="rule-head">Chặn nút "Nộp" khi còn cảnh báo đỏ chưa giải quyết.</span>
+          <span class="rule-sub">Nếu còn ≥1 luật hard-fail bị vi phạm, nút "Nộp" bị mờ đi, và khi hover nói rõ: "còn 2 trường chưa đạt chuẩn ABET — xem bước 3". Không để tác giả nộp rồi mới nhận email từ hội đồng thẩm định. Luật vàng (thiếu bằng chứng) thì cho nộp nhưng hiện cảnh báo; luật đỏ (vi phạm) thì chặn hẳn.</span>
+          <div class="rule-chips">
+            <span class="chip framework"><span class="c-dot"></span>Nielsen #5 · PAIR — Feedback &amp; Control<sup><a href="#fn-nielsen">3</a><a href="#fn-pair-feedback">6</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-r">R</span>
+          <span class="rule-head">Tự lưu nháp mỗi vài giây, có nút quay lại bản nháp trước.</span>
+          <span class="rule-sub">Đặt thời gian chờ tối đa 15 giây cho mỗi lệnh gọi AI. Khi lỗi, hiện thẻ lỗi cụ thể (ví dụ "OpenAI API timeout"), giữ nguyên các trường đã gõ, chỉ tạo lại đúng trường bị gọi. Thêm nút "Quay lại bản nháp trước" ở cấp bước, để tác giả undo nguyên bước chứ không phải undo từng ký tự. Nếu không có autosave, một lần mất mạng là tác giả bỏ luôn app.</span>
+          <div class="rule-chips">
+            <span class="chip evidence"><span class="c-dot"></span>Notion AI giữ nháp khi lỗi<sup><a href="#fn-notion">5</a></sup></span>
+            <span class="chip framework"><span class="c-dot"></span>Nielsen #9, HAX G11<sup><a href="#fn-nielsen">3</a><a href="#fn-hax">4</a></sup></span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="remember">
+      <div class="rl">Nếu không nhớ nổi 5 điều, nhớ 3 dòng này là đủ</div>
+      <h3>Ba dòng tối thiểu để wizard có đối chiếu luật không vỡ.</h3>
+      <ul>
+        <li><strong>T · Mỗi trường có nhãn luật + "Xem luật" ngay cạnh.</strong> Tác giả không phải mở PDF riêng.</li>
+        <li><strong>C · Sửa từng trường, tạo lại từng trường.</strong> Có nút ghi đè kèm lý do. Đừng ép tạo lại cả trang.</li>
+        <li><strong>R · Tự lưu nháp, chặn "Nộp" khi còn lỗi đỏ, có nút quay lại bản nháp trước.</strong> Ba thứ đó, không hơn.</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<!-- DEMO: DEEP INTERACTIVE — T → C → R walkthrough in one mock app -->
+<section id="demo">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Demo · paste từng prompt, xem giao diện đổi</div>
+      <h2>Một wizard mẫu · paste lần lượt T → C → R · thấy chính xác thứ gì xuất hiện.</h2>
+      <p>Bên trái là thanh 4 trạng thái. Bắt đầu ở <strong>Chưa áp dụng</strong>: AI điền âm thầm, không có audit. Paste prompt T → chip luật hiện ra. Paste prompt C → mỗi trường có nút sửa riêng. Paste prompt R → nút "Tạo syllabus" bị chặn khi còn lỗi đỏ, có autosave, có thẻ khôi phục. Bấm "Ép lỗi" trước khi paste R để thấy app vỡ; bấm sau khi paste R để thấy đường thoát.</p>
+    </div>
+
+    <div class="demo" data-demo aria-label="Interactive: T → C → R retrofit walkthrough">
+      <div class="demo-top">
+        <div class="demo-presets" role="group" aria-label="Ví dụ môn học">
+          <button class="demo-preset-btn active" type="button" data-preset="0">CS101 · Intro Programming</button>
+          <button class="demo-preset-btn" type="button" data-preset="1">CS302 · Databases</button>
+        </div>
+        <div class="demo-top-ctrls">
+          <label class="ix-toggle demo-force">
+            <input type="checkbox" data-demo-force />
+            <span class="track" aria-hidden="true"></span>
+            <span>Ép lỗi · Audit agent timeout</span>
+          </label>
+          <button class="ix-btn ghost sm" type="button" data-demo-reset>Reset về stage 0</button>
+        </div>
+      </div>
+
+      <div class="demo-body">
+        <!-- LEFT: vertical stepper -->
+        <ol class="demo-stepper" role="list" aria-label="4 trạng thái demo">
+          <li><button class="demo-step" type="button" data-stage="0">
+            <span class="s-dot"></span><span class="s-lbl">Chưa áp dụng</span><span class="s-sub">Wizard trống · AI điền âm thầm</span>
+          </button></li>
+          <li><button class="demo-step" type="button" data-stage="T">
+            <span class="s-dot"></span><span class="s-lbl">+T · Transparency</span><span class="s-sub">Chip luật · audit sidebar · reasoning</span>
+          </button></li>
+          <li><button class="demo-step" type="button" data-stage="C">
+            <span class="s-dot"></span><span class="s-lbl">+T+C · Control</span><span class="s-sub">Sửa từng trường · jump-to audit · undo</span>
+          </button></li>
+          <li><button class="demo-step" type="button" data-stage="R">
+            <span class="s-dot"></span><span class="s-lbl">+T+C+R · Recovery</span><span class="s-sub">Chặn nộp · autosave · khôi phục lỗi</span>
+          </button></li>
+        </ol>
+
+        <!-- RIGHT: mock wizard app -->
+        <div class="demo-stage" data-stage-panel></div>
+      </div>
+
+      <!-- Paste prompt advance + force-error guard -->
+      <div class="demo-footer" data-demo-footer></div>
+    </div>
+
+    <div class="callout blue" style="margin-top: 24px;">
+      <p><strong>Cách đọc demo này.</strong> Không phải ba widget rời nhau — là một app duy nhất, mỗi lần bạn paste một prompt, app đổi theo. Ở Recovery, bấm "Ép lỗi" để thấy thẻ audit timeout với ba đường thoát; bấm trước khi paste R, app vỡ im lặng. So sánh cảm giác hai lần đó — đó là cái giá của việc bỏ qua R.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC -->
+<section id="diagnostic">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Bước 1 · Kiểm tra trước khi paste</div>
+      <h2>App của bạn có đúng kiểu "wizard + đối chiếu luật" không?</h2>
+      <p>Đọc 5 câu hỏi bên dưới và tự trả lời. Nếu hơn 3 câu trả lời "có", app của bạn thuộc đúng kiểu này và 3 prompt sẽ paste được. Nếu ít hơn, hãy xem các trang case khác.</p>
+    </div>
+
+    <div class="diag">
+      <div class="kicker">5 câu hỏi · tự trả lời</div>
+      <h3>App của bạn có những thứ sau không?</h3>
+      <ol>
+        <li><strong>Tác giả đi qua nhiều bước có thứ tự, mỗi bước là một nhóm trường phải điền</strong>, không phải một ô chat tự do.</li>
+        <li><strong>Ở mỗi bước, app gọi AI để điền sẵn bản nháp cho một hoặc nhiều trường</strong>, rồi tác giả sửa tay.</li>
+        <li><strong>Có một tài liệu luật cố định</strong> (chuẩn ABET, quy định an toàn phòng lab, khung chương trình) mà mỗi trường phải khớp với một mục cụ thể trong đó.</li>
+        <li><strong>Kết quả cuối cùng là một hồ sơ được nộp đi</strong> (đề cương môn, giáo án, kịch bản thí nghiệm) — không phải chat hay tin nhắn.</li>
+        <li><strong>Tác giả thường quay lại bước trước để sửa</strong> sau khi thấy trường ở bước sau bị lỗi.</li>
+      </ol>
+      <div class="verdict">
+        <strong>Trả lời "có" cho 3 câu trở lên</strong> → đi tiếp bước 2, paste 3 prompt.<br/>
+        <strong>Ít hơn 3 câu</strong> → app của bạn thuộc kiểu khác. Xem trang <code>01-case-chat-context.html</code> (nếu là chat trả lời tự do) hoặc <code>05-case-draft-approve-send.html</code> (nếu chỉ có một bước duyệt rồi gửi). Nếu chưa chắc, mở Claude Code và hỏi bằng tiếng Việt: "app của mình có hợp kiểu Wizard + inline audit không?"
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- T-C-R THREE PROMPTS -->
+<section id="tcr">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Bước 2 · 3 prompt bổ sung</div>
+      <h2>Ba prompt copy-paste. Mỗi prompt thêm một lớp.</h2>
+      <p><strong>Paste từng cái, theo thứ tự T → C → R.</strong> Sau mỗi lần paste: bạn xem diff → test → commit → paste cái tiếp. Đừng paste cả ba cùng lúc.</p>
+      <ul class="tcr-order">
+        <li><span class="tag-t">T</span><strong>Hiện luật đang áp dụng inline</strong> — mỗi trường có chip luật + "Xem luật" mở ra đoạn gốc.</li>
+        <li><span class="tag-c">C</span><strong>Cho sửa / ghi đè từng trường</strong> — tạo lại riêng từng trường, ghi đè có lý do. Dựa trên bước T.</li>
+        <li><span class="tag-r">R</span><strong>Tự lưu + chặn nộp</strong> — autosave, quay lại bản nháp trước, chặn "Nộp" khi còn lỗi đỏ. Bọc cả T và C nên làm cuối.</li>
+      </ul>
+    </div>
+
+    <!-- T -->
+    <div class="tcr t">
+      <div class="head">
+        <span class="letter">T</span>
+        <div>
+          <h3>T · Hiện luật áp dụng cho từng trường</h3>
+          <span class="what">Chỉ thêm · ~20 dòng · agent chạy ~40s</span>
+        </div>
+      </div>
+
+      <div class="code-label"><span class="tag t">Prompt T</span> paste nguyên văn</div>
+      <pre class="codeblock"><span class="c"># Prompt T · Transparency · Wizard + inline audit</span>
+
+For each field in the wizard step, render an inline rule chip next
+to the field (e.g. <span class="s">"ABET 3a"</span>) plus an <span class="s">"Xem luật"</span> link that
+expands the exact quoted passage from the standard. Add a per-field
+confidence badge: <span class="s">green = đạt rule</span>, <span class="s">yellow = thiếu bằng chứng</span>,
+<span class="s">red = vi phạm rule X</span>. Show meta line: <span class="s">"N/M trường đạt · model:
+{model-name}"</span>. When a field is flagged, highlight the exact phrase
+that triggered the flag (span-level, not whole-field). Additive only
+— do not replace the existing wizard step layout or re-order fields.</pre>
+
+      <div class="after-paste">
+        <h4>Sau khi paste, bạn sẽ thấy</h4>
+        <ul>
+          <li>Bên cạnh mỗi trường xuất hiện một chip nhỏ ghi mã luật (ví dụ <code>ABET 3a</code>). Bấm "Xem luật" sẽ xổ xuống đoạn luật gốc được trích nguyên văn.</li>
+          <li>Mỗi trường có badge ba màu: xanh nếu đạt, vàng nếu thiếu bằng chứng cụ thể, đỏ nếu vi phạm một luật hard-fail.</li>
+          <li>Khi trường bị cờ vàng hoặc đỏ, phần văn bản gây cờ được tô nền — không phải cả trường bị gạch đỏ, mà chỉ đúng cụm chữ có vấn đề.</li>
+        </ul>
+      </div>
+
+      <div class="tcr-cite">
+        <strong>Framework ties.</strong> Nielsen #1 <span class="en">Visibility of system status — keep users informed</span>.<sup class="cite"><a href="#fn-nielsen">3</a></sup> HAX G4 <span class="en">Show contextually relevant information</span> + G11 <span class="en">Make clear why the system did what it did</span>.<sup class="cite"><a href="#fn-hax">4</a></sup> PAIR <span class="en">Feedback + Control</span> — mỗi gợi ý của AI phải có lý do người dùng soi được.<sup class="cite"><a href="#fn-pair-feedback">6</a></sup> Pattern xác nhận bởi GitHub Copilot (inline ghost text, không mở panel riêng)<sup class="cite"><a href="#fn-copilot">1</a></sup> và Grammarly (rule highlight ngay trong câu, không ở sidebar).<sup class="cite"><a href="#fn-grammarly">2</a></sup>
+      </div>
+
+    </div>
+
+    <!-- C -->
+    <div class="tcr c">
+      <div class="head">
+        <span class="letter">C</span>
+        <div>
+          <h3>C · Sửa và ghi đè từng trường một, không mất các trường khác</h3>
+          <span class="what">Chỉ thêm · ~25 dòng · agent chạy ~50s</span>
+        </div>
+      </div>
+
+      <div class="code-label"><span class="tag c">Prompt C</span> paste nguyên văn</div>
+      <pre class="codeblock"><span class="c"># Prompt C · Control · Wizard + inline audit</span>
+
+Per-field actions: <span class="s">"Chỉnh thẳng"</span> (click field, edit text in place),
+<span class="s">"Chỉ tạo lại trường này"</span> (regenerate single field, keep other fields
+untouched), <span class="s">"Không áp dụng rule này — lý do: …"</span> (override with
+written justification, stored on the field). When author steps back
+(<span class="s">"Quay lại bước trước"</span>), preserve all other fields in the current
+step — do not discard. Keyboard: Tab = next field, Shift+Tab = prev,
+Cmd+Enter = regenerate current field. Additive — primary <span class="s">"Nộp"</span>
+button stays, override actions are subordinate.</pre>
+
+      <div class="after-paste">
+        <h4>Sau khi paste, bạn sẽ thấy</h4>
+        <ul>
+          <li>Mỗi trường có thể bấm vào và chỉnh trực tiếp, hoặc bấm "Chỉ tạo lại trường này" để AI sinh lại riêng trường đó mà không đụng các trường khác.</li>
+          <li>Bên cạnh mỗi cảnh báo luật có nút phụ "Không áp dụng rule này" — bấm vào sẽ mở một ô nhỏ để tác giả ghi lý do. Lý do này được lưu kèm trường, để hội đồng thẩm định đọc được sau.</li>
+          <li>Khi tác giả quay về bước trước, các trường đã điền ở bước đó vẫn còn nguyên — không bị xoá, không bị tạo lại.</li>
+        </ul>
+      </div>
+
+      <div class="tcr-cite">
+        <strong>Framework ties.</strong> Nielsen #3 <span class="en">User control and freedom — users need a clearly marked emergency exit</span>.<sup class="cite"><a href="#fn-nielsen">3</a></sup> HAX G9 <span class="en">Support efficient correction — make it easy to edit, refine, or recover when the AI system is wrong</span>.<sup class="cite"><a href="#fn-hax">4</a></sup> Pattern xác nhận bởi GitHub Copilot (chấp nhận / từ chối từng đoạn gợi ý, không phải cả file)<sup class="cite"><a href="#fn-copilot">1</a></sup> và Notion AI (mỗi block có nút "Regenerate" riêng).<sup class="cite"><a href="#fn-notion">5</a></sup>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="tcr r">
+      <div class="head">
+        <span class="letter">R</span>
+        <div>
+          <h3>R · Tự lưu, quay lại bản nháp trước, chặn "Nộp" khi còn lỗi đỏ</h3>
+          <span class="what">Chỉ thêm · ~30 dòng · agent chạy ~50s</span>
+        </div>
+      </div>
+
+      <div class="code-label"><span class="tag r">Prompt R</span> paste nguyên văn</div>
+      <pre class="codeblock"><span class="c"># Prompt R · Recovery · Wizard + inline audit</span>
+
+Autosave every 3s to localStorage, scoped by wizard-id. On page
+crash or reload, restore last autosaved state and show restore
+banner. Add <span class="s">"Quay lại bản nháp trước"</span> at step level — stores
+snapshot before each regenerate; pop from stack on click. Block
+<span class="s">"Nộp"</span> button when <span class="k">any</span> field has a red hard-fail flag; on
+hover, tooltip lists which fields (<span class="s">"còn 2 trường chưa đạt ABET 3b"</span>).
+Yellow flags allow submit but show a confirm modal. 15s hard
+timeout per AI call via Promise.race. On timeout, keep all other
+field drafts, only show retry for the failed field — show
+specific error text (e.g. <span class="s">"OpenAI API timeout"</span>), never
+generic <span class="s">"Something went wrong"</span>.</pre>
+
+      <div class="after-paste">
+        <h4>Sau khi paste, bạn sẽ thấy</h4>
+        <ul>
+          <li>Khi tác giả đang gõ và trình duyệt sập, mở lại sẽ thấy banner "Khôi phục bản nháp lúc 14:23" — mọi trường đã điền vẫn còn.</li>
+          <li>Trên đầu mỗi bước có nút "Quay lại bản nháp trước". Bấm vào sẽ khôi phục đúng trạng thái trước lần tạo lại gần nhất — không phải undo từng ký tự.</li>
+          <li>Nút "Nộp" bị mờ đi khi vẫn còn trường đỏ. Hover chuột vào sẽ thấy: "còn 2 trường chưa đạt chuẩn ABET 3b — xem bước 3". Trường vàng thì cho nộp nhưng hiện hộp xác nhận trước.</li>
+        </ul>
+      </div>
+
+      <div class="tcr-cite">
+        <strong>Framework ties.</strong> Nielsen #5 <span class="en">Error prevention — eliminate error-prone conditions or present users with a confirmation option</span> + #9 <span class="en">Help users recognize, diagnose, and recover from errors — precisely indicate the problem</span>.<sup class="cite"><a href="#fn-nielsen">3</a></sup> HAX G3 <span class="en">Time services based on context</span> + G11 <span class="en">Make clear why the system did what it did</span>.<sup class="cite"><a href="#fn-hax">4</a></sup> PAIR <span class="en">Feedback + Control</span> — người dùng phải có đường lùi, không được ép đi thẳng.<sup class="cite"><a href="#fn-pair-feedback">6</a></sup>
+      </div>
+
+    </div>
+
+    <div class="callout" style="margin-top: 28px;">
+      <p><strong>Vì sao phải đúng thứ tự T → C → R.</strong> Prompt C cần chip luật hiện ra mới biết ghi đè rule nào — nên T phải xong trước. Prompt R xử lý chặn nộp dựa trên cờ đỏ của T và ghi đè của C, nên làm cuối cùng, sau khi hai cái kia đã ổn. Cách làm: paste một prompt → xem diff code → chạy thử → commit → rồi mới paste prompt tiếp theo. Đừng paste cả ba cùng lúc.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRAPS -->
+<section id="traps">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Bước 3 · 5 chỗ dễ sai</div>
+      <h2>5 chỗ AI thường làm sai khi thêm vào wizard đã có sẵn.</h2>
+      <p>Đọc trước khi paste. Nếu gặp đúng tình huống nào, thêm câu hướng dẫn tương ứng vào đầu prompt rồi mới paste cho AI.</p>
+    </div>
+
+    <div class="traps">
+      <div class="trap">
+        <div class="trap-label">Tình huống 1 · AI thêm màn hình "Review" riêng thay vì chú thích tại chỗ</div>
+        <h4>Xong wizard rồi mới hiện một trang tổng kết tất cả lỗi luật</h4>
+        <p>AI có xu hướng thêm một bước mới ở cuối wizard để "duyệt" tất cả trường. Nghe hợp lý nhưng làm cho tác giả phải quay lại sửa từng trường, rất phiền. Trong prompt, nói rõ: <em>"Do not add a separate review screen. Show rule compliance inline, next to each field in the existing wizard step. Author must see the flag while they are still on that step, before they click Next."</em></p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 2 · AI viết lại cả trường khi tác giả chỉ muốn tinh chỉnh một câu</div>
+        <h4>Bấm "Tạo lại" xong thì mất luôn phần đã tự gõ</h4>
+        <p>AI thường trả về cả trường mới, không tôn trọng các câu tác giả đã giữ. Trong prompt, khoá lại: <em>"Regenerate only the flagged span inside the field, not the whole field. Preserve author-edited sentences. If author explicitly clicks 'Regenerate entire field', confirm first."</em> Copilot làm đúng cách này — gợi ý thay đúng đoạn được highlight, không đụng phần còn lại.</p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 3 · AI bỏ qua hàm kiểm tra có sẵn, tự hỏi LLM để chấm luật</div>
+        <h4>App đã có hàm validate luật ABET (dạng rule-engine) — AI lại re-prompt LLM cho mỗi trường</h4>
+        <p>App đi đường tắt bằng cách hỏi LLM "trường này có đạt ABET 3a không?" thay vì gọi hàm kiểm tra đã có. Kết quả: mỗi lần chấm tốn token, kết quả không ổn định, không cite được đoạn luật gốc. Trong prompt: <em>"All rule validation must go through the existing rule-engine function in the repo (e.g. <code>validateAbet</code>). Do not ask the LLM to judge compliance. The LLM only drafts content; the rule engine scores it."</em></p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 4 · AI lưu cờ luật vào chỗ lưu trạng thái riêng của từng trường</div>
+        <h4>App dùng Redux / Zustand cho wizard — AI lưu cờ đỏ/vàng trong <code>useState</code> của khối hiển thị từng trường</h4>
+        <p>Kết quả là khi tác giả bấm "Quay lại bước trước", các cờ luật biến mất, và nút "Nộp" không biết còn lỗi nào. Trong prompt: <em>"Rule flags, override reasons, and autosave snapshots all go into the existing wizard store (Redux / Zustand — whichever the repo uses). Never use component-local state for rule flags — the Submit button must read them across steps."</em></p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 5 · AI tóm tắt luật thay vì trích nguyên văn</div>
+        <h4>Bấm "Xem luật" ra đoạn AI tự paraphrase — tác giả không cite được trong hồ sơ thẩm định</h4>
+        <p>Đây là cái bẫy lớn nhất. Hội đồng ABET yêu cầu tác giả cite đoạn luật gốc, nguyên văn. Nếu AI tóm tắt lại, tác giả copy vào hồ sơ thẩm định sẽ bị trả về. Trong prompt, khoá chặt: <em>"When showing rule text under 'Xem luật', always quote the exact passage from the standard (e.g. ABET 2024 Criterion 3 verbatim). Never paraphrase or summarize. Store rule text as a constant loaded from the standard document, not generated by the LLM."</em></p>
+      </div>
+    </div>
+
+    <div class="callout green" style="margin-top: 24px;">
+      <p><strong>Một quy tắc chung.</strong> Trước khi paste bất kỳ prompt nào, hãy tự trả lời trong đầu ba câu: (1) File nào chứa bước wizard chính? (2) App đang quản lý trạng thái wizard bằng gì (Redux / Zustand / context riêng)? (3) Đã có hàm kiểm tra luật nào chưa, hay phải viết mới? Nếu bạn trả lời được cả ba, paste prompt nguyên xi là được. Nếu chưa chắc, mở Claude Code và hỏi bằng tiếng Việt trước: "đọc repo và cho mình biết ba chỗ này nằm ở đâu." Sau đó mới paste prompt T/C/R.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ADAPT -->
+<section id="adapt">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">App của bạn không phải ABET syllabus?</div>
+      <h2>Ba biến thể — phần lớn giữ nguyên, chỉ đổi bộ luật đối chiếu.</h2>
+      <p>3 prompt T/C/R ở trên viết cho trường hợp đề cương ABET. Nếu app của bạn là kịch bản thí nghiệm an toàn hay giáo án theo khung chương trình, bạn <strong>dùng lại đúng 3 prompt đó</strong> — chỉ đổi bộ luật được nạp và nhãn chip. Không đụng vào khung T-C-R, không đụng vào hàm gọi AI.</p>
+    </div>
+
+    <div class="teams">
+      <article class="team-card a">
+        <span class="num">ABET</span>
+        <h4>Đề cương môn chuẩn ABET</h4>
+        <div class="tagline">Outcome · method · assessment · evidence</div>
+        <p style="font-size: 14px; opacity: .88;">Đúng kiểu gốc của trang này. Paste nguyên 3 prompt T/C/R. Bộ luật là ABET 3a/3b/3c.</p>
+
+        <div class="label keep">Giữ nguyên</div>
+        <ul>
+          <li>File bước wizard chính</li>
+          <li>Khung T-C-R</li>
+          <li>Chỗ lưu trạng thái wizard đang có</li>
+          <li>Dữ liệu luật nạp dưới dạng trích nguyên văn</li>
+        </ul>
+        <div class="label change">Chỉ đổi</div>
+        <ul>
+          <li>Mô tả từng trường trong prompt hệ thống</li>
+          <li>Các ví dụ outcome gợi ý cho ngành của bạn</li>
+          <li>Placeholder cho ô nhập</li>
+        </ul>
+      </article>
+
+      <article class="team-card b">
+        <span class="num">LAB</span>
+        <h4>Kịch bản thí nghiệm ảo (teacher flow)</h4>
+        <div class="tagline">Giáo viên dùng Scripting Agent soạn thí nghiệm</div>
+        <p style="font-size: 14px; opacity: .88;">Bộ luật là danh mục an toàn phòng lab + khung chương trình THCS. Mỗi bước thí nghiệm có chip "dụng cụ · hoá chất · cảnh báo an toàn". Simulator chạy cho học sinh là một kiểu khác — xem trang streaming.</p>
+
+        <div class="label keep">Giữ nguyên</div>
+        <ul>
+          <li>Khung T-C-R và 3 prompt</li>
+          <li>Hàm gọi AI</li>
+          <li>Chỗ lưu trạng thái wizard</li>
+          <li>Cơ chế autosave và quay lại nháp trước</li>
+        </ul>
+        <div class="label change">Chỉ đổi</div>
+        <ul>
+          <li>Bộ luật nạp: danh mục an toàn phòng lab + chuẩn THCS</li>
+          <li>Nhãn chip: <code>AN-TOÀN-1</code>, <code>CT-THCS-VL8</code></li>
+          <li>Prompt hệ thống: luật thí nghiệm thay vì chuẩn ABET</li>
+        </ul>
+      </article>
+
+      <article class="team-card c">
+        <span class="num">PLAN</span>
+        <h4>Giáo án theo khung chương trình</h4>
+        <div class="tagline">Bộ GD&amp;ĐT: yêu cầu cần đạt · nội dung · hoạt động</div>
+        <p style="font-size: 14px; opacity: .88;">Mỗi trường trong giáo án phải khớp với một mục trong khung chương trình. AI điền nháp, chip đối chiếu hiện ngay — giáo viên không phải tra PDF khung chương trình.</p>
+
+        <div class="label keep">Giữ nguyên</div>
+        <ul>
+          <li>Bước wizard và các trường có sẵn</li>
+          <li>Khung T-C-R: hiện luật, cho sửa từng trường, có autosave</li>
+          <li>Cơ chế chặn nút "Nộp"</li>
+          <li>Trích luật nguyên văn, không paraphrase</li>
+        </ul>
+        <div class="label change">Chỉ đổi</div>
+        <ul>
+          <li>Bộ luật: khung chương trình GDPT 2018 (theo môn + lớp)</li>
+          <li>Nhãn chip: <code>YCCD-Lý8-§2</code></li>
+          <li>Prompt hệ thống: luật chương trình thay vì ABET</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="callout green" style="margin-top: 24px;">
+      <p><strong>Vì sao phần lớn giữ nguyên.</strong> Kiểu app này không phải về ABET. Nó là về <strong>bản nháp AI → đối chiếu luật inline → cho sửa từng trường → chặn nộp khi chưa đạt</strong>. ABET chỉ là một bộ luật. Danh mục an toàn phòng lab là một bộ luật khác. Khung chương trình là bộ thứ ba. Cơ chế đối chiếu dùng chung được — nên khung T-C-R dùng chung được. Cùng vỏ, đổi ruột (bộ luật nạp vào).</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section id="sources">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Nguồn · đọc thêm</div>
+      <h2>Mọi kết luận trên trang này đều có nguồn.</h2>
+      <p>3 tài liệu đầu là nền tảng cho T-C-R. 2 production case (GitHub Copilot + Grammarly) cho thấy inline rule highlight đã chạy thật ở quy mô hàng triệu người dùng, không phải lý thuyết.</p>
+    </div>
+
+    <div class="sources">
+      <a class="source" href="https://www.nngroup.com/articles/ten-usability-heuristics/" target="_blank" rel="noopener">
+        <span class="tag">Nielsen Norman Group · 1994</span>
+        <h4>10 Usability Heuristics for User Interface Design</h4>
+        <p>Jakob Nielsen. #1 Visibility of system status, #5 Error prevention, #9 Help users recognize / diagnose / recover from errors. Cơ sở của T (hiện luật) và R (chặn nộp + autosave).</p>
+      </a>
+      <a class="source" href="https://www.microsoft.com/en-us/haxtoolkit/ai-guidelines/" target="_blank" rel="noopener">
+        <span class="tag">Microsoft · 2019</span>
+        <h4>HAX Toolkit · 18 Guidelines for Human-AI Interaction</h4>
+        <p>Amershi et al., CHI 2019. G3 (timing), G4 (contextually relevant info), G9 (support efficient correction), G11 (explain why). Cơ sở của C (sửa từng trường) và nuance của T.</p>
+      </a>
+      <a class="source" href="https://pair.withgoogle.com/guidebook" target="_blank" rel="noopener">
+        <span class="tag">Google PAIR · updated 2023</span>
+        <h4>People + AI Guidebook</h4>
+        <p>Chapters relevant here: Feedback + Control, Errors + Graceful Failure. Người dùng phải có đường lùi; mỗi gợi ý AI phải soi được lý do.</p>
+      </a>
+      <a class="source" href="https://dl.acm.org/doi/10.1145/3290605.3300233" target="_blank" rel="noopener">
+        <span class="tag">CHI 2019 · paper</span>
+        <h4>Guidelines for Human-AI Interaction (full paper)</h4>
+        <p>Amershi, Weld, Vorvoreanu, Fourney, Nushi, Collisson, Suh, Iqbal, Bennett, Inkpen, Teevan, Kikin-Gil, Horvitz. ACM Digital Library.</p>
+      </a>
+      <a class="source" href="https://github.blog/2023-06-20-how-to-write-better-prompts-for-github-copilot/" target="_blank" rel="noopener">
+        <span class="tag">GitHub · Copilot</span>
+        <h4>GitHub Copilot — inline suggestions &amp; per-completion accept</h4>
+        <p>Production inline code-completion. Ghost text shown in-place, tab-accept or reject per suggestion. Per-completion control, no separate review screen. Pattern cho T và C.</p>
+      </a>
+      <a class="source" href="https://support.grammarly.com/hc/en-us/articles/115000090091-What-do-Grammarly-s-underlines-mean" target="_blank" rel="noopener">
+        <span class="tag">Grammarly · support doc</span>
+        <h4>Grammarly — rule-category underlines (red / yellow / blue)</h4>
+        <p>Inline rule highlights categorized by error type. Click a mark to see the rule explanation + suggested fix. Pattern cho per-field rule badges with "Xem luật" expand.</p>
+      </a>
+      <a class="source" href="https://www.notion.so/help/guides/notion-ai-for-docs" target="_blank" rel="noopener">
+        <span class="tag">Notion · AI guide</span>
+        <h4>Notion AI — per-block generate, accept, regenerate</h4>
+        <p>Hành động AI ở cấp block: sinh, viết lại, bỏ. Giữ nguyên các block xung quanh. Nền tảng cho mẫu "chỉ viết lại field này".</p>
+      </a>
+      <a class="source" href="https://pair.withgoogle.com/chapter/feedback-controls/" target="_blank" rel="noopener">
+        <span class="tag">PAIR · chapter</span>
+        <h4>Feedback + Control</h4>
+        <p>Người dùng phải có đường điều chỉnh: accept / reject / override / undo. Base cho "override rule with reason" và "quay lại bản nháp trước".</p>
+      </a>
+    </div>
+
+    <div class="footnotes" id="footnotes">
+      <div class="kicker" style="font-family: var(--font-head); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 600; margin-bottom: 8px;">References cited inline</div>
+      <ol>
+        <li id="fn-copilot">GitHub. <em>Copilot inline suggestions — ghost text, tab-to-accept, per-suggestion control</em>. github.blog/2023-06-20-how-to-write-better-prompts-for-github-copilot/. Pattern for inline rule display + per-item accept/reject.</li>
+        <li id="fn-grammarly">Grammarly. <em>Rule-category inline underlines (red/yellow/blue)</em>. support.grammarly.com/hc/en-us/articles/115000090091. Click-to-expand rule text + category badges.</li>
+        <li id="fn-nielsen">Nielsen, J. (1994, updated). <em>10 Usability Heuristics for User Interface Design</em>. Nielsen Norman Group. nngroup.com/articles/ten-usability-heuristics/.</li>
+        <li id="fn-hax">Amershi, S. et al. (2019). <em>Guidelines for Human-AI Interaction</em>. CHI 2019. Microsoft HAX Toolkit. microsoft.com/en-us/haxtoolkit/ai-guidelines/ · dl.acm.org/doi/10.1145/3290605.3300233.</li>
+        <li id="fn-notion">Notion Labs. <em>Notion AI — per-block generate, regenerate, discard</em>. notion.so/help/guides/notion-ai-for-docs. Block-level AI actions preserving surrounding content.</li>
+        <li id="fn-pair-feedback">Google PAIR. <em>People + AI Guidebook · Feedback + Control</em>. pair.withgoogle.com/chapter/feedback-controls/. User-side accept / reject / override / undo.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div class="brand"><span class="dot" aria-hidden="true"></span>Wizard + inline audit · Checklist + 3 prompt</div>
+      <ul>
+        <li><a href="./03-case-query-to-chart.html">Case · Query → Chart</a></li>
+        <li><a href="./01-case-chat-context.html">Case · Chat + Panel</a></li>
+        <li><a href="#sources">Sources</a></li>
+      </ul>
+    </div>
+    <div class="legal">Workshop VinUni A20 · Session 1 · Checklist + 3 prompt · Dành cho AI coding agent đọc và apply vào repo</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------- DEEP DEMO: one state, one render(), T → C → R retrofit ----------
+  (function setupDemo() {
+    var root = document.querySelector('[data-demo]');
+    if (!root) return;
+
+    // Two preset courses: 0 = clean (triggers 1 audit warning),
+    // 1 = messy (triggers 3 ABET problems + 1 warning). Preset 1 makes the point.
+    var PRESETS = [
+      {
+        name: 'CS101 · Intro Programming',
+        course: { code: 'CS101', title: 'Nhập môn Lập trình', credits: 3, level: 'Năm 1 · HK1' },
+        clos: [
+          { id: 'CLO1', text: 'Người học viết được chương trình Python ≤ 200 dòng giải bài toán sắp xếp cơ bản.', verb: 'viết', measurable: true, plo: 'PLO-1a', abet: 'ABET 3a', status: 'pass', reason: 'Có động từ đo được (viết) + đối tượng cụ thể (chương trình Python) + giới hạn số dòng.' },
+          { id: 'CLO2', text: 'Người học phân tích được độ phức tạp thời gian O(n), O(n²) của 3 thuật toán sắp xếp.', verb: 'phân tích', measurable: true, plo: 'PLO-2a', abet: 'ABET 3a', status: 'pass', reason: 'Động từ phân tích đo được, có con số (3 thuật toán) và khái niệm cụ thể (O-notation).' },
+          { id: 'CLO3', text: 'Người học áp dụng được 2 kỹ thuật gỡ lỗi (print debug, breakpoint) vào chương trình đã viết.', verb: 'áp dụng', measurable: true, plo: 'PLO-1b', abet: 'ABET 3b', status: 'warn', reason: 'Động từ đo được nhưng thiếu tiêu chí đánh giá — cần mô tả thêm rubric cho hội đồng.' }
+        ],
+        assessments: [
+          { name: 'Bài tập lập trình hàng tuần', weight: 30, linksTo: ['CLO1', 'CLO3'] },
+          { name: 'Project giữa kỳ', weight: 30, linksTo: ['CLO1', 'CLO2'] },
+          { name: 'Thi cuối kỳ', weight: 40, linksTo: ['CLO2'] }
+        ],
+        schedule: [
+          { week: 1, topic: 'Biến, kiểu dữ liệu, I/O' },
+          { week: 4, topic: 'Vòng lặp, hàm, mảng' },
+          { week: 8, topic: 'Thuật toán sắp xếp cơ bản' },
+          { week: 12, topic: 'Gỡ lỗi, kiểm thử' }
+        ],
+        auditSummary: { pass: 5, warn: 1, critical: 0 }
+      },
+      {
+        name: 'CS302 · Databases',
+        course: { code: 'CS302', title: 'Cơ sở dữ liệu', credits: 3, level: 'Năm 3 · HK1' },
+        clos: [
+          { id: 'CLO1', text: 'Người học thiết kế được lược đồ quan hệ chuẩn hoá 3NF cho bài toán thực tế.', verb: 'thiết kế', measurable: true, plo: 'PLO-2b', abet: 'ABET 3a', status: 'pass', reason: 'Động từ đo được + chuẩn cụ thể (3NF) + đối tượng rõ (lược đồ quan hệ).' },
+          { id: 'CLO2', text: 'Người học hiểu nguyên lý giao tác (transaction) và các mức cô lập.', verb: 'hiểu', measurable: false, plo: '—', abet: 'ABET 3a', status: 'critical', reason: '"Hiểu" không đo được — ABET 3a yêu cầu động từ Bloom có thể chấm. Đổi thành "trình bày", "so sánh", "minh hoạ" và gắn tiêu chí.' },
+          { id: 'CLO3', text: 'Người học viết câu SQL truy vấn đa bảng có JOIN, GROUP BY, và subquery.', verb: 'viết', measurable: true, plo: 'PLO-1c', abet: 'ABET 3a', status: 'pass', reason: 'Động từ viết đo được, có liệt kê cú pháp cụ thể.' },
+          { id: 'CLO4', text: 'Người học làm quen với các hệ quản trị cơ sở dữ liệu phổ biến.', verb: 'làm quen', measurable: false, plo: '—', abet: 'ABET 3a', status: 'critical', reason: '"Làm quen" không có tiêu chí chấm. Phải đổi thành "cài đặt và vận hành cơ bản", có bảng rubric.' }
+        ],
+        assessments: [
+          { name: 'Bài tập thiết kế lược đồ', weight: 25, linksTo: ['CLO1'] },
+          { name: 'Project SQL cuối kỳ', weight: 35, linksTo: ['CLO1', 'CLO3'] },
+          { name: 'Thi cuối kỳ', weight: 40, linksTo: [] }
+        ],
+        schedule: [
+          { week: 2, topic: 'Mô hình quan hệ, đại số quan hệ' },
+          { week: 6, topic: 'SQL nâng cao, chuẩn hoá 3NF' },
+          { week: 10, topic: 'Giao tác và khôi phục' },
+          { week: 13, topic: 'NoSQL và lựa chọn kho dữ liệu' }
+        ],
+        auditSummary: { pass: 4, warn: 2, critical: 2 }
+      }
+    ];
+
+    // Single state object — shared across every render call.
+    var state = {
+      stage: 0,              // 0 | 'T' | 'C' | 'R'
+      forceError: false,
+      preset: 0,
+      currentStep: 1,        // 0..3 (Thông tin · CLO · Đánh giá · Lịch)
+      userEdits: {},         // cloId -> edited text
+      lockedFields: {},      // cloId -> true
+      overrides: {},         // auditId -> reason
+      undoStack: []          // {cloId, oldText} entries for +C+
+    };
+
+    var panel = root.querySelector('[data-stage-panel]');
+    var footer = root.querySelector('[data-demo-footer]');
+    var stepBtns = root.querySelectorAll('.demo-step');
+    var presetBtns = root.querySelectorAll('.demo-preset-btn');
+    var forceToggle = root.querySelector('[data-demo-force]');
+    var resetBtn = root.querySelector('[data-demo-reset]');
+
+    function stageRank(s) { return s === 0 ? 0 : s === 'T' ? 1 : s === 'C' ? 2 : 3; }
+
+    function stepName(i) { return ['Thông tin môn','CLO','Đánh giá','Lịch học'][i]; }
+
+    // Count ABET problems given current state (override lowers critical to warn).
+    function tally(preset) {
+      var pass = 0, warn = 0, critical = 0;
+      preset.clos.forEach(function (clo) {
+        var auditId = 'clo-' + clo.id;
+        var overridden = !!state.overrides[auditId];
+        if (clo.status === 'pass') pass++;
+        else if (clo.status === 'warn') warn++;
+        else if (clo.status === 'critical') {
+          if (overridden) warn++;
+          else critical++;
+        }
+      });
+      preset.assessments.forEach(function (a) {
+        var auditId = 'asm-' + a.name;
+        var overridden = !!state.overrides[auditId];
+        if (a.linksTo.length === 0) {
+          if (overridden) warn++;
+          else critical++;
+        } else pass++;
+      });
+      return { pass: pass, warn: warn, critical: critical };
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+      });
+    }
+
+    // ----- Render the mock wizard -----
+    function renderWizard(preset) {
+      var rank = stageRank(state.stage);
+      var showAudit = rank >= 1; // +T and up
+      var showControl = rank >= 2; // +T+C and up
+      var showRecovery = rank >= 3; // +T+C+R only
+      var t = tally(preset);
+      var blocked = showRecovery && t.critical > 0;
+
+      // Step tabs
+      var steps = [0,1,2,3].map(function (i) {
+        var cls = 'w-step' + (i === state.currentStep ? ' active' : '') + (i < state.currentStep ? ' done' : '');
+        return '<button type="button" class="' + cls + '" data-step="' + i + '">' +
+          '<span class="w-step-n">' + (i + 1) + '</span><span class="w-step-lbl">' + stepName(i) + '</span>' +
+        '</button>';
+      }).join('');
+
+      var body = '';
+      if (state.currentStep === 0) body = renderStepInfo(preset, showAudit);
+      else if (state.currentStep === 1) body = renderStepCLO(preset, showAudit, showControl);
+      else if (state.currentStep === 2) body = renderStepAssessment(preset, showAudit, showControl);
+      else body = renderStepSchedule(preset, showAudit);
+
+      var audit = showAudit ? renderAuditSidebar(preset, t, showControl) : '';
+
+      var nextBtn;
+      if (state.currentStep < 3) {
+        var canAdvance = true;
+        if (showRecovery && state.currentStep === 1) {
+          // Required-field guard: at least one CLO cannot be "critical" without override
+          canAdvance = preset.clos.every(function (clo) {
+            return clo.status !== 'critical' || state.overrides['clo-' + clo.id];
+          });
+        }
+        nextBtn = '<button class="ix-btn" type="button" data-w-next' + (canAdvance ? '' : ' disabled') + '>Bước tiếp →</button>' +
+          (canAdvance ? '' : '<span class="w-guard-note">Còn CLO vi phạm ABET — sửa hoặc bấm "Chấp nhận vấn đề" rồi mới đi tiếp.</span>');
+      } else {
+        // Final: "Tạo syllabus" button
+        if (blocked) {
+          nextBtn = '<button class="ix-btn" type="button" disabled>Tạo syllabus (bị chặn · ' + t.critical + ' lỗi ABET)</button>' +
+            '<button class="ix-btn ghost sm" type="button" data-w-override-all>Chấp nhận ' + t.critical + ' vấn đề, ghi lý do · tạo dự thảo</button>';
+        } else {
+          nextBtn = '<button class="ix-btn" type="button" data-w-submit>Tạo syllabus</button>';
+        }
+      }
+
+      panel.innerHTML =
+        '<div class="w-head"><div class="w-tabs">' + steps + '</div>' + renderStageBadge() + '</div>' +
+        '<div class="w-grid' + (showAudit ? '' : ' w-grid-solo') + '">' +
+          '<div class="w-main">' + body + '</div>' +
+          audit +
+        '</div>' +
+        '<div class="w-footer">' +
+          '<button class="ix-btn ghost sm" type="button" data-w-prev'+(state.currentStep===0?' disabled':'')+'>← Bước trước</button>' +
+          '<div class="w-footer-spacer"></div>' +
+          nextBtn +
+        '</div>' +
+        (showRecovery ? '<div class="w-autosave">Đã tự lưu nháp 5 giây trước · Lịch sử 3 phiên bản</div>' : '');
+    }
+
+    function renderStageBadge() {
+      var labels = { 0: 'Stage 0 · Chưa áp dụng', 'T': '+T · Transparency', 'C': '+T+C · Control', 'R': '+T+C+R · Recovery' };
+      return '<span class="w-stage-badge stage-' + state.stage + '">' + labels[state.stage] + '</span>';
+    }
+
+    function renderStepInfo(preset, showAudit) {
+      var c = preset.course;
+      var aiChip = showAudit ? '<span class="ai-chip">AI đã điền</span>' : '';
+      return '<div class="w-step-title">Bước 1 · Thông tin môn học</div>' +
+        '<div class="w-field"><label>Mã môn</label><div class="w-val">' + c.code + ' ' + aiChip + '</div></div>' +
+        '<div class="w-field"><label>Tên môn</label><div class="w-val">' + c.title + ' ' + aiChip + '</div></div>' +
+        '<div class="w-field"><label>Số tín chỉ · Học kỳ</label><div class="w-val">' + c.credits + ' tín chỉ · ' + c.level + ' ' + aiChip + '</div></div>';
+    }
+
+    function renderStepCLO(preset, showAudit, showControl) {
+      var rows = preset.clos.map(function (clo) {
+        var auditId = 'clo-' + clo.id;
+        var overridden = !!state.overrides[auditId];
+        var edited = state.userEdits[clo.id];
+        var locked = !!state.lockedFields[clo.id];
+        var displayText = edited != null ? edited : clo.text;
+
+        var statusCls = clo.status;
+        if (overridden && statusCls === 'critical') statusCls = 'warn';
+        var statusLbl = statusCls === 'pass' ? 'đạt ABET' : statusCls === 'warn' ? 'cảnh báo' : 'vi phạm ABET';
+
+        var chip = showAudit
+          ? (edited != null ? '<span class="ai-chip edited">Bạn đã sửa</span>' : '<span class="ai-chip">AI đã điền</span>')
+          : '';
+
+        var statusPill = showAudit
+          ? '<span class="clo-status ' + statusCls + '"><span class="pill-dot"></span>' + statusLbl + ' · ' + clo.abet + '</span>'
+          : '';
+
+        var ploLine = showAudit ? '<div class="clo-plo">Gắn với <code>' + clo.plo + '</code></div>' : '';
+
+        var reasoning = showAudit
+          ? '<details class="clo-reason"><summary>Cách AI viết CLO này</summary>' +
+              '<div><strong>Lý do:</strong> ' + escapeHtml(clo.reason) + '</div>' +
+              '<div><strong>Động từ đánh giá:</strong> <code>' + clo.verb + '</code> · ' + (clo.measurable ? 'đo được' : 'không đo được') + '</div>' +
+            '</details>'
+          : '';
+
+        var controls = '';
+        if (showControl) {
+          controls = '<div class="clo-ctrls">' +
+            '<button type="button" class="ix-btn ghost sm" data-clo-act="rewrite" data-clo="' + clo.id + '"' + (locked?' disabled':'') + '>Viết lại</button>' +
+            '<button type="button" class="ix-btn ghost sm" data-clo-act="suggest" data-clo="' + clo.id + '"' + (locked?' disabled':'') + '>Gợi ý khác</button>' +
+            '<button type="button" class="ix-btn ghost sm" data-clo-act="lock" data-clo="' + clo.id + '">' + (locked ? 'Mở khoá' : 'Khoá field') + '</button>' +
+            (edited != null ? '<button type="button" class="ix-btn ghost sm" data-clo-act="undo" data-clo="' + clo.id + '">Undo AI</button>' : '') +
+            '</div>';
+        }
+
+        var edInput = showControl
+          ? '<textarea class="clo-edit" data-clo-edit="' + clo.id + '" rows="2"' + (locked?' disabled':'') + '>' + escapeHtml(displayText) + '</textarea>'
+          : '<div class="clo-text">' + escapeHtml(displayText) + '</div>';
+
+        return '<div class="clo-row ' + statusCls + '" id="anchor-' + auditId + '">' +
+            '<div class="clo-row-head"><strong>' + clo.id + '</strong> ' + chip + ' ' + statusPill + '</div>' +
+            edInput + ploLine + reasoning + controls +
+          '</div>';
+      }).join('');
+
+      return '<div class="w-step-title">Bước 2 · Course Learning Outcomes (CLO)</div>' + rows;
+    }
+
+    function renderStepAssessment(preset, showAudit, showControl) {
+      var rows = preset.assessments.map(function (a) {
+        var auditId = 'asm-' + a.name;
+        var missing = a.linksTo.length === 0;
+        var overridden = !!state.overrides[auditId];
+        var cls = missing ? (overridden ? 'warn' : 'critical') : 'pass';
+        var lbl = missing
+          ? (showAudit ? '<span class="clo-status ' + cls + '"><span class="pill-dot"></span>' + (overridden ? 'đã ghi nhận · chưa map CLO' : 'vi phạm · chưa map CLO nào') + '</span>' : '')
+          : (showAudit ? '<span class="clo-status pass"><span class="pill-dot"></span>map ' + a.linksTo.join(', ') + '</span>' : '');
+        return '<div class="clo-row ' + cls + '" id="anchor-' + auditId + '">' +
+          '<div class="clo-row-head"><strong>' + a.name + '</strong> ' + (showAudit ? '<span class="ai-chip">AI đã điền</span>' : '') + ' ' + lbl + '</div>' +
+          '<div class="clo-text">Trọng số: ' + a.weight + '% · Gắn CLO: ' + (a.linksTo.length ? a.linksTo.join(', ') : '(chưa có)') + '</div>' +
+        '</div>';
+      }).join('');
+      return '<div class="w-step-title">Bước 3 · Đánh giá</div>' + rows;
+    }
+
+    function renderStepSchedule(preset, showAudit) {
+      var rows = preset.schedule.map(function (s) {
+        return '<div class="clo-row pass"><div class="clo-row-head"><strong>Tuần ' + s.week + '</strong> ' + (showAudit ? '<span class="ai-chip">AI đã điền</span>' : '') + '</div><div class="clo-text">' + escapeHtml(s.topic) + '</div></div>';
+      }).join('');
+      return '<div class="w-step-title">Bước 4 · Lịch học · ' + preset.schedule.length + ' mốc</div>' + rows;
+    }
+
+    function renderAuditSidebar(preset, t, showControl) {
+      var items = [];
+      preset.clos.forEach(function (clo) {
+        if (clo.status === 'pass') return;
+        var auditId = 'clo-' + clo.id;
+        var overridden = !!state.overrides[auditId];
+        var status = clo.status;
+        if (overridden && status === 'critical') status = 'warn';
+        items.push({
+          id: auditId,
+          status: status,
+          title: clo.id + ' · ' + (clo.status === 'critical' ? clo.abet : 'ABET 3b'),
+          msg: clo.reason,
+          overridden: overridden,
+          step: 1
+        });
+      });
+      preset.assessments.forEach(function (a) {
+        if (a.linksTo.length > 0) return;
+        var auditId = 'asm-' + a.name;
+        var overridden = !!state.overrides[auditId];
+        items.push({
+          id: auditId,
+          status: overridden ? 'warn' : 'critical',
+          title: a.name + ' · ABET 3b',
+          msg: 'Bài đánh giá chưa map CLO nào — ABET 3b yêu cầu mỗi CLO phải có ít nhất một phương pháp đánh giá.',
+          overridden: overridden,
+          step: 2
+        });
+      });
+
+      var cards = items.map(function (it) {
+        var clickAttr = showControl ? ' data-audit-jump="' + it.id + '" data-audit-step="' + it.step + '"' : '';
+        var actions = showControl
+          ? '<div class="audit-acts">' +
+              (it.overridden
+                ? '<span class="audit-overridden">✓ đã ghi nhận lý do</span>'
+                : '<button type="button" class="ix-btn ghost sm" data-audit-fix="' + it.id + '" data-audit-step="' + it.step + '">Sửa ngay</button>' +
+                  '<button type="button" class="ix-btn ghost sm" data-audit-accept="' + it.id + '">Chấp nhận vấn đề</button>') +
+            '</div>'
+          : '';
+        return '<div class="audit-card ' + it.status + '"' + clickAttr + '>' +
+            '<div class="audit-title"><span class="pill-dot"></span>' + it.title + '</div>' +
+            '<div class="audit-msg">' + escapeHtml(it.msg) + '</div>' +
+            actions +
+          '</div>';
+      }).join('');
+
+      return '<aside class="w-audit"><div class="w-audit-head">Audit ABET · bước ' + (state.currentStep + 1) + '/4<span class="w-audit-sum">' +
+          '<span class="aud-pill critical">' + t.critical + ' vi phạm</span>' +
+          '<span class="aud-pill warn">' + t.warn + ' cảnh báo</span>' +
+          '<span class="aud-pill pass">' + t.pass + ' đạt</span>' +
+        '</span></div>' +
+        (items.length ? '<div class="w-audit-list">' + cards + '</div>' : '<div class="w-audit-empty">Không có vấn đề ở bước này.</div>') +
+        '<div class="w-audit-foot">Audit model: <code>abet-checker-v2</code> · confidence ' + (state.stage === 0 ? 'n/a' : '0.92') + '</div>' +
+      '</aside>';
+    }
+
+    // ----- Footer: stage-specific advance buttons + force-error toggle guard -----
+    function renderFooter() {
+      var rank = stageRank(state.stage);
+      var label, advanceBtn;
+      if (state.stage === 0) {
+        label = 'Paste prompt T → hiện audit luật ABET';
+        advanceBtn = '<button class="demo-paste-btn tag-t" type="button" data-advance="T">Paste prompt T</button>';
+      } else if (state.stage === 'T') {
+        label = 'Paste prompt C → cho sửa từng CLO, jump tới audit';
+        advanceBtn = '<button class="demo-paste-btn tag-c" type="button" data-advance="C">Paste prompt C</button>';
+      } else if (state.stage === 'C') {
+        label = 'Paste prompt R → chặn nộp, autosave, đường thoát lỗi';
+        advanceBtn = '<button class="demo-paste-btn tag-r" type="button" data-advance="R">Paste prompt R</button>';
+      } else {
+        label = 'Đã paste đủ T + C + R · app của bạn đã bọc 3 lớp';
+        advanceBtn = '<span class="demo-complete">✓ Đã đến cuối · bấm "Reset" để chạy lại</span>';
+      }
+
+      var forceBlock = '';
+      if (state.forceError) {
+        if (rank < 3) {
+          forceBlock = '<div class="demo-force-note">Ép lỗi bị bỏ qua — <strong>Recovery chưa áp dụng · prompt R chưa paste</strong>. Ở stage này, app chỉ tắt giữa chừng, tác giả mất hết nháp. Paste R rồi bấm lại để thấy đường thoát.</div>';
+        } else {
+          // Show recovery card
+          forceBlock = '<div class="demo-recovery"><div class="rec-title">⚠ Audit agent timeout (&gt;15 giây)</div>' +
+            '<div class="rec-msg">Audit không trả kết quả cho CLO hiện tại. Các CLO khác đã audit vẫn giữ nguyên · autosave cách đây 5 giây. Chọn một trong ba đường thoát:</div>' +
+            '<div class="rec-acts">' +
+              '<button class="ix-btn sm" type="button" data-rec="retry">Thử lại audit</button>' +
+              '<button class="ix-btn ghost sm" type="button" data-rec="skip">Bỏ qua audit, gửi thô</button>' +
+              '<button class="ix-btn ghost sm" type="button" data-rec="save">Lưu nháp, quay lại sau</button>' +
+            '</div></div>';
+        }
+      }
+
+      footer.innerHTML =
+        '<div class="demo-advance"><span class="demo-advance-lbl">' + label + '</span>' + advanceBtn + '</div>' +
+        forceBlock;
+
+      // Wire advance
+      var adv = footer.querySelector('[data-advance]');
+      if (adv) adv.addEventListener('click', function () {
+        state.stage = adv.getAttribute('data-advance');
+        render();
+      });
+      // Wire recovery
+      footer.querySelectorAll('[data-rec]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          state.forceError = false;
+          if (forceToggle) forceToggle.checked = false;
+          render();
+        });
+      });
+    }
+
+    // ----- Stepper highlighting -----
+    function renderStepper() {
+      stepBtns.forEach(function (btn) {
+        var s = btn.getAttribute('data-stage');
+        var matches = (s === String(state.stage));
+        btn.classList.toggle('active', matches);
+        var rank = stageRank(s === '0' ? 0 : s);
+        btn.classList.toggle('done', rank < stageRank(state.stage));
+      });
+      presetBtns.forEach(function (b, i) {
+        b.classList.toggle('active', i === state.preset);
+      });
+    }
+
+    function render() {
+      var preset = PRESETS[state.preset];
+      renderStepper();
+      renderWizard(preset);
+      renderFooter();
+      wireWizard();
+    }
+
+    // ----- Wizard event wiring (rebound per render) -----
+    function wireWizard() {
+      var preset = PRESETS[state.preset];
+
+      panel.querySelectorAll('[data-step]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          state.currentStep = parseInt(b.getAttribute('data-step'), 10);
+          render();
+        });
+      });
+      var prev = panel.querySelector('[data-w-prev]');
+      if (prev) prev.addEventListener('click', function () {
+        state.currentStep = Math.max(0, state.currentStep - 1);
+        render();
+      });
+      var next = panel.querySelector('[data-w-next]');
+      if (next) next.addEventListener('click', function () {
+        state.currentStep = Math.min(3, state.currentStep + 1);
+        render();
+      });
+      var submit = panel.querySelector('[data-w-submit]');
+      if (submit) submit.addEventListener('click', function () {
+        submit.textContent = '✓ Đã tạo syllabus dự thảo · chuyển sang khoa duyệt';
+        submit.disabled = true;
+      });
+      var overrideAll = panel.querySelector('[data-w-override-all]');
+      if (overrideAll) overrideAll.addEventListener('click', function () {
+        preset.clos.forEach(function (clo) {
+          if (clo.status === 'critical') state.overrides['clo-' + clo.id] = 'ghi đè hàng loạt';
+        });
+        preset.assessments.forEach(function (a) {
+          if (a.linksTo.length === 0) state.overrides['asm-' + a.name] = 'ghi đè hàng loạt';
+        });
+        render();
+      });
+
+      // CLO control actions (+C+ and up)
+      panel.querySelectorAll('[data-clo-act]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var act = btn.getAttribute('data-clo-act');
+          var cloId = btn.getAttribute('data-clo');
+          var clo = preset.clos.find(function (c) { return c.id === cloId; });
+          if (!clo) return;
+          if (act === 'rewrite') {
+            state.undoStack.push({ cloId: cloId, oldText: state.userEdits[cloId] == null ? clo.text : state.userEdits[cloId] });
+            state.userEdits[cloId] = clo.text.replace(/hiểu/gi, 'trình bày').replace(/làm quen với/gi, 'cài đặt và vận hành cơ bản');
+          } else if (act === 'suggest') {
+            state.undoStack.push({ cloId: cloId, oldText: state.userEdits[cloId] == null ? clo.text : state.userEdits[cloId] });
+            state.userEdits[cloId] = clo.text + ' (bản gợi ý khác: thêm tiêu chí rubric 3 mức)';
+          } else if (act === 'lock') {
+            state.lockedFields[cloId] = !state.lockedFields[cloId];
+          } else if (act === 'undo') {
+            var last = null;
+            for (var i = state.undoStack.length - 1; i >= 0; i--) {
+              if (state.undoStack[i].cloId === cloId) { last = state.undoStack.splice(i, 1)[0]; break; }
+            }
+            if (last) state.userEdits[cloId] = last.oldText;
+            else delete state.userEdits[cloId];
+          }
+          render();
+        });
+      });
+
+      // CLO direct edit (+C+ only)
+      panel.querySelectorAll('[data-clo-edit]').forEach(function (ta) {
+        ta.addEventListener('input', function () {
+          var cloId = ta.getAttribute('data-clo-edit');
+          var original = preset.clos.find(function (c) { return c.id === cloId; });
+          if (state.userEdits[cloId] == null && original) {
+            state.undoStack.push({ cloId: cloId, oldText: original.text });
+          }
+          state.userEdits[cloId] = ta.value;
+          // Don't full-render on every keystroke — just update the chip
+          var row = ta.closest('.clo-row');
+          if (row) {
+            var chip = row.querySelector('.ai-chip');
+            if (chip) { chip.textContent = 'Bạn đã sửa'; chip.classList.add('edited'); }
+          }
+        });
+      });
+
+      // Audit card jump-to + accept/fix (+C+ and up)
+      panel.querySelectorAll('[data-audit-jump]').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('button')) return; // let buttons handle themselves
+          var step = parseInt(card.getAttribute('data-audit-step'), 10);
+          if (!isNaN(step) && step !== state.currentStep) {
+            state.currentStep = step;
+            render();
+            setTimeout(function () {
+              var anchor = panel.querySelector('#anchor-' + card.getAttribute('data-audit-jump'));
+              if (anchor) { anchor.classList.add('anchor-flash'); setTimeout(function(){ anchor.classList.remove('anchor-flash'); }, 1200); }
+            }, 30);
+          }
+        });
+      });
+      panel.querySelectorAll('[data-audit-accept]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var auditId = btn.getAttribute('data-audit-accept');
+          state.overrides[auditId] = 'chấp nhận ở bước audit';
+          render();
+        });
+      });
+      panel.querySelectorAll('[data-audit-fix]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var step = parseInt(btn.getAttribute('data-audit-step'), 10);
+          var auditId = btn.getAttribute('data-audit-fix');
+          if (!isNaN(step)) {
+            state.currentStep = step;
+            render();
+            setTimeout(function () {
+              var anchor = panel.querySelector('#anchor-' + auditId);
+              if (anchor) { anchor.classList.add('anchor-flash'); anchor.scrollIntoView({behavior:'smooth', block:'center'}); setTimeout(function(){ anchor.classList.remove('anchor-flash'); }, 1200); }
+            }, 30);
+          }
+        });
+      });
+    }
+
+    // ----- Wire top-level controls once -----
+    presetBtns.forEach(function (b, i) {
+      b.addEventListener('click', function () {
+        state.preset = i;
+        // Clear user edits/overrides tied to prior preset
+        state.userEdits = {};
+        state.lockedFields = {};
+        state.overrides = {};
+        state.undoStack = [];
+        state.currentStep = 1;
+        render();
+      });
+    });
+    stepBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var s = b.getAttribute('data-stage');
+        state.stage = s === '0' ? 0 : s;
+        render();
+      });
+    });
+    forceToggle.addEventListener('change', function () {
+      state.forceError = forceToggle.checked;
+      render();
+    });
+    resetBtn.addEventListener('click', function () {
+      state.stage = 0;
+      state.forceError = false;
+      state.preset = 0;
+      state.currentStep = 1;
+      state.userEdits = {};
+      state.lockedFields = {};
+      state.overrides = {};
+      state.undoStack = [];
+      if (forceToggle) forceToggle.checked = false;
+      render();
+    });
+
+    render();
+  })();
+})();
+</script>
+
+</body>
+</html>

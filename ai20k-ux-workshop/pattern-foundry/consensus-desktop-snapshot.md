@@ -1,0 +1,25 @@
+- generic [ref=e1] [box=0,0,1425,3303]:
+  - generic [ref=e5] [box=0,0,1425,3303]:
+    - complementary [ref=e6] [box=0,0,208,1000]:
+      - generic [ref=e8] [box=0,0,208,1000]:
+        - generic [ref=e9] [box=0,0,208,64]:
+          - link [ref=e10] [cursor=pointer] [box=16,0,20,64]:
+            - /url: /
+          - button "Close sidebar" [ref=e16] [cursor=pointer] [box=164,14,36,36]
+        - generic [ref=e21] [box=0,64,208,936]:
+          - generic [ref=e22] [box=0,64,208,72]
+          - generic [ref=e37] [box=0,136,208,852]
+    - main [ref=e53] [box=208,0,1217,3303]:
+      - navigation [ref=e54] [box=208,0,1217,64]:
+        - button "Sign up" [ref=e56] [cursor=pointer] [box=1323,14,78,36]:
+          - generic [ref=e57] [box=1336,23,52,18]: Sign up
+      - generic [ref=e58] [box=208,64,1217,3239]:
+        - generic [ref=e61] [box=433,64,768,3239]:
+          - generic [ref=e62] [box=433,64,768,880]
+          - generic [ref=e156] [box=433,944,768,2359]
+        - button "Open support chat" [ref=e548] [cursor=pointer] [box=1373,948,32,32]:
+          - img [ref=e549] [box=1381,956,16,16]
+    - complementary [box=1425,0,0,1000]
+  - alert [ref=e552] [box=-1,-1,1,1]
+  - iframe [ref=e553] [box=0,0,1,1]:
+    
