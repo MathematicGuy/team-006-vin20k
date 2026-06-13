@@ -1,0 +1,1751 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Query → Chart · Checklist + 3 prompt · VinUni A20</title>
+<meta name="description" content="Checklist + 3 copy-paste prompts for AI coding agents (Claude Code / Cursor / Windsurf) to retrofit a text-to-SQL / digital-twin / feedback-analysis app with the T-C-R pattern. Every rule cited to Nielsen, Microsoft HAX, or Google PAIR." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap&subset=vietnamese,latin,latin-ext" rel="stylesheet" />
+<style>
+  :root {
+    --dark: #141413;
+    --light: #faf9f5;
+    --mid: #b0aea5;
+    --light-gray: #e8e6dc;
+    --dim: #6b6960;
+    --orange: #d97757;
+    --blue: #6a9bcc;
+    --green: #788c5d;
+    --red: #c07a6e;
+    --yellow: #d4a84b;
+    --purple: #a07fb5;
+    --teal: #5a9b94;
+
+    --font-head: "Be Vietnam Pro", "Poppins", system-ui, sans-serif;
+    --font-body: "Lora", "Be Vietnam Pro", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --radius: 12px;
+    --max: 1120px;
+    --max-narrow: 780px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--light); color: var(--dark);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-head); font-weight: 600; line-height: 1.22;
+    letter-spacing: -0.015em; margin: 0 0 0.5em;
+  }
+  p { margin: 0 0 1em; }
+  ul, ol { margin: 0 0 1em; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--dark); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { color: var(--orange); }
+  code {
+    font-family: var(--font-mono); font-size: 0.88em;
+    background: var(--light-gray); padding: 2px 6px; border-radius: 4px;
+  }
+  pre { margin: 0; }
+  pre code { background: transparent; padding: 0; }
+  sup.cite {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    color: var(--orange); padding: 0 3px; vertical-align: super; line-height: 0;
+  }
+  sup.cite a { color: var(--orange); text-decoration: none; }
+  sup.cite a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  .wrap-narrow { max-width: var(--max-narrow); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    padding: 18px 0; border-bottom: 1px solid var(--light-gray);
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250, 249, 245, 0.92); backdrop-filter: saturate(140%) blur(8px);
+  }
+  nav .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  nav .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; }
+  nav .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); }
+  nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; font-family: var(--font-head); font-size: 13px; }
+  nav a { text-decoration: none; color: var(--dark); opacity: .72; }
+  nav a:hover { opacity: 1; color: var(--orange); }
+  @media (max-width: 860px) { nav ul { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 56px 0 40px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--light-gray); padding: 6px 12px; border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  .eyebrow .bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+  h1 {
+    font-size: clamp(2.1rem, 5.0vw, 3.6rem); font-weight: 700;
+    letter-spacing: -0.03em; max-width: 18ch; margin-bottom: 18px;
+  }
+  h1 .accent { color: var(--orange); font-style: italic; font-family: "Lora", Georgia, serif; font-weight: 500; }
+  .lede {
+    font-size: clamp(1.06rem, 1.5vw, 1.2rem); line-height: 1.6;
+    max-width: 62ch; margin-bottom: 28px;
+  }
+  .meta {
+    margin-top: 18px; display: flex; flex-wrap: wrap; gap: 20px;
+    font-family: var(--font-head); font-size: 13px; opacity: .72;
+  }
+  .meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .meta .sq { width: 8px; height: 8px; }
+
+  /* ---------- rules card (insight-first "gold") ---------- */
+  .rules-card {
+    margin-top: 36px; padding: 28px 32px;
+    background: #fff; border: 1px solid var(--light-gray);
+    border-radius: var(--radius); border-left: 4px solid var(--orange);
+  }
+  .rules-card .kicker {
+    font-family: var(--font-head); font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .rules-card h2 {
+    font-size: 1.3rem; margin: 0 0 18px; letter-spacing: -0.01em;
+  }
+  .rules-card ol {
+    margin: 0; padding-left: 0; list-style: none; counter-reset: rule;
+  }
+  .rules-card ol li {
+    counter-increment: rule; padding: 10px 0 10px 38px; position: relative;
+    font-size: 15.5px; line-height: 1.55; border-top: 1px solid var(--light-gray);
+  }
+  .rules-card ol li:first-child { border-top: none; }
+  .rules-card ol li::before {
+    content: counter(rule);
+    position: absolute; left: 0; top: 10px;
+    width: 26px; height: 26px; border-radius: 6px;
+    background: var(--light-gray); color: var(--dark);
+    font-family: var(--font-mono); font-weight: 600; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rules-card .tag-t, .rules-card .tag-c, .rules-card .tag-r {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px; margin-right: 8px;
+    vertical-align: 2px;
+  }
+  .rules-card .tag-t { background: rgba(217,119,87,0.15); color: var(--orange); }
+  .rules-card .tag-c { background: rgba(106,155,204,0.15); color: var(--blue); }
+  .rules-card .tag-r { background: rgba(120,140,93,0.18); color: var(--green); }
+
+  /* compact scannable rule body: headline + subtext + chip row */
+  .rule-head {
+    font-family: var(--font-head); font-weight: 700;
+    font-size: 16px; color: var(--dark); line-height: 1.3;
+    display: block; margin-bottom: 4px;
+  }
+  .rule-sub {
+    font-size: 14.5px; line-height: 1.55; color: var(--dark);
+    display: block; margin-bottom: 6px;
+  }
+  .rule-sub code { font-size: 0.86em; background: var(--light-gray); padding: 1px 5px; border-radius: 3px; }
+  .rule-chips {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+  }
+  .chip {
+    font-family: var(--font-head); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 3px 9px; border-radius: 999px;
+    background: #fafaf8; color: var(--dim);
+    border: 1px solid var(--light-gray);
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .chip.evidence { color: var(--dark); border-color: #d5d3c8; }
+  .chip.framework { color: var(--dim); font-family: var(--font-mono); font-size: 10.5px; }
+  .chip .c-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--mid);
+  }
+  .chip.evidence .c-dot { background: var(--orange); }
+  .chip.framework .c-dot { background: var(--blue); }
+  .chip sup { font-size: 9px; vertical-align: super; margin-left: 3px; }
+  .chip sup a { color: inherit; opacity: .7; }
+  .chip sup a + a::before { content: ","; margin: 0 1px; opacity: .6; }
+
+  /* ---------- if-remember-nothing ---------- */
+  .remember {
+    margin-top: 28px; padding: 22px 26px;
+    background: rgba(212,168,75,0.08);
+    border: 1px solid rgba(212,168,75,0.3); border-radius: var(--radius);
+  }
+  .remember .rl {
+    font-family: var(--font-head); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #8a6e20;
+    margin-bottom: 8px;
+  }
+  .remember h3 { font-size: 1.05rem; margin: 0 0 10px; }
+  .remember ul { margin: 0; padding-left: 20px; font-size: 15px; }
+  .remember li { margin-bottom: 4px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 56px 0; border-top: 1px solid var(--light-gray); }
+  .section-head { margin-bottom: 32px; max-width: 62ch; }
+  .section-head h2 { font-size: clamp(1.55rem, 2.6vw, 2.1rem); }
+  .section-head .kicker {
+    font-family: var(--font-head); font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--orange); font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .section-head p { font-size: 1.02rem; opacity: .84; }
+  h3 { font-size: 1.22rem; }
+  h4 { font-size: 1.02rem; }
+
+  /* ---------- diagnostic card (NEW) ---------- */
+  .diag {
+    padding: 22px 26px; background: #fff;
+    border: 1px solid var(--light-gray); border-radius: var(--radius);
+    border-left: 4px solid var(--blue);
+  }
+  .diag .kicker {
+    font-family: var(--font-head); font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .diag h3 { font-size: 1.05rem; margin: 0 0 12px; }
+  .diag ol { padding-left: 22px; margin: 0 0 12px; font-size: 15px; }
+  .diag ol li { margin-bottom: 6px; }
+  .diag .verdict {
+    margin-top: 14px; padding: 12px 14px; border-radius: 8px;
+    background: var(--light); border: 1px dashed var(--light-gray);
+    font-family: var(--font-head); font-size: 13.5px;
+  }
+  .diag .verdict strong { color: var(--dark); }
+
+  /* ---------- T-C-R block ---------- */
+  .tcr {
+    padding: 28px 0; border-top: 1px solid var(--light-gray);
+  }
+  .tcr:first-of-type { border-top: none; padding-top: 0; }
+  .tcr .head {
+    display: flex; align-items: baseline; gap: 18px;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .tcr .letter {
+    font-family: var(--font-head); font-weight: 700;
+    font-size: 2.6rem; letter-spacing: -0.04em; line-height: 1;
+  }
+  .tcr.t .letter { color: var(--orange); }
+  .tcr.c .letter { color: var(--blue); }
+  .tcr.r .letter { color: var(--green); }
+  .tcr h3 { font-size: 1.3rem; margin: 0; }
+  .tcr .what {
+    font-family: var(--font-head); font-size: 13px; color: var(--mid);
+    font-weight: 500; letter-spacing: 0.03em;
+  }
+  .tcr-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 0;
+  }
+  @media (max-width: 720px) { .tcr-grid { grid-template-columns: 1fr; } }
+  .tcr-cell {
+    padding: 16px 18px; border: 1px solid var(--light-gray);
+    border-radius: 10px; background: #fff;
+  }
+  .tcr-cell .cl {
+    font-family: var(--font-head); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid);
+    margin-bottom: 8px;
+  }
+  .tcr-cell h4 { margin: 0 0 8px; font-size: 0.98rem; }
+  .tcr-cell ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+  .tcr-cell li { margin-bottom: 4px; }
+  .tcr-cell code { font-size: 0.82em; }
+  .tcr-cell.ui { border-left: 3px solid var(--orange); }
+  .tcr.c .tcr-cell.ui { border-left-color: var(--blue); }
+  .tcr.r .tcr-cell.ui { border-left-color: var(--green); }
+  .tcr-cell.mistake { border-left: 3px solid var(--red); }
+  .tcr-cell.verify { border-left: 3px solid var(--teal); }
+  .tcr-cite {
+    font-family: var(--font-head); font-size: 12.5px; color: var(--dim);
+    margin-top: 12px; padding: 10px 14px;
+    border-left: 2px solid var(--light-gray); background: transparent;
+  }
+  .tcr-cite strong { color: var(--dark); font-weight: 600; }
+
+  .tcr-order {
+    list-style: none; padding: 0; margin: 18px 0 0;
+    display: grid; grid-template-columns: 1fr; gap: 8px;
+  }
+  .tcr-order li {
+    padding: 10px 14px; background: #fff;
+    border: 1px solid var(--light-gray); border-radius: 8px;
+    font-size: 14.5px; line-height: 1.5;
+    display: flex; gap: 10px; align-items: baseline;
+  }
+  .tcr-order .tag-t, .tcr-order .tag-c, .tcr-order .tag-r {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px;
+    flex-shrink: 0; align-self: center;
+  }
+  .tcr-order .tag-t { background: rgba(217,119,87,0.15); color: var(--orange); }
+  .tcr-order .tag-c { background: rgba(106,155,204,0.15); color: var(--blue); }
+  .tcr-order .tag-r { background: rgba(120,140,93,0.18); color: var(--green); }
+  .tcr-order strong { margin-right: 4px; }
+
+  /* ---------- English jargon inline (Vietnamese base, English for tech terms) ---------- */
+  .en {
+    font-family: var(--font-head); font-style: normal;
+    color: var(--dim); font-weight: 500;
+    font-size: 0.94em; letter-spacing: 0.01em;
+  }
+
+  /* ---------- after-paste panel (single verify block, replaces 4-tab cluster) ---------- */
+  .after-paste {
+    margin-top: 14px; padding: 16px 20px;
+    background: rgba(127,160,127,0.08);
+    border: 1px solid rgba(127,160,127,0.25);
+    border-left: 3px solid var(--green);
+    border-radius: 10px;
+  }
+  .after-paste h4 {
+    margin: 0 0 10px; font-size: 0.98rem;
+    font-family: var(--font-head); color: var(--dark);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .after-paste h4::before {
+    content: "✓"; color: var(--green); font-weight: 700;
+    font-size: 1.05em;
+  }
+  .after-paste ul {
+    margin: 0; padding-left: 20px;
+    font-size: 14.5px; line-height: 1.6;
+  }
+  .after-paste li { margin-bottom: 6px; }
+  .after-paste li::marker { color: var(--green); }
+  .after-paste code {
+    font-size: 0.86em; background: #fff;
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ---------- code blocks (prompts sacred) ---------- */
+  .codeblock {
+    background: var(--dark); color: var(--light);
+    border-radius: 10px; padding: 20px 22px;
+    overflow-x: auto; font-size: 13px; line-height: 1.7;
+    font-family: var(--font-mono); margin: 14px 0;
+  }
+  .codeblock .c { color: var(--mid); }
+  .codeblock .k { color: var(--orange); }
+  .codeblock .s { color: #9ab98a; }
+  .code-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 8px; color: var(--mid);
+  }
+  .code-label .tag { padding: 3px 10px; border-radius: 999px; font-weight: 500; font-size: 10.5px; color: var(--light); }
+  .code-label .tag.t { background: var(--orange); }
+  .code-label .tag.c { background: var(--blue); }
+  .code-label .tag.r { background: var(--green); }
+
+  /* ---------- adapt cards ---------- */
+  .teams {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  }
+  @media (max-width: 860px) { .teams { grid-template-columns: 1fr; } }
+  .team-card {
+    padding: 20px 22px;
+    border: 1px solid var(--light-gray); border-radius: var(--radius);
+    background: #fff;
+  }
+  .team-card .num {
+    font-family: var(--font-head); font-weight: 700;
+    font-size: 1.4rem; line-height: 1; margin-bottom: 8px;
+  }
+  .team-card.a .num { color: var(--orange); }
+  .team-card.b .num { color: var(--blue); }
+  .team-card.c .num { color: var(--green); }
+  .team-card h4 { font-size: 1.02rem; margin: 0 0 4px; }
+  .team-card .tagline {
+    font-family: var(--font-head); font-size: 13px; color: var(--mid);
+    margin-bottom: 12px;
+  }
+  .team-card .label {
+    font-family: var(--font-head); font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; margin-top: 12px; margin-bottom: 4px;
+    color: var(--mid);
+  }
+  .team-card .label.keep { color: var(--green); }
+  .team-card .label.change { color: var(--orange); }
+  .team-card ul { margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.5; }
+  .team-card li { margin-bottom: 3px; }
+  .team-card code { font-size: 12px; }
+
+  /* ---------- brownfield traps (NEW) ---------- */
+  .traps { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+  .trap {
+    padding: 14px 18px; background: #fff;
+    border: 1px solid var(--light-gray); border-radius: 10px;
+    border-left: 3px solid var(--red);
+  }
+  .trap .trap-label {
+    font-family: var(--font-head); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+    margin-bottom: 4px;
+  }
+  .trap h4 { font-size: 0.98rem; margin: 0 0 6px; }
+  .trap p { margin: 0; font-size: 14px; line-height: 1.55; }
+  .trap code { font-size: 12.5px; }
+
+  /* ---------- sources / further reading ---------- */
+  .sources {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    margin-top: 20px;
+  }
+  @media (max-width: 720px) { .sources { grid-template-columns: 1fr; } }
+  .source {
+    padding: 16px 18px; border: 1px solid var(--light-gray);
+    border-radius: 10px; text-decoration: none; color: var(--dark);
+    background: #fff; display: block; transition: border-color .15s ease;
+  }
+  .source:hover { border-color: var(--dark); color: var(--dark); }
+  .source .tag {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 6px; display: block;
+  }
+  .source h4 { font-size: 0.96rem; margin: 0 0 4px; }
+  .source p { font-size: 13px; margin: 0; opacity: .8; }
+
+  /* ---------- callout ---------- */
+  .callout {
+    padding: 18px 22px; border-left: 3px solid var(--orange);
+    margin: 24px 0; background: transparent;
+  }
+  .callout p { margin: 0; font-size: 15px; }
+  .callout p + p { margin-top: 8px; }
+  .callout.blue { border-left-color: var(--blue); }
+  .callout.green { border-left-color: var(--green); }
+
+  /* ---------- toggle switch (shared with demo) ---------- */
+  .ix-toggle {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-head); font-size: 12.5px;
+    cursor: pointer; user-select: none;
+  }
+  .ix-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .ix-toggle .track {
+    width: 38px; height: 20px;
+    background: var(--light-gray); border-radius: 999px;
+    position: relative; transition: background .2s ease; flex-shrink: 0;
+  }
+  .ix-toggle .track::after {
+    content: ""; position: absolute; top: 3px; left: 3px;
+    width: 14px; height: 14px; background: var(--light);
+    border-radius: 50%; transition: transform .2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+  }
+  .ix-toggle input:checked + .track { background: var(--orange); }
+  .ix-toggle input:checked + .track::after { transform: translateX(18px); }
+  .ix-toggle input:focus-visible + .track { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+  [hidden] { display: none !important; }
+
+  /* ---------- deep interactive demo (single #demo section) ---------- */
+  .demo-wrap {
+    display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+    margin-top: 18px;
+  }
+  @media (max-width: 780px) { .demo-wrap { grid-template-columns: 1fr; } }
+  .demo-stepper {
+    display: flex; flex-direction: column; gap: 8px;
+    background: #fff; border: 1px solid var(--light-gray);
+    border-radius: var(--radius); padding: 14px;
+    align-self: start; position: sticky; top: 84px;
+  }
+  @media (max-width: 780px) { .demo-stepper { position: static; flex-direction: row; flex-wrap: wrap; } }
+  .demo-stepper .stp-head {
+    font-family: var(--font-head); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid);
+    padding: 4px 4px 6px;
+  }
+  .demo-step-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 8px;
+    border: 1px solid transparent; background: transparent;
+    font-family: var(--font-head); font-size: 13px; font-weight: 500;
+    color: var(--dark); cursor: pointer; text-align: left;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .demo-step-btn:hover { background: var(--light); }
+  .demo-step-btn.active { background: var(--light-gray); border-color: var(--dark); font-weight: 600; }
+  .demo-step-btn .sdot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--mid);
+    flex-shrink: 0;
+  }
+  .demo-step-btn[data-step="0"] .sdot { background: var(--mid); }
+  .demo-step-btn[data-step="T"] .sdot { background: var(--orange); }
+  .demo-step-btn[data-step="C"] .sdot { background: var(--blue); }
+  .demo-step-btn[data-step="R"] .sdot { background: var(--green); }
+  .demo-step-btn.locked { color: var(--mid); }
+
+  .demo-stage {
+    background: #fff; border: 1px solid var(--light-gray);
+    border-radius: var(--radius); padding: 22px 24px;
+  }
+  .demo-stage__head {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .demo-stage__kicker {
+    font-family: var(--font-head); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange);
+  }
+  .demo-stage__title {
+    font-family: var(--font-head); font-weight: 700; font-size: 1.12rem;
+    margin: 0;
+  }
+  .demo-stage__lede {
+    font-family: var(--font-head); font-size: 13px; color: var(--dim);
+    margin: 0 0 14px;
+  }
+
+  .demo-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .demo-preset {
+    padding: 5px 11px; font-family: var(--font-head); font-size: 11.5px;
+    border: 1px solid var(--light-gray); border-radius: 999px;
+    background: var(--light); color: var(--dark); cursor: pointer;
+  }
+  .demo-preset:hover { border-color: var(--dark); }
+  .demo-preset.active { background: var(--dark); color: var(--light); border-color: var(--dark); }
+
+  .demo-app {
+    background: var(--light); border: 1px solid var(--light-gray);
+    border-radius: 10px; padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .demo-ask {
+    display: flex; gap: 8px; align-items: center;
+  }
+  .demo-ask input[type="text"] {
+    flex: 1; padding: 9px 12px;
+    font-family: var(--font-body); font-size: 14px;
+    border: 1px solid var(--light-gray); border-radius: 8px;
+    background: #fff; color: var(--dark);
+  }
+  .demo-ask input[type="text"]:focus { outline: 2px solid var(--orange); outline-offset: 1px; border-color: var(--orange); }
+  .demo-ask .demo-run {
+    padding: 9px 14px; font-family: var(--font-head); font-size: 12.5px; font-weight: 600;
+    background: var(--dark); color: var(--light);
+    border: 1px solid var(--dark); border-radius: 8px; cursor: pointer;
+  }
+  .demo-ask .demo-run:hover { background: var(--orange); border-color: var(--orange); }
+  .demo-ask .demo-run:disabled { opacity: .5; cursor: not-allowed; }
+
+  .demo-inputmsg {
+    font-family: var(--font-head); font-size: 12px;
+    padding: 8px 10px; border-radius: 6px;
+  }
+  .demo-inputmsg.red { background: rgba(192,122,110,.1); border: 1px solid rgba(192,122,110,.3); color: var(--red); }
+  .demo-inputmsg.yellow { background: rgba(212,168,75,.14); border: 1px solid rgba(212,168,75,.35); color: #8a6e20; }
+
+  .demo-sqlblock {
+    background: var(--dark); color: var(--light); border-radius: 8px;
+    overflow: hidden;
+  }
+  .demo-sqlblock__head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px; background: rgba(255,255,255,.05);
+    font-family: var(--font-head); font-size: 10.5px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid);
+  }
+  .demo-sqlblock__head .toggle-sql {
+    background: transparent; border: none; color: var(--light);
+    cursor: pointer; font-family: var(--font-head); font-size: 11px;
+    padding: 2px 8px;
+  }
+  .demo-sqlblock__head .toggle-sql:hover { color: var(--orange); }
+  .demo-sqlblock__head .conf {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-head); font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px;
+  }
+  .demo-sqlblock__head .conf.green { background: rgba(120,140,93,.25); color: #cdd9b5; }
+  .demo-sqlblock__head .conf.yellow { background: rgba(212,168,75,.25); color: #eed196; }
+  .demo-sqlblock__head .conf .cdot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  .demo-sqltext {
+    padding: 12px 14px; font-family: var(--font-mono); font-size: 12.5px;
+    line-height: 1.6; white-space: pre-wrap; word-break: break-word;
+  }
+  .demo-sqltext .k { color: var(--orange); }
+  .demo-sqltext .s { color: #9ab98a; }
+  .demo-sqltext .n { color: var(--yellow); }
+  .demo-sqltext[contenteditable="true"] {
+    outline: 1px dashed var(--orange); outline-offset: -1px; cursor: text;
+    background: rgba(217,119,87,0.08);
+  }
+  .demo-sqltext[contenteditable="true"]:focus { outline: 2px solid var(--orange); }
+
+  .demo-sqlactions {
+    display: flex; gap: 6px; padding: 8px 12px; background: rgba(255,255,255,.03);
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+  .demo-sqlactions button {
+    background: transparent; color: var(--light);
+    border: 1px solid rgba(255,255,255,.2); border-radius: 6px;
+    padding: 4px 10px; font-family: var(--font-head); font-size: 11px;
+    cursor: pointer;
+  }
+  .demo-sqlactions button:hover { border-color: var(--orange); color: var(--orange); }
+
+  .demo-chart { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .demo-bar-row {
+    display: grid; grid-template-columns: 180px 1fr 50px; gap: 10px;
+    align-items: center; font-family: var(--font-head); font-size: 12.5px;
+  }
+  @media (max-width: 640px) { .demo-bar-row { grid-template-columns: 110px 1fr 40px; } }
+  .demo-bar-row .bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .demo-bar-row .bar-track { display: block; height: 18px; background: var(--light-gray); border-radius: 5px; overflow: hidden; }
+  .demo-bar-row .bar-fill { display: block; height: 100%; background: var(--orange); border-radius: 5px; transition: width .45s cubic-bezier(.3,.7,.4,1); }
+  .demo-bar-row.baseline .bar-fill { background: var(--mid); }
+  .demo-bar-row .bar-val { font-variant-numeric: tabular-nums; text-align: right; }
+
+  .demo-rawtable {
+    margin-top: 8px; border: 1px solid var(--light-gray); border-radius: 6px;
+    overflow: hidden; font-family: var(--font-head); font-size: 12px;
+  }
+  .demo-rawtable table { width: 100%; border-collapse: collapse; }
+  .demo-rawtable th, .demo-rawtable td {
+    text-align: left; padding: 6px 9px;
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .demo-rawtable th {
+    background: #fafaf8; color: var(--mid);
+    font-weight: 500; font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: .06em;
+  }
+  .demo-rawtable tr:last-child td { border-bottom: none; }
+  .demo-rawtable .raw-head {
+    padding: 6px 9px; background: #fafaf8; color: var(--mid);
+    font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .demo-meta {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    font-family: var(--font-head); font-size: 11.5px; color: var(--dim);
+  }
+  .demo-caption {
+    font-family: var(--font-head); font-size: 11.5px; color: var(--dim);
+    padding-top: 4px;
+  }
+
+  .demo-error {
+    padding: 12px 14px; border: 1px solid var(--red); border-left: 3px solid var(--red);
+    border-radius: 8px; background: rgba(192,122,110,.06);
+  }
+  .demo-error .err-title {
+    font-family: var(--font-head); font-weight: 600; color: var(--red);
+    font-size: 13px; margin-bottom: 4px;
+  }
+  .demo-error .err-msg { font-size: 13px; margin-bottom: 10px; }
+  .demo-error.baseline {
+    border-color: var(--mid); background: #f0eee6;
+    text-align: center; font-family: var(--font-head);
+  }
+  .demo-error.baseline .err-title { color: var(--dim); }
+
+  .demo-actions {
+    margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;
+    align-items: center; padding-top: 14px;
+    border-top: 1px dashed var(--light-gray);
+  }
+  .demo-paste-btn {
+    padding: 10px 18px;
+    font-family: var(--font-head); font-size: 13px; font-weight: 600;
+    color: var(--light); border: 1px solid var(--dark); background: var(--dark);
+    border-radius: 8px; cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  .demo-paste-btn:hover { background: var(--orange); border-color: var(--orange); }
+  .demo-paste-btn.t { background: var(--orange); border-color: var(--orange); }
+  .demo-paste-btn.c { background: var(--blue); border-color: var(--blue); }
+  .demo-paste-btn.r { background: var(--green); border-color: var(--green); }
+
+  .demo-reset {
+    margin-left: auto; padding: 8px 14px; background: transparent;
+    border: 1px solid var(--light-gray); color: var(--dark);
+    font-family: var(--font-head); font-size: 12px; cursor: pointer;
+    border-radius: 8px;
+  }
+  .demo-reset:hover { border-color: var(--dark); }
+
+  .demo-toggles {
+    display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+    margin-top: 10px; padding: 10px 0 0;
+  }
+
+  .demo-note {
+    margin-top: 10px; padding: 10px 12px;
+    background: rgba(212,168,75,.1); border: 1px solid rgba(212,168,75,.3);
+    border-left: 3px solid var(--yellow);
+    border-radius: 6px;
+    font-family: var(--font-head); font-size: 12.5px;
+    color: #8a6e20;
+  }
+
+  .demo-modal {
+    position: fixed; inset: 0; background: rgba(20,20,19,.55);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200; padding: 20px;
+  }
+  .demo-modal__body {
+    background: #fff; border-radius: var(--radius);
+    padding: 22px 24px; max-width: 440px; width: 100%;
+    border-left: 4px solid var(--red);
+  }
+  .demo-modal__body h4 {
+    margin: 0 0 8px; color: var(--red);
+    font-family: var(--font-head); font-size: 15px;
+  }
+  .demo-modal__body p { font-size: 14px; margin: 0 0 14px; }
+  .demo-modal__body .row {
+    display: flex; gap: 8px; justify-content: flex-end;
+  }
+  .demo-modal__body button {
+    padding: 8px 14px; font-family: var(--font-head); font-size: 12.5px;
+    border-radius: 6px; cursor: pointer;
+  }
+  .demo-modal__body .cancel {
+    background: transparent; border: 1px solid var(--light-gray); color: var(--dark);
+  }
+  .demo-modal__body .confirm {
+    background: var(--red); border: 1px solid var(--red); color: var(--light);
+  }
+
+  /* ---------- footer ---------- */
+  footer {
+    padding: 36px 0 48px; border-top: 1px solid var(--light-gray);
+    font-family: var(--font-head); font-size: 13.5px; opacity: .85;
+  }
+  footer .row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; }
+  footer .brand { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  footer .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+  footer ul { list-style: none; display: flex; flex-wrap: wrap; gap: 18px; margin: 0; padding: 0; }
+  footer a { text-decoration: none; opacity: .72; }
+  footer a:hover { opacity: 1; color: var(--orange); }
+  footer .legal { font-size: 12px; opacity: .55; margin-top: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* footnote list */
+  .footnotes {
+    margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--light-gray);
+    font-family: var(--font-head); font-size: 12.5px; opacity: .88;
+  }
+  .footnotes ol { padding-left: 24px; counter-reset: fn; list-style: decimal; }
+  .footnotes li { margin-bottom: 6px; line-height: 1.5; }
+  .footnotes a { color: var(--orange); text-decoration: none; }
+  .footnotes a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap row">
+    <div class="brand"><span class="dot" aria-hidden="true"></span>Query → Chart · Checklist + 3 prompt</div>
+    <ul>
+      <li><a href="#rules">5 điều bắt buộc</a></li>
+      <li><a href="#diagnostic">App có hợp không?</a></li>
+      <li><a href="#tcr">3 prompt</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#traps">Chỗ dễ sai</a></li>
+      <li><a href="#adapt">Biến thể</a></li>
+      <li><a href="#sources">Nguồn</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap-narrow">
+    <span class="eyebrow"><span class="bullet" aria-hidden="true"></span>VinUni A20 · Checklist + 3 prompt · Dùng với AI coding agent</span>
+    <h1>Query → <span class="accent">Chart</span>.</h1>
+    <p class="lede">
+      App của bạn cho người dùng <strong>hỏi tiếng Việt, trả chart</strong>? Trang này cho bạn: <strong>5 điều bắt buộc</strong> để app không vỡ, và <strong>3 prompt copy-paste</strong> để bổ sung những điều còn thiếu. Paste URL này vào Claude Code / Cursor / Windsurf — agent đọc trang, scan code hiện tại, biết sửa gì.
+    </p>
+    <div class="meta">
+      <span><svg class="sq" viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" fill="#d97757"/></svg>3 prompt · agent chạy ~2 phút mỗi cái</span>
+      <span><svg class="sq" viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" fill="#6a9bcc"/></svg>Chỉ thêm, không viết lại</span>
+      <span><svg class="sq" viewBox="0 0 8 8" aria-hidden="true"><rect width="8" height="8" fill="#788c5d"/></svg>Text-to-SQL · Digital Twin · Feedback analysis</span>
+    </div>
+
+    <!-- RULES CARD -->
+    <div class="rules-card" id="rules">
+      <div class="kicker">5 điều bắt buộc · chụp màn hình để xem lại</div>
+      <h2>5 điều bắt buộc để app hỏi-đáp dữ liệu của bạn không vỡ.</h2>
+      <ol>
+        <li>
+          <span class="tag-t">T</span>
+          <span class="rule-head">Cho người dùng xem câu SQL mà AI sinh ra.</span>
+          <span class="rule-sub">Đặt SQL trong một khối gập được ngay trên chart. Mặc định đóng, lần đầu tiên thì mở sẵn để người dùng biết là có. Nếu bạn giấu SQL, người dùng không có cách nào kiểm tra xem con số đúng hay sai — và họ sẽ không tin app.</span>
+          <div class="rule-chips">
+            <span class="chip evidence"><span class="c-dot"></span>Uber QueryGPT, Pinterest<sup><a href="#fn-uber">1</a><a href="#fn-pinterest">2</a></sup></span>
+            <span class="chip framework"><span class="c-dot"></span>Nielsen #1<sup><a href="#fn-nielsen">3</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-t">T</span>
+          <span class="rule-head">Chỉ hiện mức độ tự tin khi bạn đo được thật.</span>
+          <span class="rule-sub">Nếu app tính được độ tin cậy thật (ví dụ Uber chấm điểm similarity giữa câu hỏi và schema), hãy dùng ba màu xanh/vàng/đỏ. Nếu không đo được, đừng bịa ra số 87%. Thay vào đó hãy dùng cờ định tính kiểu Pinterest: "kết quả rỗng", "join đáng ngờ".</span>
+          <div class="rule-chips">
+            <span class="chip evidence"><span class="c-dot"></span>Uber, Pinterest<sup><a href="#fn-uber">1</a><a href="#fn-pinterest">2</a></sup></span>
+            <span class="chip framework"><span class="c-dot"></span>HAX G2<sup><a href="#fn-hax">4</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-c">C</span>
+          <span class="rule-head">Cho người dùng sửa thẳng câu SQL rồi chạy lại.</span>
+          <span class="rule-sub">Cho phép người dùng click vào câu SQL, chỉnh vài chữ, rồi bấm "Chạy lại". Khi AI gần đúng nhưng sai một chi tiết nhỏ (giới hạn số dòng sai, thiếu điều kiện lọc), sửa thẳng câu SQL nhanh hơn rất nhiều so với bắt họ viết lại câu hỏi từ đầu.</span>
+          <div class="rule-chips">
+            <span class="chip evidence"><span class="c-dot"></span>Uber duyệt table, Pinterest confirm schema<sup><a href="#fn-uber">1</a><a href="#fn-pinterest">2</a></sup></span>
+            <span class="chip framework"><span class="c-dot"></span>Nielsen #3, HAX G9<sup><a href="#fn-nielsen">3</a><a href="#fn-hax">4</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-r">R</span>
+          <span class="rule-head">Chặn câu hỏi nguy hiểm ở phía trình duyệt, trước khi gọi AI.</span>
+          <span class="rule-sub">Nếu câu hỏi chứa <code>DROP</code>, <code>DELETE</code>, <code>TRUNCATE</code>, hoặc ngắn dưới 5 ký tự, đừng gọi AI. Chặn ở phía client để tiết kiệm tiền và tránh rủi ro. Đừng trông chờ bản thân mô hình AI tự từ chối — nó không đáng tin cho việc đó.</span>
+          <div class="rule-chips">
+            <span class="chip framework"><span class="c-dot"></span>PAIR — Errors &amp; Graceful Failure<sup><a href="#fn-pair-errors">5</a></sup></span>
+          </div>
+        </li>
+        <li>
+          <span class="tag-r">R</span>
+          <span class="rule-head">Khi lỗi, hiện lỗi cụ thể và giữ nguyên câu hỏi gốc.</span>
+          <span class="rule-sub">Đặt thời gian chờ tối đa 15 giây. Khi lỗi, hiện thẻ lỗi với dòng chữ cụ thể (ví dụ "Gemini API timeout") — không dùng câu chung chung kiểu "Something went wrong". Nút "Thử lại" phải chạy lại với câu hỏi cũ đã giữ trong state. Người dùng không phải gõ lại.</span>
+          <div class="rule-chips">
+            <span class="chip framework"><span class="c-dot"></span>Nielsen #9, HAX G11<sup><a href="#fn-nielsen">3</a><a href="#fn-hax">4</a></sup></span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="remember">
+      <div class="rl">Nếu không nhớ nổi 5 điều, nhớ 3 dòng này là đủ</div>
+      <h3>Ba dòng tối thiểu để app hỏi-đáp dữ liệu không vỡ.</h3>
+      <ul>
+        <li><strong>T · Hiện câu SQL ra.</strong> Nếu giấu, người dùng không có cách nào biết con số đúng hay sai.</li>
+        <li><strong>C · Cho sửa câu SQL rồi chạy lại.</strong> AI là bản nháp đầu tiên, người dùng là người biên tập.</li>
+        <li><strong>R · Chặn câu hỏi xấu trước khi gọi AI, giữ câu hỏi gốc khi lỗi, có nút thử lại.</strong> Ba thứ đó, không hơn.</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<!-- DEEP INTERACTIVE DEMO -->
+<section id="demo">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Demo · paste từng prompt · thấy UI đổi</div>
+      <h2>App của bạn sau mỗi lần paste — bấm qua 4 trạng thái.</h2>
+      <p>Bắt đầu ở <strong>Chưa áp dụng</strong>: người dùng hỏi → chart hiện ra, không có câu SQL, không có cách kiểm tra. Bấm lần lượt <strong>Paste T · C · R</strong> để xem UI thay đổi sau mỗi lần. Bật "Ép lỗi" ở cuối để thấy thẻ báo lỗi kèm nút thử lại — chỉ có khi đã paste R.</p>
+    </div>
+
+    <div class="demo-wrap" data-demo>
+      <aside class="demo-stepper" aria-label="Tiến trình retrofit">
+        <div class="stp-head">Tiến trình</div>
+        <button class="demo-step-btn active" data-step="0" type="button"><span class="sdot" aria-hidden="true"></span>Chưa áp dụng</button>
+        <button class="demo-step-btn locked" data-step="T" type="button"><span class="sdot" aria-hidden="true"></span>+T · Hiện SQL</button>
+        <button class="demo-step-btn locked" data-step="C" type="button"><span class="sdot" aria-hidden="true"></span>+T+C · Sửa SQL</button>
+        <button class="demo-step-btn locked" data-step="R" type="button"><span class="sdot" aria-hidden="true"></span>+T+C+R · Bắt lỗi</button>
+      </aside>
+
+      <div class="demo-stage">
+        <div class="demo-stage__head">
+          <span class="demo-stage__kicker" data-stage-kicker>Trạng thái 1 / 4</span>
+          <h3 class="demo-stage__title" data-stage-title>Chưa áp dụng</h3>
+        </div>
+        <p class="demo-stage__lede" data-stage-lede>Người dùng gõ câu hỏi, app trả chart. Không có câu SQL hiện ra. Không có badge. Không có cách xem dữ liệu gốc. Khi lỗi: "Something went wrong."</p>
+
+        <div class="demo-presets" role="group" aria-label="Câu hỏi mẫu">
+          <button class="demo-preset active" data-preset="0" type="button">Top 5 môn có tỷ lệ fail cao nhất</button>
+          <button class="demo-preset" data-preset="1" type="button">Điểm trung bình theo khoá</button>
+        </div>
+
+        <div class="demo-app" data-app>
+          <!-- render target -->
+        </div>
+
+        <div class="demo-toggles">
+          <label class="ix-toggle">
+            <input type="checkbox" data-force-error />
+            <span class="track" aria-hidden="true"></span>
+            <span>Ép lỗi (để thấy cách xử lý)</span>
+          </label>
+        </div>
+        <div class="demo-note" data-note hidden></div>
+
+        <div class="demo-actions">
+          <button class="demo-paste-btn t" data-advance="T" type="button">Paste prompt T</button>
+          <button class="demo-paste-btn c" data-advance="C" type="button" hidden>Paste prompt C</button>
+          <button class="demo-paste-btn r" data-advance="R" type="button" hidden>Paste prompt R</button>
+          <button class="demo-reset" data-reset type="button">Reset về đầu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal for destructive SQL confirm (stage C) -->
+    <div class="demo-modal" data-modal hidden role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+      <div class="demo-modal__body">
+        <h4 id="demo-modal-title">Câu SQL chứa từ phá dữ liệu</h4>
+        <p>Câu truy vấn có chứa <code data-modal-kw>DROP</code>. Bấm xác nhận mới chạy.</p>
+        <div class="row">
+          <button class="cancel" type="button" data-modal-cancel>Huỷ</button>
+          <button class="confirm" type="button" data-modal-confirm>Vẫn chạy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC: does your app match this UI pattern? -->
+<section id="diagnostic">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Bước 1 · Kiểm tra trước khi paste</div>
+      <h2>App của bạn có đúng kiểu "hỏi → chart" không?</h2>
+      <p>Đọc 5 câu hỏi bên dưới và tự trả lời. Nếu hơn 3 câu trả lời "có", app của bạn thuộc đúng kiểu này và 3 prompt sẽ paste được. Nếu ít hơn, hãy xem các trang case khác.</p>
+    </div>
+
+    <div class="diag">
+      <div class="kicker">5 câu hỏi · tự trả lời</div>
+      <h3>App của bạn có những thứ sau không?</h3>
+      <ol>
+        <li><strong>Người dùng gõ một câu hỏi bằng tiếng Việt, ứng dụng gọi AI và nhận về câu SQL hoặc danh sách có cấu trúc?</strong> Không phải đoạn văn tự do.</li>
+        <li><strong>Kết quả cuối cùng hiện ra dưới dạng biểu đồ hoặc bảng</strong>, không phải đoạn text dài hay tin nhắn streaming.</li>
+        <li><strong>Khung nhập là một câu hỏi duy nhất</strong>, không phải form nhiều trường.</li>
+        <li><strong>Trong code có chỗ gọi AI và parse ra các mảng hoặc object</strong>, không chỉ là chat thường.</li>
+        <li><strong>Mỗi lần chạy, ứng dụng đều có một "câu truy vấn" hoặc "kế hoạch" do AI sinh ra</strong>, kể cả khi hiện đang ẩn.</li>
+      </ol>
+      <div class="verdict">
+        <strong>Trả lời "có" cho 3 câu trở lên</strong> → đi tiếp bước 2, paste 3 prompt.<br/>
+        <strong>Ít hơn 3 câu</strong> → app của bạn thuộc kiểu khác. Xem trang chat + nguồn (<code>01-case-chat-context.html</code>) hoặc trang duyệt (<code>06-case-queue-approval.html</code>). Nếu chưa chắc, mở Claude Code và hỏi bằng tiếng Việt: "app của mình có hợp kiểu Query → Chart không?"
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- T-C-R THREE PROMPTS (THE CORE) -->
+<section id="tcr">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Bước 2 · 3 prompt bổ sung</div>
+      <h2>Ba prompt copy-paste. Mỗi prompt thêm một lớp.</h2>
+      <p><strong>Paste từng cái, theo thứ tự T → C → R.</strong> Sau mỗi lần paste: bạn xem diff → test → commit → paste cái tiếp. Đừng paste cả ba cùng lúc.</p>
+      <ul class="tcr-order">
+        <li><span class="tag-t">T</span><strong>Hiện câu SQL</strong> — để người dùng xem AI đã sinh câu nào.</li>
+        <li><span class="tag-c">C</span><strong>Cho sửa câu SQL</strong> — người dùng sửa rồi chạy lại. Dựa trên bước T.</li>
+        <li><span class="tag-r">R</span><strong>Bắt lỗi</strong> — đặt thời gian chờ, nút thử lại, chặn câu hỏi xấu từ sớm. Bọc cả T và C nên làm cuối.</li>
+      </ul>
+    </div>
+
+    <!-- T -->
+    <div class="tcr t">
+      <div class="head">
+        <span class="letter">T</span>
+        <div>
+          <h3>T · Hiện câu SQL mà AI sinh ra</h3>
+          <span class="what">Chỉ thêm · ~15 dòng · agent chạy ~30s</span>
+        </div>
+      </div>
+
+      <div class="code-label"><span class="tag t">Prompt T</span> paste nguyên văn</div>
+      <pre class="codeblock"><span class="c"># Prompt T · Transparency · Query → Chart</span>
+
+Mỗi khi người dùng hỏi, show generated SQL (hoặc query plan) trong
+collapsible panel <span class="s">"Xem truy vấn"</span>. Trên kết quả, thêm
+badge confidence: xanh/vàng/đỏ + tooltip giải thích. Thêm
+dòng meta: <span class="s">"N rows · X ms · model: {model-name}"</span>. Nếu chart
+render, show nút <span class="s">"Xem data thô"</span> → table view. Additive
+only — không refactor existing components.</pre>
+
+      <div class="after-paste">
+        <h4>Sau khi paste, bạn sẽ thấy</h4>
+        <ul>
+          <li>Một dòng "Xem truy vấn" xuất hiện phía trên chart. Bấm vào sẽ xổ xuống câu SQL mà AI đã sinh.</li>
+          <li>Bên cạnh tiêu đề kết quả có một badge màu (xanh / vàng / đỏ) cho biết mức độ khớp schema.</li>
+          <li>Nếu lúc trước chỉ thấy chart, giờ có thêm nút "Xem data thô" để mở bảng dữ liệu gốc.</li>
+        </ul>
+      </div>
+
+      <div class="tcr-cite">
+        <strong>Framework ties.</strong> Nielsen #1 <span class="en">Visibility of system status — keep users informed about what is going on</span>.<sup class="cite"><a href="#fn-nielsen">3</a></sup> HAX G1 <span class="en">Make clear what the system can do</span> + G11 <span class="en">Make clear why the system did what it did</span>.<sup class="cite"><a href="#fn-hax">4</a></sup> PAIR <span class="en">Explainability + Trust</span> — hiện độ tin của model, giải thích từng phần, lộ thông tin từ từ.<sup class="cite"><a href="#fn-pair-trust">6</a></sup>
+      </div>
+
+    </div>
+
+    <!-- C -->
+    <div class="tcr c">
+      <div class="head">
+        <span class="letter">C</span>
+        <div>
+          <h3>C · Cho người dùng sửa câu SQL rồi chạy lại</h3>
+          <span class="what">Chỉ thêm · ~20 dòng · agent chạy ~45s</span>
+        </div>
+      </div>
+
+      <div class="code-label"><span class="tag c">Prompt C</span> paste nguyên văn</div>
+      <pre class="codeblock"><span class="c"># Prompt C · Control · Query → Chart</span>
+
+Nút <span class="s">"Sửa query"</span> cho người dùng edit generated query rồi re-run.
+Trước khi chạy, nếu query có <span class="s">DELETE/UPDATE/DROP</span>, hiện
+confirm modal. Keyboard: Enter = run, Esc = clear. Additive —
+primary run button giữ nguyên, edit button subordinate.</pre>
+
+      <div class="after-paste">
+        <h4>Sau khi paste, bạn sẽ thấy</h4>
+        <ul>
+          <li>Câu SQL có thể bấm vào và chỉnh trực tiếp, rồi có thêm một nút "Chạy lại" nhỏ bên cạnh nút chạy chính.</li>
+          <li>Nút chạy chính vẫn là nút nổi bật — nút "Chạy lại" chỉ là viền mảnh, phụ.</li>
+          <li>Nếu câu SQL đã sửa chứa <code>DROP</code>, <code>DELETE</code>, <code>TRUNCATE</code>, một hộp xác nhận sẽ hiện ra trước khi chạy.</li>
+        </ul>
+      </div>
+
+      <div class="tcr-cite">
+        <strong>Framework ties.</strong> Nielsen #3 <span class="en">User control and freedom — users need a clearly marked emergency exit</span>.<sup class="cite"><a href="#fn-nielsen">3</a></sup> HAX G9 <span class="en">Support efficient correction — make it easy to edit, refine, or recover when the AI system is wrong</span>.<sup class="cite"><a href="#fn-hax">4</a></sup> Pattern được Uber QueryGPT (duyệt table trước khi gen SQL) và Pinterest (trả top-K tables cho user xác nhận / sửa) xác nhận trên production.<sup class="cite"><a href="#fn-uber">1</a></sup><sup class="cite"><a href="#fn-pinterest">2</a></sup>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="tcr r">
+      <div class="head">
+        <span class="letter">R</span>
+        <div>
+          <h3>R · Chặn từ sớm, đặt thời gian chờ, thử lại không gõ lại</h3>
+          <span class="what">Chỉ thêm · ~25 dòng · agent chạy ~45s</span>
+        </div>
+      </div>
+
+      <div class="code-label"><span class="tag r">Prompt R</span> paste nguyên văn</div>
+      <pre class="codeblock"><span class="c"># Prompt R · Recovery · Query → Chart</span>
+
+Nếu query fail (syntax, timeout, empty result), show error
+card với: error text, nút <span class="s">"Thử lại"</span>, nút <span class="s">"Gợi ý lại"</span>
+(re-prompt LLM with error as context). Keep query history —
+nút <span class="s">"Quay lại câu trước"</span>. 15s hard timeout qua
+Promise.race. Prompt giữ nguyên trong state — không gõ lại.
+Pre-flight client-side: block destructive keywords + min
+length check TRƯỚC khi gọi LLM.</pre>
+
+      <div class="after-paste">
+        <h4>Sau khi paste, bạn sẽ thấy</h4>
+        <ul>
+          <li>Khi ngắt mạng hoặc gửi câu hỏi quá ngắn, app hiện thẻ báo lỗi với dòng chữ cụ thể (ví dụ "Gemini API timeout"), không phải "Something went wrong" chung chung.</li>
+          <li>Có nút "Thử lại" chạy lại đúng câu hỏi cũ. Người dùng không phải gõ lại.</li>
+          <li>Gõ <code>DROP TABLE x</code> vào ô hỏi — app chặn ngay ở trình duyệt, không gửi request nào tới AI.</li>
+        </ul>
+      </div>
+
+      <div class="tcr-cite">
+        <strong>Framework ties.</strong> Nielsen #9 <span class="en">Help users recognize, diagnose, and recover from errors — plain language, precisely indicate the problem, constructively suggest a solution</span>.<sup class="cite"><a href="#fn-nielsen">3</a></sup> HAX G8 <span class="en">Support efficient dismissal</span> + G11 <span class="en">Make clear why the system did what it did</span>.<sup class="cite"><a href="#fn-hax">4</a></sup> PAIR <span class="en">Errors + Graceful Failure</span> — phân loại lỗi (user / system / context) trước khi viết message.<sup class="cite"><a href="#fn-pair-errors">5</a></sup>
+      </div>
+
+    </div>
+
+    <div class="callout" style="margin-top: 28px;">
+      <p><strong>Vì sao phải đúng thứ tự T → C → R.</strong> Prompt C cần câu SQL hiện ra mới sửa được — nên T phải xong trước. Prompt R xử lý lỗi cho cả T và C, nên làm cuối cùng, sau khi hai cái kia đã ổn. Cách làm: paste một prompt → xem diff code → chạy thử → commit → rồi mới paste prompt tiếp theo. Đừng paste cả ba cùng lúc.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BROWNFIELD TRAPS -->
+<section id="traps">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Bước 3 · 5 chỗ dễ sai</div>
+      <h2>5 chỗ AI thường làm sai khi thêm vào app đã có sẵn.</h2>
+      <p>Đọc trước khi paste. Nếu gặp đúng tình huống nào, thêm câu hướng dẫn tương ứng vào đầu prompt rồi mới paste cho AI.</p>
+    </div>
+
+    <div class="traps">
+      <div class="trap">
+        <div class="trap-label">Tình huống 1 · File UI chính quá dài</div>
+        <h4>File hiển thị chart có hơn 500 dòng</h4>
+        <p>AI có thể sửa nhầm sang chỗ khác trong cùng file. Trước khi paste prompt, ghi thêm một câu chỉ rõ đường dẫn file cần sửa và nói AI không đụng vào phần còn lại. Ví dụ: <em>"chỉ sửa trong file <code>src/pages/Dashboard.tsx</code> — phần render chart và kết quả. Không đụng các phần khác của file."</em></p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 2 · Đã có chỗ xem SQL, nhưng giấu trong popup</div>
+        <h4>App cũ đã hiện được câu SQL, nhưng phải bấm nút mới mở ra</h4>
+        <p>AI thường thêm chỗ hiển thị thứ hai thay vì sửa chỗ cũ. Trong prompt, nói rõ: <em>"sửa đúng chỗ đang hiện SQL — không tạo component mới. Nếu đang nằm trong popup, chuyển nó thành khối gập được đặt thẳng trên chart, và bỏ nút bật popup."</em></p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 3 · AI tự đổi thư viện biểu đồ</div>
+        <h4>App đang dùng Plotly / ECharts / Chart.js — AI lại viết code theo Recharts</h4>
+        <p>AI có xu hướng viết theo thư viện quen nhất. Trong prompt, khoá lại: <em>"Dùng đúng thư viện chart đang có trong <code>package.json</code>. Không thêm thư viện mới, không đổi sang Recharts."</em> Plotly và Recharts có cú pháp hoàn toàn khác nhau — để AI tự đổi là hỏng.</p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 4 · AI gọi API thẳng, bỏ qua hàm trung gian</div>
+        <h4>App đã có hàm bọc sẵn để gọi AI (ví dụ <code>askLLM</code>) — nhưng AI viết lại <code>fetch</code> trực tiếp</h4>
+        <p>Đi đường tắt đồng nghĩa mất hết phần timeout, retry, log đang có. Trong prompt, viết: <em>"Mọi lời gọi AI đều phải đi qua hàm đang có trong repo (ví dụ <code>askLLM</code>). Không gọi <code>fetch</code> thẳng tới API. Nếu cần thêm tham số, sửa hàm đó trước, xong mới dùng."</em></p>
+      </div>
+
+      <div class="trap">
+        <div class="trap-label">Tình huống 5 · Lưu state sai chỗ</div>
+        <h4>App đang dùng Redux / Zustand / store riêng — AI lại lưu trong state của từng component</h4>
+        <p>Kết quả là lịch sử câu hỏi, câu hỏi gốc, cờ retry bị phân tán khắp nơi, rất khó debug. Trong prompt: <em>"Làm theo đúng cách app đang quản lý state. Nếu app có Redux hoặc Zustand, thêm các trường mới vào store đó. Không dùng <code>useState</code> riêng cho lịch sử câu hỏi, prompt gốc, hoặc trạng thái retry."</em></p>
+      </div>
+    </div>
+
+    <div class="callout green" style="margin-top: 24px;">
+      <p><strong>Một quy tắc chung.</strong> Trước khi paste bất kỳ prompt nào, hãy tự trả lời trong đầu ba câu: (1) File nào chứa UI chính? (2) App đang dùng thư viện biểu đồ nào? (3) Lời gọi AI đi qua hàm trung gian nào? Nếu bạn trả lời được cả ba, paste prompt nguyên xi là được. Nếu chưa chắc, mở Claude Code và hỏi bằng tiếng Việt trước: "đọc repo và cho mình biết ba chỗ này nằm ở đâu." Sau đó mới paste prompt T/C/R.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ADAPT -->
+<section id="adapt">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">App của bạn không phải text-to-SQL?</div>
+      <h2>Ba biến thể — phần lớn giữ nguyên, chỉ đổi kiểu dữ liệu đầu ra.</h2>
+      <p>3 prompt T/C/R ở trên viết cho trường hợp chạy SQL. Nếu app của bạn là mô phỏng (what-if) hoặc phân tích feedback, bạn <strong>dùng lại đúng 3 prompt đó</strong> — chỉ đổi nhãn hiển thị và hình dạng dữ liệu trả về. Không đụng vào khung T-C-R, không đụng vào hàm gọi AI.</p>
+    </div>
+
+    <div class="teams">
+      <article class="team-card a">
+        <span class="num">SQL</span>
+        <h4>App chạy SQL (text-to-SQL)</h4>
+        <div class="tagline">Hỏi bằng tiếng Việt · AI sinh câu SQL · chart</div>
+        <p style="font-size: 14px; opacity: .88;">Đúng kiểu gốc của trang này. Paste nguyên 3 prompt T/C/R.</p>
+
+        <div class="label keep">Giữ nguyên</div>
+        <ul>
+          <li>File UI chính</li>
+          <li>Khung T-C-R</li>
+          <li>Thư viện biểu đồ đang dùng</li>
+          <li>Dữ liệu trả về dạng "câu SQL + danh sách dòng"</li>
+        </ul>
+        <div class="label change">Chỉ đổi</div>
+        <ul>
+          <li>Mô tả bảng/cột trong prompt hệ thống</li>
+          <li>Các ví dụ câu hỏi gợi ý cho domain của bạn</li>
+          <li>Placeholder cho ô nhập</li>
+        </ul>
+      </article>
+
+      <article class="team-card b">
+        <span class="num">SIM</span>
+        <h4>App mô phỏng what-if (Digital Twin)</h4>
+        <div class="tagline">Đổi giả định · xem kết quả thay đổi</div>
+        <p style="font-size: 14px; opacity: .88;">Biểu đồ có hai đường để so sánh: kịch bản gốc và kịch bản giả định. Mỗi dòng có thêm tên kịch bản bên cạnh con số.</p>
+
+        <div class="label keep">Giữ nguyên</div>
+        <ul>
+          <li>Khung T-C-R và 3 prompt</li>
+          <li>Hàm gọi AI</li>
+          <li>Thư viện biểu đồ (cấu hình 2 đường)</li>
+          <li>Thẻ báo lỗi và timeout</li>
+        </ul>
+        <div class="label change">Chỉ đổi</div>
+        <ul>
+          <li>Dữ liệu trả về thêm cột "kịch bản"</li>
+          <li>Nhãn "Xem truy vấn" → "Xem kịch bản what-if"</li>
+          <li>Prompt hệ thống: luật mô phỏng thay vì schema SQL</li>
+        </ul>
+      </article>
+
+      <article class="team-card c">
+        <span class="num">NLP</span>
+        <h4>App phân tích feedback</h4>
+        <div class="tagline">Hàng nghìn đoạn văn tự do · nhóm theo chủ đề</div>
+        <p style="font-size: 14px; opacity: .88;">AI không sinh câu SQL — AI phân loại từng ý kiến vào nhóm. Nhưng kết quả cuối cùng vẫn là một danh sách để render chart.</p>
+
+        <div class="label keep">Giữ nguyên</div>
+        <ul>
+          <li>Ô nhập và nút chạy</li>
+          <li>Khung T-C-R: hiện kết quả, cho sửa, có retry</li>
+          <li>Thư viện biểu đồ</li>
+          <li>Thẻ báo lỗi</li>
+        </ul>
+        <div class="label change">Chỉ đổi</div>
+        <ul>
+          <li>Dữ liệu trả về: "tóm tắt phân loại + danh sách nhóm"</li>
+          <li>Nhãn "Xem truy vấn" → "Xem cách phân loại"</li>
+          <li>Prompt hệ thống: luật phân loại thay vì schema SQL</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="callout green" style="margin-top: 24px;">
+      <p><strong>Vì sao phần lớn giữ nguyên.</strong> Kiểu app này không phải về chạy SQL. Nó là về <strong>câu hỏi tự nhiên → dữ liệu có cấu trúc → biểu đồ</strong>. SQL chỉ là một cách để lấy dữ liệu có cấu trúc. Kịch bản what-if là một cách khác. Phân loại feedback là cách thứ ba. Đầu ra cuối cùng đều là một danh sách để vẽ chart — nên khung T-C-R dùng chung được. Cùng vỏ, đổi ruột.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section id="sources">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="kicker">Nguồn · đọc thêm</div>
+      <h2>Mọi kết luận trên trang này đều có nguồn.</h2>
+      <p>3 tài liệu đầu là nền tảng cho T-C-R. 2 blog Uber + Pinterest cho thấy pattern này đã chạy production thật, không phải lý thuyết.</p>
+    </div>
+
+    <div class="sources">
+      <a class="source" href="https://www.nngroup.com/articles/ten-usability-heuristics/" target="_blank" rel="noopener">
+        <span class="tag">Nielsen Norman Group · 1994</span>
+        <h4>10 Usability Heuristics for User Interface Design</h4>
+        <p>Jakob Nielsen. #1 Visibility of system status, #3 User control and freedom, #9 Help users recognize / diagnose / recover from errors. Cơ sở của T và R.</p>
+      </a>
+      <a class="source" href="https://www.microsoft.com/en-us/haxtoolkit/ai-guidelines/" target="_blank" rel="noopener">
+        <span class="tag">Microsoft · 2019</span>
+        <h4>HAX Toolkit · 18 Guidelines for Human-AI Interaction</h4>
+        <p>Amershi et al., CHI 2019 (Honorable Mention). G1-G2 (initially), G3-G6 (during), G7-G11 (when wrong), G12-G18 (over time). Cơ sở của C và nuance của T.</p>
+      </a>
+      <a class="source" href="https://pair.withgoogle.com/guidebook" target="_blank" rel="noopener">
+        <span class="tag">Google PAIR · updated 2023</span>
+        <h4>People + AI Guidebook</h4>
+        <p>Chapters relevant here: Explainability + Trust, Errors + Graceful Failure, Feedback + Control. Worked examples, anti-patterns, product cases.</p>
+      </a>
+      <a class="source" href="https://dl.acm.org/doi/10.1145/3290605.3300233" target="_blank" rel="noopener">
+        <span class="tag">CHI 2019 · paper</span>
+        <h4>Guidelines for Human-AI Interaction (full paper)</h4>
+        <p>Amershi, Weld, Vorvoreanu, Fourney, Nushi, Collisson, Suh, Iqbal, Bennett, Inkpen, Teevan, Kikin-Gil, Horvitz. ACM Digital Library.</p>
+      </a>
+      <a class="source" href="https://www.uber.com/us/en/blog/query-gpt/" target="_blank" rel="noopener">
+        <span class="tag">Uber Engineering</span>
+        <h4>QueryGPT — Natural Language to SQL Using GenAI</h4>
+        <p>Text-to-SQL chạy thật ở production. Có bước xác nhận bảng trước khi sinh SQL. SQL hiện kèm giải thích. Đánh giá bằng LLM-judge similarity (0-1) + Table Overlap. Sửa lỗi qua chat theo vòng.</p>
+      </a>
+      <a class="source" href="https://medium.com/pinterest-engineering/how-we-built-text-to-sql-at-pinterest-30bad30dabff" target="_blank" rel="noopener">
+        <span class="tag">Pinterest Engineering</span>
+        <h4>How we built Text-to-SQL at Pinterest</h4>
+        <p>Trả về top-K bảng để người dùng xác nhận trước khi sinh SQL. Stream SQL qua WebSocket. Tỉ lệ đúng lần đầu 20% → 40%+ sau khi lặp.</p>
+      </a>
+      <a class="source" href="https://pair.withgoogle.com/chapter/explainability-trust/" target="_blank" rel="noopener">
+        <span class="tag">PAIR · chapter</span>
+        <h4>Explainability + Trust</h4>
+        <p>Partial explanations, progressive disclosure, model confidence displays. Base cho "show query, không show chain-of-thought".</p>
+      </a>
+      <a class="source" href="https://pair.withgoogle.com/chapter/errors-failing-gracefully/" target="_blank" rel="noopener">
+        <span class="tag">PAIR · chapter</span>
+        <h4>Errors + Graceful Failure</h4>
+        <p>Phân loại lỗi (do người dùng / do hệ thống / do ngữ cảnh) trước khi viết thông báo. Nền tảng cho Recovery: chặn từ sớm + thông báo lỗi cụ thể.</p>
+      </a>
+    </div>
+
+    <div class="footnotes" id="footnotes">
+      <div class="kicker" style="font-family: var(--font-head); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); font-weight: 600; margin-bottom: 8px;">References cited inline</div>
+      <ol>
+        <li id="fn-uber">Uber Engineering. <em>QueryGPT — Natural Language to SQL Using Generative AI</em>. uber.com/us/en/blog/query-gpt/. Table approval step, SQL + explanation display, LLM-judge scoring, iterative error fix-up.</li>
+        <li id="fn-pinterest">Pinterest Engineering. <em>How we built Text-to-SQL at Pinterest</em>. medium.com/pinterest-engineering. WebSocket streaming SQL, top-K table validation, acceptance rate 20%→40%+.</li>
+        <li id="fn-nielsen">Nielsen, J. (1994, updated). <em>10 Usability Heuristics for User Interface Design</em>. Nielsen Norman Group. nngroup.com/articles/ten-usability-heuristics/.</li>
+        <li id="fn-hax">Amershi, S. et al. (2019). <em>Guidelines for Human-AI Interaction</em>. CHI 2019. Microsoft HAX Toolkit. microsoft.com/en-us/haxtoolkit/ai-guidelines/ · dl.acm.org/doi/10.1145/3290605.3300233.</li>
+        <li id="fn-pair-errors">Google PAIR. <em>People + AI Guidebook · Errors + Graceful Failure</em>. pair.withgoogle.com/chapter/errors-failing-gracefully/.</li>
+        <li id="fn-pair-trust">Google PAIR. <em>People + AI Guidebook · Explainability + Trust</em>. pair.withgoogle.com/chapter/explainability-trust/. Progressive disclosure, model confidence displays.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div class="brand"><span class="dot" aria-hidden="true"></span>Query → Chart · Checklist + 3 prompt</div>
+      <ul>
+        <li><a href="./01-case-chat-context.html">Case · Chat + Panel</a></li>
+        <li><a href="./06-case-queue-approval.html">Case · Queue + Approval</a></li>
+        <li><a href="#sources">Sources</a></li>
+      </ul>
+    </div>
+    <div class="legal">Workshop VinUni A20 · Session 1 · Checklist + 3 prompt · Dành cho AI coding agent đọc và apply vào repo</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------- deep interactive demo: T→C→R retrofit walkthrough ----------
+  (function setupDemo() {
+    var root = document.querySelector('[data-demo]');
+    if (!root) return;
+
+    var DESTRUCTIVE_RE = /\b(DROP|DELETE|TRUNCATE|ALTER)\b/i;
+
+    var PRESETS = [
+      {
+        question: 'Top 5 môn có tỷ lệ fail cao nhất',
+        sql: 'SELECT course, fail_rate\nFROM course_stats\nWHERE term = \'2024-fall\'\nORDER BY fail_rate DESC\nLIMIT 5;',
+        confidence: 'green',
+        confidenceLabel: 'khớp rõ · 5 cột schema',
+        bars: [
+          { label: 'Calculus I', value: 34, max: 40 },
+          { label: 'Organic Chem', value: 29, max: 40 },
+          { label: 'Data Structures', value: 24, max: 40 },
+          { label: 'Thermodynamics', value: 21, max: 40 },
+          { label: 'Intro to Stats', value: 18, max: 40 }
+        ],
+        barUnit: '% fail',
+        rawRows: [
+          { course: 'Calculus I', term: '2024-fall', enrolled: 312, failed: 106, fail_rate: '34%' },
+          { course: 'Organic Chem', term: '2024-fall', enrolled: 198, failed: 57, fail_rate: '29%' },
+          { course: 'Data Structures', term: '2024-fall', enrolled: 245, failed: 59, fail_rate: '24%' }
+        ],
+        rawCols: ['course', 'term', 'enrolled', 'failed', 'fail_rate']
+      },
+      {
+        question: 'Điểm trung bình theo khoá',
+        sql: 'SELECT cohort, AVG(gpa) AS avg_gpa\nFROM student_records\nWHERE status = \'active\'\nGROUP BY cohort\nORDER BY cohort DESC\nLIMIT 5;',
+        confidence: 'green',
+        confidenceLabel: 'khớp rõ · bảng chuẩn',
+        bars: [
+          { label: 'Khoá 2024', value: 3.42, max: 4 },
+          { label: 'Khoá 2023', value: 3.38, max: 4 },
+          { label: 'Khoá 2022', value: 3.35, max: 4 },
+          { label: 'Khoá 2021', value: 3.29, max: 4 },
+          { label: 'Khoá 2020', value: 3.24, max: 4 }
+        ],
+        barUnit: '/4.0',
+        rawRows: [
+          { cohort: 'Khoá 2024', avg_gpa: 3.42, students: 612, active: 598 },
+          { cohort: 'Khoá 2023', avg_gpa: 3.38, students: 588, active: 571 },
+          { cohort: 'Khoá 2022', avg_gpa: 3.35, students: 554, active: 530 }
+        ],
+        rawCols: ['cohort', 'avg_gpa', 'students', 'active']
+      }
+    ];
+
+    var STAGE_INFO = {
+      '0': {
+        kicker: 'Trạng thái 1 / 4',
+        title: 'Chưa áp dụng',
+        lede: 'Người dùng gõ câu hỏi, app trả chart. Không có câu SQL hiện ra. Không có badge. Không có cách xem dữ liệu gốc.'
+      },
+      'T': {
+        kicker: 'Trạng thái 2 / 4 · +T',
+        title: 'Sau khi paste prompt T',
+        lede: 'Có dòng "Xem truy vấn" gập được ngay trên chart — bấm để xem câu SQL. Badge mức độ khớp hiện bên cạnh. Nút "Xem data thô" mở bảng dữ liệu gốc.'
+      },
+      'C': {
+        kicker: 'Trạng thái 3 / 4 · +T+C',
+        title: 'Sau khi paste prompt T+C',
+        lede: 'Bấm vào câu SQL để sửa trực tiếp — ví dụ đổi LIMIT 5 thành LIMIT 10, bấm "Chạy lại", chart tự vẽ lại. Nếu sửa thành DROP/DELETE, app hiện hộp xác nhận trước khi chạy.'
+      },
+      'R': {
+        kicker: 'Trạng thái 4 / 4 · +T+C+R',
+        title: 'Sau khi paste prompt T+C+R',
+        lede: 'Gõ DROP TABLE hoặc câu dưới 5 ký tự — app chặn ngay ở ô nhập, không gọi AI. Bật "Ép lỗi" → hiện thẻ "Không gọi được mô hình · Thử lại", câu hỏi gốc vẫn giữ.'
+      }
+    };
+
+    var STAGE_ORDER = ['0', 'T', 'C', 'R'];
+
+    // single state
+    var state = {
+      stage: '0',
+      forceError: false,
+      preset: 0,
+      sqlText: PRESETS[0].sql, // the current SQL (may be edited at stage C / R)
+      showSQL: false,          // is the ▸ Xem truy vấn expanded?
+      showRaw: false,          // is the raw-data table open?
+      errorOn: false,          // actually showing the error card?
+      inputValue: PRESETS[0].question
+    };
+
+    // dom refs
+    var stepBtns = root.querySelectorAll('.demo-step-btn');
+    var presetBtns = root.querySelectorAll('.demo-preset');
+    var app = root.querySelector('[data-app]');
+    var forceToggle = root.querySelector('[data-force-error]');
+    var note = root.querySelector('[data-note]');
+    var advanceT = root.querySelector('[data-advance="T"]');
+    var advanceC = root.querySelector('[data-advance="C"]');
+    var advanceR = root.querySelector('[data-advance="R"]');
+    var resetBtn = root.querySelector('[data-reset]');
+    var kickerEl = root.querySelector('[data-stage-kicker]');
+    var titleEl = root.querySelector('[data-stage-title]');
+    var ledeEl = root.querySelector('[data-stage-lede]');
+    var modal = document.querySelector('[data-modal]');
+    var modalKw = modal.querySelector('[data-modal-kw]');
+    var modalCancel = modal.querySelector('[data-modal-cancel]');
+    var modalConfirm = modal.querySelector('[data-modal-confirm]');
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function highlightSQL(sql) {
+      var kw = /\b(SELECT|FROM|WHERE|GROUP BY|ORDER BY|LIMIT|AVG|SUM|COUNT|DESC|ASC|AND|OR|AS|IS|NULL)\b/g;
+      var out = escapeHtml(sql);
+      out = out.replace(kw, '<span class="k">$1</span>');
+      out = out.replace(/('[^']*')/g, '<span class="s">$1</span>');
+      out = out.replace(/\b(\d+)\b/g, '<span class="n">$1</span>');
+      return out;
+    }
+
+    // parse LIMIT N from SQL — used to clip bars when user edits LIMIT
+    function parseLimit(sql) {
+      var m = sql.match(/\bLIMIT\s+(\d+)/i);
+      return m ? parseInt(m[1], 10) : null;
+    }
+
+    function renderBars(preset, limitN) {
+      var bars = preset.bars.slice(0);
+      var n = typeof limitN === 'number' ? limitN : bars.length;
+      // if limit > bars.length, synthesize extra mock bars
+      while (bars.length < n) {
+        var extraIdx = bars.length;
+        var fallback = { label: 'Môn #' + (extraIdx + 1), value: Math.max(1, bars[bars.length - 1].value - 2 - extraIdx), max: bars[0].max };
+        bars.push(fallback);
+      }
+      bars = bars.slice(0, n);
+      var max = Math.max.apply(null, bars.map(function (b) { return b.max || b.value; }));
+      var baselineCls = state.stage === '0' ? ' baseline' : '';
+      return '<div class="demo-chart" role="list" aria-label="Chart kết quả">' +
+        bars.map(function (b) {
+          var pct = Math.round((b.value / max) * 100);
+          return '<div class="demo-bar-row' + baselineCls + '" role="listitem">' +
+            '<span class="bar-label">' + escapeHtml(b.label) + '</span>' +
+            '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%"></span></span>' +
+            '<span class="bar-val">' + b.value + '</span>' +
+            '</div>';
+        }).join('') +
+        '</div>' +
+        '<div class="demo-caption">' + bars.length + ' dòng · ' + escapeHtml(preset.barUnit) + '</div>';
+    }
+
+    function renderRawTable(preset) {
+      var cols = preset.rawCols;
+      var rows = preset.rawRows;
+      return '<div class="demo-rawtable">' +
+        '<div class="raw-head">Dữ liệu thô · bảng <code>course_stats</code></div>' +
+        '<table><thead><tr>' +
+        cols.map(function (c) { return '<th>' + escapeHtml(c) + '</th>'; }).join('') +
+        '</tr></thead><tbody>' +
+        rows.map(function (r) {
+          return '<tr>' + cols.map(function (c) { return '<td>' + escapeHtml(String(r[c])) + '</td>'; }).join('') + '</tr>';
+        }).join('') +
+        '</tbody></table></div>';
+    }
+
+    function renderSQLBlock(preset) {
+      var editable = (state.stage === 'C' || state.stage === 'R');
+      var confCls = state.stage === '0' ? '' : (preset.confidence || 'green');
+      var confHtml = state.stage === '0' ? '' :
+        '<span class="conf ' + confCls + '"><span class="cdot" aria-hidden="true"></span>' + escapeHtml(preset.confidenceLabel) + '</span>';
+
+      if (!state.showSQL) {
+        return '<div class="demo-sqlblock">' +
+          '<div class="demo-sqlblock__head">' +
+            '<button type="button" class="toggle-sql" data-toggle-sql>▸ Xem truy vấn</button>' +
+            confHtml +
+          '</div>' +
+          '</div>';
+      }
+
+      var sqlHtml = highlightSQL(state.sqlText);
+      var actions = editable ?
+        '<div class="demo-sqlactions">' +
+          '<button type="button" data-run-sql>Chạy lại</button>' +
+          '<button type="button" data-reset-sql>Khôi phục câu gốc</button>' +
+        '</div>' : '';
+
+      return '<div class="demo-sqlblock">' +
+        '<div class="demo-sqlblock__head">' +
+          '<button type="button" class="toggle-sql" data-toggle-sql>▾ Ẩn truy vấn</button>' +
+          confHtml +
+        '</div>' +
+        '<div class="demo-sqltext"' + (editable ? ' contenteditable="true" spellcheck="false" data-sql-edit' : '') + '>' +
+          sqlHtml +
+        '</div>' +
+        actions +
+        '</div>';
+    }
+
+    // validate input (only active at stage R)
+    function validateInput(v) {
+      if (state.stage !== 'R') return { ok: true };
+      var t = (v || '').trim();
+      if (t.length === 0) return { ok: true }; // don't nag on empty
+      if (t.length < 5) return { ok: false, level: 'red', msg: 'Câu hỏi quá ngắn (' + t.length + ' ký tự) — app chặn trước khi gọi AI.' };
+      if (DESTRUCTIVE_RE.test(t)) return { ok: false, level: 'red', msg: 'Phát hiện từ phá dữ liệu — câu hỏi bị chặn ngay ở ô nhập, không gọi AI.' };
+      return { ok: true };
+    }
+
+    function renderApp() {
+      var preset = PRESETS[state.preset];
+      var limitN = parseLimit(state.sqlText);
+      var inputValidation = validateInput(state.inputValue);
+
+      // stage 0: simplest — ask input + chart, no SQL, no badge, no raw view
+      if (state.stage === '0') {
+        app.innerHTML =
+          '<div class="demo-ask">' +
+            '<input type="text" data-input value="' + escapeHtml(state.inputValue) + '" aria-label="Câu hỏi" />' +
+            '<button class="demo-run" type="button" data-run>Chạy</button>' +
+          '</div>' +
+          renderBars(preset);
+        return;
+      }
+
+      // stage T, C, R: full app
+      var inputMsg = '';
+      if (state.stage === 'R' && !inputValidation.ok) {
+        inputMsg = '<div class="demo-inputmsg ' + inputValidation.level + '">' + escapeHtml(inputValidation.msg) + '</div>';
+      }
+      var rawBlock = state.showRaw ? renderRawTable(preset) : '';
+      var rawBtnLabel = state.showRaw ? 'Ẩn data thô' : 'Xem data thô';
+      var errorBlock = '';
+      if (state.errorOn && state.stage === 'R') {
+        errorBlock =
+          '<div class="demo-error" role="alert">' +
+            '<div class="err-title">Không gọi được mô hình · Gemini API timeout (>15 giây)</div>' +
+            '<div class="err-msg">Câu hỏi của bạn vẫn đây. Không phải gõ lại. Bấm "Thử lại" để chạy lại.</div>' +
+            '<button class="demo-run" type="button" data-retry>Thử lại</button>' +
+          '</div>';
+      }
+
+      app.innerHTML =
+        '<div class="demo-ask">' +
+          '<input type="text" data-input value="' + escapeHtml(state.inputValue) + '" aria-label="Câu hỏi" />' +
+          '<button class="demo-run" type="button" data-run' + (state.stage === 'R' && !inputValidation.ok ? ' disabled' : '') + '>Chạy</button>' +
+        '</div>' +
+        inputMsg +
+        renderSQLBlock(preset) +
+        renderBars(preset, limitN) +
+        '<div class="demo-meta">' +
+          '<button class="toggle-sql" style="border:1px solid var(--light-gray); background:#fff; color:var(--dark); padding:4px 10px; border-radius:6px; cursor:pointer; font-family:var(--font-head); font-size:11.5px;" type="button" data-toggle-raw>' + rawBtnLabel + '</button>' +
+          '<span>bảng: <code>' + (state.preset === 0 ? 'course_stats' : 'student_records') + '</code> · ~45 dòng · mô hình: gemini-1.5-pro</span>' +
+        '</div>' +
+        rawBlock +
+        errorBlock;
+    }
+
+    function updateStepper() {
+      stepBtns.forEach(function (btn) {
+        var s = btn.getAttribute('data-step');
+        btn.classList.toggle('active', s === state.stage);
+        var order = STAGE_ORDER.indexOf(s);
+        var current = STAGE_ORDER.indexOf(state.stage);
+        btn.classList.toggle('locked', order > current);
+      });
+    }
+
+    function updateAdvance() {
+      advanceT.hidden = (state.stage !== '0');
+      advanceC.hidden = (state.stage !== 'T');
+      advanceR.hidden = (state.stage !== 'C');
+    }
+
+    function updateStageHeader() {
+      var info = STAGE_INFO[state.stage];
+      kickerEl.textContent = info.kicker;
+      titleEl.textContent = info.title;
+      ledeEl.textContent = info.lede;
+    }
+
+    function updateNote() {
+      // "Ép lỗi" only works at stage R; if user toggles it earlier, show inline note
+      if (forceToggle.checked && state.stage !== 'R') {
+        note.hidden = false;
+        note.textContent = 'Recovery chưa áp dụng — prompt R chưa paste. Paste tới +T+C+R để thấy thẻ "Không gọi được mô hình · Thử lại".';
+      } else {
+        note.hidden = true;
+        note.textContent = '';
+      }
+    }
+
+    function render() {
+      // "Ép lỗi" only takes effect at stage R (recovery applied)
+      state.errorOn = (state.stage === 'R' && forceToggle.checked);
+
+      updateStepper();
+      updateAdvance();
+      updateStageHeader();
+      updateNote();
+      renderApp();
+      wireAppEvents();
+    }
+
+    function wireAppEvents() {
+      var input = app.querySelector('[data-input]');
+      var runBtn = app.querySelector('[data-run]');
+      var retryBtn = app.querySelector('[data-retry]');
+      var toggleSql = app.querySelector('[data-toggle-sql]');
+      var toggleRaw = app.querySelector('[data-toggle-raw]');
+      var sqlEdit = app.querySelector('[data-sql-edit]');
+      var runSqlBtn = app.querySelector('[data-run-sql]');
+      var resetSqlBtn = app.querySelector('[data-reset-sql]');
+
+      if (input) {
+        input.addEventListener('input', function (e) {
+          state.inputValue = e.target.value;
+          // for stage R, re-render to show validation msg in place
+          if (state.stage === 'R') render();
+        });
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') { e.preventDefault(); doRun(); }
+        });
+      }
+      if (runBtn) runBtn.addEventListener('click', doRun);
+      if (retryBtn) retryBtn.addEventListener('click', function () {
+        forceToggle.checked = false;
+        render();
+      });
+
+      if (toggleSql) {
+        toggleSql.addEventListener('click', function () {
+          state.showSQL = !state.showSQL;
+          render();
+        });
+      }
+      if (toggleRaw) {
+        toggleRaw.addEventListener('click', function () {
+          state.showRaw = !state.showRaw;
+          render();
+        });
+      }
+      if (sqlEdit) {
+        // capture live edits as plain text
+        sqlEdit.addEventListener('input', function () {
+          state.sqlText = sqlEdit.innerText.replace(/ /g, ' ');
+        });
+        sqlEdit.addEventListener('blur', function () {
+          // re-highlight on blur without losing state.sqlText
+          renderApp();
+          wireAppEvents();
+        });
+      }
+      if (runSqlBtn) {
+        runSqlBtn.addEventListener('click', function () {
+          if (DESTRUCTIVE_RE.test(state.sqlText)) {
+            // show confirm modal
+            var m = state.sqlText.match(DESTRUCTIVE_RE);
+            modalKw.textContent = (m ? m[0] : 'DROP').toUpperCase();
+            modal.hidden = false;
+          } else {
+            // just re-render — chart reflects new LIMIT
+            render();
+          }
+        });
+      }
+      if (resetSqlBtn) {
+        resetSqlBtn.addEventListener('click', function () {
+          state.sqlText = PRESETS[state.preset].sql;
+          render();
+        });
+      }
+    }
+
+    function doRun() {
+      // stage R: block if input invalid
+      if (state.stage === 'R') {
+        var v = validateInput(state.inputValue);
+        if (!v.ok) return; // already shown as inline message
+      }
+      render();
+    }
+
+    // stepper buttons (go back / jump)
+    stepBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = btn.getAttribute('data-step');
+        // allow jumping to any stage user has already reached OR backwards
+        var targetIdx = STAGE_ORDER.indexOf(target);
+        var currentIdx = STAGE_ORDER.indexOf(state.stage);
+        if (targetIdx <= currentIdx) {
+          state.stage = target;
+          // reset transient per-stage state so it looks clean
+          if (target === '0') { state.showSQL = false; state.showRaw = false; }
+          render();
+        }
+      });
+    });
+
+    // paste prompt advance buttons
+    advanceT.addEventListener('click', function () {
+      state.stage = 'T';
+      state.showSQL = true; // default opened first time so user sees T's effect
+      render();
+    });
+    advanceC.addEventListener('click', function () {
+      state.stage = 'C';
+      state.showSQL = true;
+      render();
+    });
+    advanceR.addEventListener('click', function () {
+      state.stage = 'R';
+      render();
+    });
+
+    resetBtn.addEventListener('click', function () {
+      state = {
+        stage: '0',
+        forceError: false,
+        preset: state.preset, // keep user's preset choice
+        sqlText: PRESETS[state.preset].sql,
+        showSQL: false,
+        showRaw: false,
+        errorOn: false,
+        inputValue: PRESETS[state.preset].question
+      };
+      forceToggle.checked = false;
+      render();
+    });
+
+    // preset switch
+    presetBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = parseInt(btn.getAttribute('data-preset'), 10);
+        state.preset = i;
+        state.sqlText = PRESETS[i].sql;
+        state.inputValue = PRESETS[i].question;
+        state.showRaw = false;
+        presetBtns.forEach(function (b, bi) { b.classList.toggle('active', bi === i); });
+        render();
+      });
+    });
+
+    // force-error toggle
+    forceToggle.addEventListener('change', render);
+
+    // modal
+    modalCancel.addEventListener('click', function () { modal.hidden = true; });
+    modalConfirm.addEventListener('click', function () {
+      modal.hidden = true;
+      // pretend to run — but we actually just re-render (destructive "ran")
+      // leave state alone but give visual acknowledgement via note
+      note.hidden = false;
+      note.textContent = 'Câu SQL chứa từ phá dữ liệu đã được xác nhận và chạy. Trong sản phẩm thật, đây là chỗ log audit trail.';
+      render();
+      // re-show the note again after render clears it
+      note.hidden = false;
+      note.textContent = 'Câu SQL chứa từ phá dữ liệu đã được xác nhận và chạy. Trong sản phẩm thật, đây là chỗ log audit trail.';
+    });
+
+    render();
+  })();
+})();
+</script>
+
+</body>
+</html>

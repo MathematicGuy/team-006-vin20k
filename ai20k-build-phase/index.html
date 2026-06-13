@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>buildflow — idea to deployed URL, through gates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F0EEE6; --paper-2:#E8E5DA; --ink:#1A1A18; --ink-soft:#46443E; --ink-faint:#73706A;
+    --rule:#D6D2C4; --clay:#CC785C; --clay-deep:#B5573C; --clay-wash:#E5D3C5;
+    --green:#5C7A5C; --max:1080px; --read:680px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+  body{background:var(--paper);color:var(--ink);font-family:"Inter",system-ui,sans-serif;font-size:18px;line-height:1.6;letter-spacing:-0.005em}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 32px}
+  .serif{font-family:"Newsreader","Iowan Old Style",Georgia,serif;font-weight:400;letter-spacing:-0.01em}
+  .mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:.84em}
+  code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86em;background:var(--clay-wash);padding:1px 6px;border-radius:4px;color:var(--clay-deep)}
+  a{color:var(--clay-deep);text-decoration:none;border-bottom:1px solid rgba(181,87,60,.35)}
+  a:hover{border-color:var(--clay-deep)}
+  #progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--clay);z-index:50;transition:width .1s linear}
+  header.bar{position:fixed;top:0;left:0;right:0;z-index:40;background:rgba(240,238,230,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{font-weight:600;font-size:15px;border:0}
+  .brand b{color:var(--clay-deep)}
+  nav.links{display:flex;gap:24px}
+  nav.links a{color:var(--ink-soft);font-size:14px;border:0}
+  nav.links a:hover{color:var(--clay-deep)}
+  @media(max-width:760px){nav.links{display:none}}
+  section{padding:96px 0;border-top:1px solid var(--rule)}
+  section:first-of-type{border-top:0}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--clay-deep);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--clay)}
+  h1{font-size:clamp(40px,6.4vw,72px);line-height:1.04;font-weight:400}
+  h1 em{font-style:italic;color:var(--clay-deep)}
+  h2{font-size:clamp(30px,4.4vw,46px);line-height:1.1;font-weight:400;max-width:18ch}
+  h3{font-size:20px;font-weight:500;font-family:"Inter",sans-serif}
+  p.lede{font-size:21px;line-height:1.55;color:var(--ink-soft);max-width:var(--read);margin-top:24px}
+  p.body{color:var(--ink-soft);max-width:var(--read);margin-top:18px}
+  .rv{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform .8s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+  #top{padding-top:168px;padding-bottom:88px}
+  .hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:38px}
+  .badge{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-soft);border:1px solid var(--rule);border-radius:100px;padding:7px 15px;background:var(--paper)}
+  .badge b{color:var(--clay-deep);font-weight:500}
+
+  /* flow rail */
+  .rail{margin-top:56px}
+  .rail-row{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+  .stage{flex:1 1 130px;min-width:118px;border:1px solid var(--rule);border-radius:10px;background:var(--paper-2);padding:14px 14px 12px;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+  .stage:hover,.stage.on{border-color:var(--clay);background:#EFE6DC}
+  .stage .sn{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-faint);letter-spacing:.08em}
+  .stage h4{font-size:15px;font-weight:600;margin-top:5px}
+  .stage .gate-dot{position:absolute;top:13px;right:13px;width:8px;height:8px;border-radius:50%;background:var(--clay)}
+  .stage.ship .gate-dot{background:var(--green)}
+  .rail-label{display:flex;gap:8px;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink-faint);letter-spacing:.06em}
+  .rail-label .pl{flex:6;border-top:2px solid var(--clay);padding-top:7px}
+  .rail-label .sh{flex:5;border-top:2px solid var(--green);padding-top:7px}
+  .gate-reveal{margin-top:26px;border:1px solid var(--rule);border-left:3px solid var(--clay);border-radius:10px;background:var(--paper-2);padding:20px 24px;max-width:var(--read)}
+  .gate-reveal .gq{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-deep);margin-bottom:8px}
+  .gate-reveal p{color:var(--ink-soft);font-size:16px}
+  .gate-reveal .art{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink-faint);margin-top:10px}
+
+  /* gate demo */
+  .demo{margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  @media(max-width:820px){.demo{grid-template-columns:1fr}}
+  .panel{border:1px solid var(--rule);border-radius:12px;background:var(--paper-2);overflow:hidden}
+  .panel .ph{padding:15px 20px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline}
+  .panel .ph h3{font-size:15px}
+  .panel .ph span{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em}
+  .gchecks{list-style:none;padding:12px 20px}
+  .gchecks li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--rule);font-size:15px;color:var(--ink-soft);cursor:pointer}
+  .gchecks li:last-child{border-bottom:0}
+  .gchecks .box{width:18px;height:18px;border:1.5px solid var(--ink-faint);border-radius:4px;flex:0 0 18px;margin-top:3px;display:grid;place-items:center;font-size:12px;color:var(--paper);transition:background .15s,border-color .15s}
+  .gchecks li.ck .box{background:var(--clay-deep);border-color:var(--clay-deep)}
+  .gchecks li.ck .box::after{content:"✓"}
+  .demo-act{display:flex;align-items:center;gap:16px;padding:6px 20px 20px}
+  .btn{font-family:"Inter",sans-serif;font-weight:500;font-size:15px;color:var(--paper);background:var(--clay-deep);border:0;border-radius:8px;padding:11px 22px;cursor:pointer;transition:background .2s,transform .1s}
+  .btn:hover{background:#9e4c34}
+  .btn:active{transform:translateY(1px)}
+  .term{padding:16px 20px 20px;font-family:"JetBrains Mono",monospace;font-size:13px;line-height:1.75;color:var(--ink-soft);min-height:230px;white-space:pre-wrap}
+  .term .fail{color:var(--clay-deep)}
+  .term .pass{color:var(--green)}
+  .term .dim{color:var(--ink-faint)}
+
+  /* rubric */
+  .rubric{margin-top:48px;border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+  .rrow{display:grid;grid-template-columns:90px 1fr 1.4fr;border-bottom:1px solid var(--rule)}
+  .rrow:last-child{border-bottom:0}
+  .rrow>div{padding:18px 22px}
+  .rrow .g{font-family:"Newsreader",serif;font-size:30px;color:var(--clay-deep);border-right:1px solid var(--rule)}
+  .rrow .m{font-weight:500;font-size:15px;align-self:center}
+  .rrow .e{font-size:14px;color:var(--ink-faint);align-self:center;border-left:1px dashed var(--rule)}
+  .paths{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.paths{grid-template-columns:1fr}}
+  .path{border:1px solid var(--rule);border-radius:10px;padding:22px;background:var(--paper-2)}
+  .path .pn{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-deep)}
+  .path h4{font-size:16px;font-weight:600;margin-top:8px}
+  .path p{font-size:14px;color:var(--ink-soft);margin-top:8px}
+  .trapline{margin-top:34px;font-family:"JetBrains Mono",monospace;font-size:13.5px;color:var(--ink-soft);border-left:3px solid var(--green);padding:4px 0 4px 18px}
+  .trapline b{color:var(--green);font-weight:500}
+
+  /* card anatomy */
+  .card-x{margin-top:52px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:start}
+  @media(max-width:860px){.card-x{grid-template-columns:1fr}}
+  .cardfile{border:1px solid var(--rule);border-radius:12px;background:var(--paper-2);font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.8;color:var(--ink-soft);padding:22px 24px;white-space:pre-wrap}
+  .cardfile .h{color:var(--ink);font-weight:500}
+  .cardfile .k{color:var(--clay-deep)}
+  .cardfile .todo{background:var(--clay-wash);border-radius:4px;padding:0 5px;color:var(--clay-deep)}
+  .annos{display:flex;flex-direction:column;gap:14px}
+  .anno{border:1px solid var(--rule);border-radius:10px;padding:16px 18px;background:var(--paper)}
+  .anno h5{font-size:13.5px;font-weight:600;color:var(--clay-deep);font-family:"JetBrains Mono",monospace;letter-spacing:.03em}
+  .anno p{font-size:13.5px;color:var(--ink-soft);margin-top:5px}
+
+  /* sequence */
+  .steps{margin-top:50px;border-top:1px solid var(--rule)}
+  .step{display:grid;grid-template-columns:64px 1fr;gap:24px;padding:24px 0;border-bottom:1px solid var(--rule);transition:background .3s}
+  .step:hover{background:rgba(204,120,92,.05)}
+  .step .n{font-family:"Newsreader",serif;font-size:32px;color:var(--clay);line-height:1}
+  .step h3{margin-top:2px}
+  .step p{color:var(--ink-soft);margin-top:4px;max-width:58ch;font-size:15.5px}
+  .step .tag{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--green);letter-spacing:.06em}
+
+  /* evidence */
+  .ev{margin-top:48px;border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+  .ev table{width:100%;border-collapse:collapse;font-size:14.5px}
+  .ev th{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:14px 20px;border-bottom:1px solid var(--rule);background:var(--paper-2)}
+  .ev td{padding:14px 20px;border-bottom:1px solid var(--rule);color:var(--ink-soft);vertical-align:top}
+  .ev tr:last-child td{border-bottom:0}
+  .ev .pass{font-family:"JetBrains Mono",monospace;color:var(--green);font-size:13px;white-space:nowrap}
+
+  /* commands / start */
+  .cmds{margin-top:44px;max-width:var(--read);border:1px solid var(--rule);border-radius:10px;background:#23211C;overflow:hidden}
+  .cmds .tt{display:flex;gap:7px;padding:11px 15px;border-bottom:1px solid #3a372f}
+  .dot{width:10px;height:10px;border-radius:50%;background:#4a463c}
+  .cmds .tb{padding:18px 20px;font-family:"JetBrains Mono",monospace;font-size:13.5px;line-height:1.9;color:#C9C4B4}
+  .cmds .pr{color:var(--clay)}
+  .cmds .cm{color:#8a857a}
+  footer{padding:60px 0 80px;border-top:1px solid var(--rule)}
+  footer p{font-size:14px;color:var(--ink-faint)}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header class="bar"><div class="wrap">
+  <a class="brand" href="#top">build<b>flow</b></a>
+  <nav class="links">
+    <a href="#flow">The flow</a><a href="#gates">Gates</a><a href="#modes">Drives</a><a href="#scope">Scope</a>
+    <a href="#card">The card</a><a href="#sequence">Build order</a><a href="#guardrails">Guardrails</a><a href="#evidence">Evidence</a><a href="#start">Start</a>
+  </nav>
+</div></header>
+
+<section id="top"><div class="wrap">
+  <div class="eyebrow rv">A lite harness for end-to-end software development</div>
+  <h1 class="serif rv">Idea to <em>deployed URL</em>,<br>not idea to paperwork.</h1>
+  <p class="lede rv">buildflow walks one project through eleven stages. Every stage boundary has a <strong>gate</strong> —
+  a checklist that must be honestly satisfied before you advance. The files are the state, one command drives it,
+  and killing a weak idea at a gate is a success, not a failure.</p>
+  <div class="hero-badges rv">
+    <span class="badge"><b>6</b> planning gates</span>
+    <span class="badge"><b>1</b> command — /flow</span>
+    <span class="badge"><b>3</b> drives — teach / work / auto</span>
+    <span class="badge">done = <b>proof in the world</b></span>
+    <span class="badge"><b>7/7</b> test rounds passed</span>
+  </div>
+</div></section>
+
+<section id="flow"><div class="wrap">
+  <div class="eyebrow rv">01 — The flow</div>
+  <h2 class="serif rv">Eleven stages. Two halves.</h2>
+  <p class="body rv">The left half plans — each stage is one file in <code>flow/</code>, unlocked by <code>/flow next</code>
+  only when the previous gate passes. The right half ships — those stages live <em>inside each card</em> and repeat per card.
+  Click any stage to see its gate.</p>
+  <div class="rail rv">
+    <div class="rail-row" id="railrow"></div>
+    <div class="rail-label">
+      <div class="pl">PLANNING — once per project, linear, flow/</div>
+      <div class="sh">SHIPPING — once per card, a loop, cards/</div>
+    </div>
+    <div class="gate-reveal" id="gatereveal">
+      <div class="gq" id="grq">Gate — Stage 00 · Idea</div>
+      <p id="grp">Can you name ONE real person or group who has this pain? Three sentences, no more.</p>
+      <div class="art" id="gra">artifact: flow/00-idea.md</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="gates"><div class="wrap">
+  <div class="eyebrow rv">02 — Gates, two layers</div>
+  <h2 class="serif rv">A script that can't be charmed.<br>A reviewer that can't be bored.</h2>
+  <p class="body rv">The runner (<code>flow.sh</code>) does the mechanical checks — unchecked boxes, leftover
+  <code>[FILL]</code> placeholders, a card marked done without pasted evidence. The <code>/flow</code> skill makes the AI a
+  <em>gatekeeper</em> for what scripts can't judge: hollow content, fake evidence, grade-laundering, contract drift.
+  It may show you one example. It never fills your artifact.</p>
+  <p class="body rv"><strong>Try it.</strong> This is the real stage-00 gate. <code>/flow next</code> refuses until every box is honestly checked.</p>
+  <div class="demo rv">
+    <div class="panel">
+      <div class="ph"><h3>flow/00-idea.md</h3><span>gate checklist</span></div>
+      <ul class="gchecks" id="gchecks">
+        <li data-p="The pitch below is 3 sentences, no more"><span class="box"></span>The pitch below is 3 sentences, no more</li>
+        <li data-p="I can name at least ONE real person/group who has this pain"><span class="box"></span>I can name at least ONE real person/group who has this pain</li>
+        <li data-p="No FILL placeholders remain in this file"><span class="box"></span>No FILL placeholders remain in this file</li>
+      </ul>
+      <div class="demo-act"><button class="btn" id="nextbtn">$ /flow next</button></div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h3>terminal</h3><span>flow.sh</span></div>
+      <div class="term" id="term"><span class="dim">— check the boxes, then run /flow next —</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="modes"><div class="wrap">
+  <div class="eyebrow rv">03 — Three drives</div>
+  <h2 class="serif rv">Teach trains the attendee.<br>Work plans. Auto builds.</h2>
+  <p class="body rv"><code>/flow mode teach|work</code> decides <em>who writes the plan</em>;
+  <code>/flow auto</code> decides <em>who drives the build</em>. The gates, the rubric, and the
+  done-rules are identical everywhere.</p>
+  <div class="paths rv">
+    <div class="path"><div class="pn">teach — default</div><h4>You write, the AI gatekeeps</h4>
+      <p>The attendee fills every artifact themselves. The gatekeeper refuses hollow work with a specific
+      reason and never fills a template — the attendee writing it IS the method. Built for learning.</p></div>
+    <div class="path"><div class="pn">work</div><h4>Interview once, then it plans</h4>
+      <p>The AI interviews the operator once, drafts all six stages itself while self-gating, pauses exactly
+      ONCE — the scope sign-off — then delivers the full card set as one plan summary. Live: 6–8 minutes.</p></div>
+    <div class="path"><div class="pn">auto</div><h4>Cards to done, subagent per card</h4>
+      <p>After a preflight (plan complete, deps graph whole), a planner session drives the cards: one subagent
+      per card, worktree isolation for parallel groups, planner reviews every diff and runs every verify itself.
+      Seven principles govern it — done = world-state, halts batch at operator gates, two strikes per card,
+      never destructive, all state in files (resumable). The run log is AUTO-LOG.md, not scrollback.</p></div>
+  </div>
+</div></section>
+
+<section id="scope"><div class="wrap">
+  <div class="eyebrow rv">04 — The scope gate</div>
+  <h2 class="serif rv">Impact × cost,<br>not cost alone.</h2>
+  <p class="body rv">Every feature gets a business-impact score FIRST (H = moves money or the core promise ·
+  M = retention, time saved · L = nobody would pay or switch for it), then an AI-coding grade. H-impact justifies
+  B/C cost; <strong>no L-impact feature above grade A survives</strong> — the classic failure is a v1 full of A-grade
+  L-impact features: cheap to build, worthless to sell. The flow also <em>proposes</em> up to 3 impact-first features
+  you didn't list (tied to the GTM research), default OUT, each needing your explicit decision. The cost grades:</p>
+  <div class="rubric rv">
+    <div class="rrow"><div class="g serif">A</div><div class="m">Cheap for AI</div><div class="e">CRUD, forms, dashboards, content sites, API wrappers</div></div>
+    <div class="rrow"><div class="g serif">B</div><div class="m">Moderate</div><div class="e">file processing, integrations, auth via library, single LLM call, HITL AI drafts</div></div>
+    <div class="rrow"><div class="g serif">C</div><div class="m">Expensive</div><div class="e">realtime, payments from scratch, custom auth, autonomous agentic pipelines</div></div>
+  </div>
+  <p class="body rv">When the real need is grade C, there are exactly three honest paths:</p>
+  <div class="paths rv">
+    <div class="path"><div class="pn">Path 1</div><h4>The C is the product</h4><p>Invert the cut: the C feature goes FIRST (riskiest assumption first), everything else is minimized to serve it. One C proves the value prop — its siblings are v2.</p></div>
+    <div class="path"><div class="pn">Path 2</div><h4>Re-architect C → B</h4><p>The highest-leverage move. Multi-step agent → single LLM call. Auto-send → human-approves-draft. Custom pipeline → managed service. Same value, one grade cheaper.</p></div>
+    <div class="path"><div class="pn">Path 3</div><h4>Kill or re-budget</h4><p>An irreducible C that doesn't fit the budget. Both outcomes are honest, and killing here costs almost nothing — that's the point of gating early.</p></div>
+  </div>
+  <div class="trapline rv"><b>Real run:</b> “realtime so 2 people don't double-book” → re-graded C→A — it's UNIQUE(court_id, slot_start), not websockets. Built first.</div>
+  <div class="trapline rv" style="margin-top:14px"><b>Real run:</b> “RAG auto-reply bot via deepagents” → re-architected C→B — manager-approved HITL draft, one LLM call. Autonomy cut to v2.</div>
+</div></section>
+
+<section id="card"><div class="wrap">
+  <div class="eyebrow rv">05 — The card</div>
+  <h2 class="serif rv">A card is a session brief<br>an AI coder can't wander out of.</h2>
+  <p class="body rv">After planning, work becomes cards — one thing each. This is a real card from the courtbook run,
+  after a full local build with every check green. Note what it still says.</p>
+  <div class="card-x rv">
+    <div class="cardfile"><span class="h"># C-001 — Vertical slice: atomic booking insert behind a deployed URL</span>
+
+<span class="k">status:</span> <span class="todo">todo</span>   ← local green ≠ done
+
+<span class="k">## Scope</span>  POST /api/bookings + UNIQUE(court_id, slot_start)
+          + one ugly page. NO grid, NO VietQR, NO email, NO admin.
+
+<span class="k">## Allowed files</span>  app/main.py · app/db.py · book.html ·
+          migrations/001 · Dockerfile · requirements.txt
+
+<span class="k">## Verify</span>  curl POST → 201 · same curl → 409 slot_taken ·
+          SELECT count(*) → 1 · tap "Book" twice on a phone
+
+<span class="k">## Done-evidence</span>  a PUBLIC URL where the two-curl sequence
+          returns 201 then 409 — named BEFORE building
+
+<span class="k">## Evidence</span>  PARTIAL — local PoC only, deploy gate unmet</div>
+    <div class="annos">
+      <div class="anno"><h5>scope + NOT-list</h5><p>One thing, stated negatively too. The NOT-list is what keeps a long AI session from helpfully building three other features.</p></div>
+      <div class="anno"><h5>verify = runnable commands</h5><p>Not intentions. The second curl proves the DB constraint; the SELECT proves the row persisted, not echoed. Sabotage checks included.</p></div>
+      <div class="anno"><h5>done-evidence = world-state</h5><p>Named before building. “Tests pass” and “code merged” are mid-pipeline — done is a URL someone clicked.</p></div>
+      <div class="anno"><h5>the discipline moment</h5><p>This card passed every local check and still says <strong>todo</strong> — the executor itself reported: “without CLAUDE.md I'd have flipped the status on passing curls.”</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="sequence"><div class="wrap">
+  <div class="eyebrow rv">06 — Build order</div>
+  <h2 class="serif rv">The standard card sequence.</h2>
+  <p class="body rv">Contract-first, slice early, UI last. Each card is one focused build session — human or AI coder.
+  These rules ship in the project's <code>CLAUDE.md</code>, so they're in context exactly when the building happens.</p>
+  <div class="steps rv">
+    <div class="step"><div class="n">1</div><div><h3>Scaffold + CI/CD</h3><p>Repo, deploy pipeline, /healthz on a public URL. The deploy path exists before any feature does.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h3>Vertical slice</h3><p>One contract endpoint + one ugly page calling it, deployed. The motivation hit and the integration proof.</p></div></div>
+    <div class="step"><div class="n">3</div><div><h3>Backend cards</h3><p>One endpoint-group per card, built TO the contract. The contract is law — wrong contract? Amend it first, then code.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h3>Contract-test card <span class="tag">— the “feel safe” gate, made objective</span></h3><p>An automated suite hitting EVERY contract endpoint with edge + failure cases against the deployed API.</p></div></div>
+    <div class="step"><div class="n">5</div><div><h3>UI mock card <span class="tag">— look-right gate before framework work</span></h3><p>Static HTML, real copy, no logic. Iterate here: mock retries cost seconds, framework retries cost deploys.</p></div></div>
+    <div class="step"><div class="n">6</div><div><h3>Frontend cards</h3><p>Implement the approved mock, consuming the contract. Neither side improvises shapes.</p></div></div>
+    <div class="step"><div class="n">7</div><div><h3>E2E card</h3><p>Automated browser test over the DEPLOYED app covering the PRD's user actions. Its run doubles as verify-live.</p></div></div>
+  </div>
+  <p class="body rv" style="margin-top:34px"><strong>Parallel when it's safe.</strong> Cards declare
+  <code>deps:</code>; <code>/flow ready</code> computes which todo cards have their deps done AND no
+  allowed-files overlap — those may build in parallel, one git worktree per card, merged back in card
+  order with a run-the-merged-app check between merges. The runner advises; the operator dispatches.
+  Contract-test and e2e cards stay serial by nature.</p>
+</div></section>
+
+<section id="guardrails"><div class="wrap">
+  <div class="eyebrow rv">07 — Guardrails</div>
+  <h2 class="serif rv">The rules that ride along.</h2>
+  <p class="body rv">Six protocols, each born from a real failure, each living where the work happens —
+  not in a handbook nobody opens.</p>
+  <div class="paths rv">
+    <div class="path"><div class="pn">Two law files</div><h4>Contract for shapes, DESIGN.md for pixels</h4>
+      <p>Every UI card is built and reviewed against the design law: the edit-affordance ladder, object-first
+      pages, locked tokens, a banned-words table (engine words never reach user copy). Structure is law;
+      tokens are taste — replaceable deliberately, never ad-hoc.</p></div>
+    <div class="path"><div class="pn">Playbooks</div><h4>Paid-for stack knowledge</h4>
+      <p>One playbook per stack, written only after it worked for real — gotcha at the top, runnable smoke tests.
+      Read before building on that stack; harvest after paying for a lesson. Auto briefs include them.</p></div>
+    <div class="path"><div class="pn">Debt</div><h4>Gate-skips are loans, written down</h4>
+      <p>Skipping a gate deliberately is a legit operator call — and opens a DEBT.md line: the exposure,
+      concretely, plus a close-before condition. Security-class skips are never silent. Status shows the count.</p></div>
+    <div class="path"><div class="pn">PR &amp; merge</div><h4>Merge ≠ shipped</h4>
+      <p>Branch per card, PR = the card's review surface, merges in card order. After merge: deploy, then verify
+      on the LIVE URL — only then does the card close. Deploy-success is not proof the surface changed.</p></div>
+    <div class="path"><div class="pn">Swagger with the API</div><h4>Docs are never a catch-up card</h4>
+      <p>The served spec is live from the vertical slice onward; every backend card verifies its endpoints
+      appear in the live /docs. Bonus: a route missing from /openapi.json after a green deploy = stale image,
+      not your code — diagnosis in one curl.</p></div>
+    <div class="path"><div class="pn">Retro</div><h4>Three questions, three routes</h4>
+      <p>Process lesson → RETRO.md. Stack lesson → a playbook. Flow lesson → FLOW-FEEDBACK.md, carried upstream
+      to the template repo. Projects never edit the engine for themselves — feedback is the legal channel.</p></div>
+  </div>
+</div></section>
+
+<section id="evidence"><div class="wrap">
+  <div class="eyebrow rv">08 — Evidence</div>
+  <h2 class="serif rv">Tested the way it teaches:<br>adversarially.</h2>
+  <p class="body rv">Six independent test rounds, each a fresh AI session in its own workspace, reports archived in
+  <code>docs/test-reports/</code>.</p>
+  <div class="ev rv"><table>
+    <tr><th>Round</th><th>Mode</th><th>What it proved</th><th></th></tr>
+    <tr><td class="mono">R1</td><td>Honest attendee</td><td>Full walk-through; every gate advanced and refused correctly</td><td class="pass">PASS</td></tr>
+    <tr><td class="mono">R2</td><td>Adversarial</td><td>8 cheat attempts (checked boxes over placeholders, hollow research, C-graded-as-B, done-without-evidence) — all caught at the right layer</td><td class="pass">PASS</td></tr>
+    <tr><td class="mono">R3</td><td>End-to-end</td><td>Empty folder → full plan → cards → retro, zero misbehaviors</td><td class="pass">PASS</td></tr>
+    <tr><td class="mono">R4</td><td>Real idea (tickets + deepagents)</td><td>AI wishlist converted to 3 single LLM calls; agent framework declined with reasons</td><td class="pass">PASS</td></tr>
+    <tr><td class="mono">R5</td><td>Real idea (booking + payments + realtime)</td><td>Realtime→DB constraint (C→A), VietQR split, chatbot cut; caught its own contract drift</td><td class="pass">PASS</td></tr>
+    <tr><td class="mono">PoC</td><td>Real build (C-001)</td><td>Card built exactly to scope; all checks green locally; card correctly STAYED todo — deploy gate unmet</td><td class="pass">PASS</td></tr>
+    <tr><td class="mono">R6</td><td>Work-mode rehearsal</td><td>Interview consumed once, stages self-drafted with real research, exactly one scope pause, 7 cards + one plan summary</td><td class="pass">PASS</td></tr>
+  </table></div>
+</div></section>
+
+<section id="start"><div class="wrap">
+  <div class="eyebrow rv">09 — Start</div>
+  <h2 class="serif rv">One folder. One command.</h2>
+  <p class="body rv">Copy the template, open Claude Code in it, and let the first gate teach you the method.</p>
+  <div class="cmds rv">
+    <div class="tt"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+    <div class="tb"><span class="cm"># your project = a copy of the template</span>
+<span class="pr">$</span> cp -R buildflow my-project && cd my-project && claude
+
+<span class="cm"># where am I, what's blocking</span>
+<span class="pr">&gt;</span> /flow
+
+<span class="cm"># check the gate, unlock the next stage</span>
+<span class="pr">&gt;</span> /flow next
+
+<span class="cm"># operator running a real project? interview-once mode</span>
+<span class="pr">&gt;</span> /flow mode work
+
+<span class="cm"># after planning: create + validate build cards</span>
+<span class="pr">&gt;</span> /flow card
+<span class="pr">&gt;</span> /flow check C-001
+
+<span class="cm"># what can be built now — and in parallel (worktrees)</span>
+<span class="pr">&gt;</span> /flow ready
+
+<span class="cm"># autonomous build run (preflight, then subagent per card)</span>
+<span class="pr">&gt;</span> /flow auto
+
+<span class="cm"># end of a run: three questions, three routes</span>
+<span class="pr">&gt;</span> /flow retro</div>
+  </div>
+  <p class="body rv" style="margin-top:34px">Three rules under everything: <strong>inspect first</strong> — evidence before planning.
+  <strong>The contract is the seam</strong> — backend builds to it, UI consumes from it. <strong>Done = proof in the world</strong> —
+  a URL you clicked, never “tests pass.”</p>
+</div></section>
+
+<footer><div class="wrap">
+  <p>buildflow — a lite harness distilled from tony-harness. Files are the state · gates are the method · the structure carries the quality.</p>
+</div></footer>
+
+<script>
+  // progress bar
+  addEventListener('scroll',()=>{const h=document.documentElement;
+    document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'});
+  // reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // flow rail
+  const stages=[
+    {n:'00',t:'Idea',g:'Can you name ONE real person/group with this pain? Three sentences, no more.',a:'flow/00-idea.md',ship:false},
+    {n:'01',t:'Research',g:'Did you INSPECT what exists — competitors opened, real complaints quoted, real PRICES found, and ONE named channel for your first 10 users? No named channel = a kill signal.',a:'flow/01-research.md',ship:false},
+    {n:'02',t:'Scope',g:'Impact × grade on every feature; no L-impact above grade A; every C justified via path 1/2/3; suggested features decided. GO or KILL written down — kill is a success here.',a:'flow/02-scope.md',ship:false},
+    {n:'03',t:'PRD',g:'Could a stranger build v1 from this without asking you anything? Is the success metric a number?',a:'flow/03-prd.md',ship:false},
+    {n:'04',t:'ADR',g:'Does every decision name what you REJECTED? Is the NOT-doing list written?',a:'flow/04-adr.md',ship:false},
+    {n:'05',t:'Contract',g:'Every PRD feature maps to an endpoint; every endpoint has request AND response shapes. The seam between backend and UI.',a:'flow/05-contract.md',ship:false},
+    {n:'06',t:'Cards',g:'Each card: one thing, allowed files, runnable verify steps, world-state done-evidence named BEFORE building.',a:'cards/C-NNN.md',ship:true},
+    {n:'07',t:'Build',g:'Touch only the card’s allowed files. Contract is law — amend it first if it’s wrong, never improvise shapes.',a:'one card = one session',ship:true},
+    {n:'08',t:'Verify',g:'Run every verify step for real — including the sabotage case. Paste actual output into ## Evidence.',a:'card ## Verify',ship:true},
+    {n:'09',t:'Deploy + live',g:'Deploy-success ≠ shipped. You observed the done-evidence on the PUBLIC URL, as a user.',a:'card ## Evidence → status: done',ship:true},
+    {n:'10',t:'Retro',g:'Three questions, three routes: process lesson → RETRO.md, stack lesson → a playbook, flow lesson → FLOW-FEEDBACK.md (carried upstream). Open debts checked.',a:'RETRO.md · playbooks/ · FLOW-FEEDBACK.md',ship:true},
+  ];
+  const row=document.getElementById('railrow');
+  stages.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='stage'+(s.ship?' ship':'')+(i===0?' on':'');
+    d.innerHTML=`<div class="gate-dot"></div><div class="sn">${s.n}</div><h4>${s.t}</h4>`;
+    d.onclick=()=>{document.querySelectorAll('.stage').forEach(x=>x.classList.remove('on'));d.classList.add('on');
+      document.getElementById('grq').textContent=`Gate — Stage ${s.n} · ${s.t}`;
+      document.getElementById('grp').textContent=s.g;
+      document.getElementById('gra').textContent='artifact: '+s.a;};
+    row.appendChild(d);
+  });
+
+  // gate demo
+  const checks=document.querySelectorAll('#gchecks li');
+  checks.forEach(li=>li.onclick=()=>li.classList.toggle('ck'));
+  document.getElementById('nextbtn').onclick=()=>{
+    const term=document.getElementById('term');
+    const open=[...checks].filter(li=>!li.classList.contains('ck'));
+    if(open.length){
+      term.innerHTML=`<span class="fail">GATE FAIL — 00-idea is not done:</span>\n`+
+        open.map(li=>`  <span class="fail">- unchecked:</span> ${li.dataset.p}`).join('\n')+
+        `\n\n<span class="dim">No advance. Fix flow/00-idea.md first.\n(Killing the idea here is also a valid exit.)</span>`;
+    }else{
+      term.innerHTML=`<span class="pass">Gate ✓ on 00-idea.</span>\nStage unlocked → flow/01-research.md.\n<span class="dim">Fill it, check its gate boxes, then /flow next.\n\nThe script checked the boxes. The gatekeeper\nstill reads what you wrote — hollow content\ngets sent back even with every box checked.</span>`;
+    }
+  };
+</script>
+</body>
+</html>

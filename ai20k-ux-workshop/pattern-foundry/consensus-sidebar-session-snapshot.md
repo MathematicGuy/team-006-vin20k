@@ -1,0 +1,25 @@
+- generic [active] [ref=e1] [box=0,0,914,3385]:
+  - generic [ref=e5] [box=0,0,914,3385]:
+    - complementary [ref=e6] [box=0,0,208,965]:
+      - generic [ref=e300] [box=0,0,208,965]:
+        - generic [ref=e301] [box=0,0,208,64]:
+          - link [ref=e302] [cursor=pointer] [box=16,0,20,64]:
+            - /url: /
+          - button "Close sidebar" [ref=e308] [cursor=pointer] [box=164,14,36,36]
+        - generic [ref=e313] [box=0,64,208,901]:
+          - generic [ref=e314] [box=0,64,208,72]
+          - generic [ref=e329] [box=0,136,208,817]
+    - main [ref=e8] [box=208,0,706,3385]:
+      - navigation [ref=e9] [box=208,0,706,64]:
+        - button "Sign up" [ref=e346] [cursor=pointer] [box=820,14,78,36]:
+          - generic [ref=e347] [box=833,23,52,18]: Sign up
+      - generic [ref=e10] [box=208,64,706,3321]:
+        - generic [ref=e13] [box=232,64,658,3321]:
+          - generic [ref=e14] [box=232,64,658,845]
+          - generic [ref=e74] [box=232,909,658,2476]
+        - button "Open support chat" [ref=e295] [cursor=pointer] [box=862,913,32,32]:
+          - img [ref=e296] [box=870,921,16,16]
+    - complementary [box=914,0,0,965]
+  - alert [ref=e299] [box=-1,-1,1,1]
+  - iframe [ref=e741] [box=0,0,1,1]:
+    
