@@ -59,7 +59,11 @@ def normalize(data: dict, tool: str) -> dict | None:
     # origin isn't set), skip the event entirely — these entries can't be
     # tied back to a team on the server and would just clutter the pending
     # queue forever.
-    origin = git("git remote get-url origin")
+    origin = git("git remote get-url origin") or git("git remote get-url main")
+    if not origin:
+        remotes = git("git remote").split()
+        if remotes:
+            origin = git(f"git remote get-url {remotes[0]}")
     if not origin:
         return None
     repo = origin.rstrip("/").split("/")[-1]

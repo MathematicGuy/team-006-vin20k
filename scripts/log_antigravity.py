@@ -336,7 +336,12 @@ def main() -> None:
 
     repo_root_n = "" if args.no_repo_filter else _normalize(str(Path.cwd()))
 
-    repo = git("git remote get-url origin").split("/")[-1].replace(".git", "")
+    origin_url = git("git remote get-url origin") or git("git remote get-url main")
+    if not origin_url:
+        remotes_url_list = git("git remote").split()
+        if remotes_url_list:
+            origin_url = git(f"git remote get-url {remotes_url_list[0]}")
+    repo = origin_url.split("/")[-1].replace(".git", "") if origin_url else ""
     branch = git("git rev-parse --abbrev-ref HEAD")
     commit = git("git rev-parse --short HEAD")
     student = git("git config user.email") or os.environ.get(
