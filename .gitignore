@@ -62,3 +62,6 @@ out/
 .ai-log/archive/
 *.chrome_profile
 *.playwright-mcp
+
+
+ai20k-ux-workshop\pattern-foundry

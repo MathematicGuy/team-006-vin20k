@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 4,
+  "packageVersion": "1.6.1",
+  "locale": "en",
+  "installedAt": "2026-06-14T08:18:44.862Z",
+  "updatedAt": "2026-06-14T08:18:44.862Z",
+  "packs": {
+    "core": {
+      "version": "1.6.1",
+      "source": "built-in"
+    },
+    "research": {
+      "version": "1.6.1",
+      "source": "built-in"
+    },
+    "learning": {
+      "version": "1.6.1",
+      "source": "built-in"
+    }
+  },
+  "ideTargets": [
+    "claude_code",
+    "codex"
+  ],
+  "symlinkStrategies": {
+    "lumi-init": "junction",
+    "lumi-ingest": "junction",
+    "lumi-ask": "junction",
+    "lumi-edit": "junction",
+    "lumi-check": "junction",
+    "lumi-reset": "junction",
+    "lumi-verify": "junction",
+    "lumi-migrate-legacy": "junction",
+    "lumi-help": "junction",
+    "lumi-research-discover": "junction",
+    "lumi-research-survey": "junction",
+    "lumi-research-prefill": "junction",
+    "lumi-research-setup": "junction",
+    "lumi-research-topic": "junction",
+    "lumi-research-watchlist": "junction",
+    "lumi-research-watch-run": "junction",
+    "lumi-learning-reflect": "junction"
+  },
+  "resolvedPaths": {
+    "projectRoot": "D:\\Personlich\\_VIN20K_PROJECT\\core",
+    "wiki": "D:\\Personlich\\_VIN20K_PROJECT\\core\\wiki",
+    "raw": "D:\\Personlich\\_VIN20K_PROJECT\\core\\raw",
+    "agents": "D:\\Personlich\\_VIN20K_PROJECT\\core\\.agents",
+    "lumina": "D:\\Personlich\\_VIN20K_PROJECT\\core\\_lumina"
+  }
+}
