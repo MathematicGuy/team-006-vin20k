@@ -8,9 +8,19 @@
 # Exits 0 silently if no Python is found — hooks must never block the AI tool.
 set -u
 
-if command -v python3 >/dev/null 2>&1 && python3 --version >/dev/null 2>&1; then
+# Returns true only if the candidate is a real Python, not the Windows Store stub.
+_is_real_python() {
+  local cmd="$1"
+  local path
+  path=$(command -v "$cmd" 2>/dev/null) || return 1
+  # Windows Store stubs live under WindowsApps — skip them.
+  case "$path" in *WindowsApps*) return 1 ;; esac
+  "$cmd" --version >/dev/null 2>&1
+}
+
+if _is_real_python python3; then
   PY=python3
-elif command -v python >/dev/null 2>&1 && python --version >/dev/null 2>&1; then
+elif _is_real_python python; then
   PY=python
 elif command -v py >/dev/null 2>&1 && py -3 --version >/dev/null 2>&1; then
   PY="py -3"
